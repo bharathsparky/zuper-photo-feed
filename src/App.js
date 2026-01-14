@@ -802,7 +802,7 @@ const HomepageWithPhotos = ({ onNavigate, recentPhotos = [] }) => {
         </div>
       </div>
 
-      {/* Quick Links - With Photo Feed */}
+      {/* Quick Links - Without Photo Feed (moved to preview card) */}
       <div className="quick-links-section">
         <div className="section-header">
           <h3>Quick Links</h3>
@@ -811,12 +811,6 @@ const HomepageWithPhotos = ({ onNavigate, recentPhotos = [] }) => {
           </button>
         </div>
         <div className="quick-links-grid">
-          <button className="quick-link-item" onClick={() => onNavigate('photo-feed')}>
-            <div className="quick-link-icon photo-feed">
-              <Icons.Gallery />
-            </div>
-            <span>Photo Feed</span>
-          </button>
           <button className="quick-link-item">
             <div className="quick-link-icon schedule">
               <Icons.Schedule />
@@ -835,6 +829,37 @@ const HomepageWithPhotos = ({ onNavigate, recentPhotos = [] }) => {
             </div>
             <span>Announcements</span>
           </button>
+          <button className="quick-link-item">
+            <div className="quick-link-icon scan">
+              <Icons.Scan />
+            </div>
+            <span>Scan</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Recent Photos Preview Card - Prominent placement BEFORE Jobs */}
+      <div className="photo-preview-card prominent" onClick={() => onNavigate('photo-feed')}>
+        <div className="preview-card-header">
+          <div className="preview-card-title">
+            <Icons.Gallery />
+            <span>Recent Photos</span>
+          </div>
+          <div className="preview-card-action">
+            <span className="photo-count-badge">{recentPhotos.length}</span>
+            <Icons.ChevronRight />
+          </div>
+        </div>
+        <div className="preview-card-strip">
+          {previewPhotos.map((photo) => (
+            <img key={photo.id} src={photo.url} alt="" className="strip-thumb" />
+          ))}
+          {recentPhotos.length > 4 && (
+            <div className="strip-more">
+              <span>+{recentPhotos.length - 4}</span>
+              <span className="more-label">more</span>
+            </div>
+          )}
         </div>
       </div>
 
@@ -908,31 +933,6 @@ const HomepageWithPhotos = ({ onNavigate, recentPhotos = [] }) => {
               <span>Genese Street, 46th Avenue, SW, Seattle</span>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Recent Photos Preview Card - Navigates to Photo Feed */}
-      <div className="photo-preview-card" onClick={() => onNavigate('photo-feed')}>
-        <div className="preview-card-header">
-          <div className="preview-card-title">
-            <Icons.Gallery />
-            <span>Recent Photos</span>
-          </div>
-          <div className="preview-card-action">
-            <span className="photo-count-badge">{recentPhotos.length}</span>
-            <Icons.ChevronRight />
-          </div>
-        </div>
-        <div className="preview-card-strip">
-          {previewPhotos.map((photo) => (
-            <img key={photo.id} src={photo.url} alt="" className="strip-thumb" />
-          ))}
-          {recentPhotos.length > 4 && (
-            <div className="strip-more">
-              <span>+{recentPhotos.length - 4}</span>
-              <span className="more-label">more</span>
-            </div>
-          )}
         </div>
       </div>
     </div>
