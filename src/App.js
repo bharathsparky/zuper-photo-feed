@@ -758,6 +758,7 @@ const Homepage = ({ onNavigate }) => {
 
 // Homepage V2 - With Photo Preview Section
 const HomepageWithPhotos = ({ onNavigate, recentPhotos = [] }) => {
+  const [activeView, setActiveView] = useState('jobs'); // 'jobs' or 'photos'
   // Take first 5 photos for preview
   const previewPhotos = recentPhotos.slice(0, 5);
   
@@ -802,151 +803,188 @@ const HomepageWithPhotos = ({ onNavigate, recentPhotos = [] }) => {
         </div>
       </div>
 
-      {/* Quick Links - Same colorful style as main homepage */}
-      <div className="quick-links-section">
-        <div className="section-header">
-          <h3>Quick Links</h3>
-          <button className="add-btn">
-            <img src={FigmaAssets.imgPlus} alt="Add" className="add-icon-img" />
-          </button>
-        </div>
-        <div className="quick-links-grid">
-          <button className="quick-link-item">
-            <div className="quick-link-icon schedule">
-              <Icons.Schedule />
-            </div>
-            <span>Schedule</span>
-          </button>
-          <button className="quick-link-item">
-            <div className="quick-link-icon tasks">
-              <Icons.Tasks />
-            </div>
-            <span>My Tasks (12)</span>
-          </button>
-          <button className="quick-link-item">
-            <div className="quick-link-icon announcement">
-              <Icons.Megaphone />
-            </div>
-            <span>Announcements</span>
-          </button>
-          <button className="quick-link-item">
-            <div className="quick-link-icon scan">
-              <Icons.Scan />
-            </div>
-            <span>Scan</span>
-          </button>
-        </div>
+      {/* View Toggle - Jobs / Photos */}
+      <div className="home-view-toggle">
+        <button 
+          className={`view-toggle-btn ${activeView === 'jobs' ? 'active' : ''}`}
+          onClick={() => setActiveView('jobs')}
+        >
+          <Icons.Briefcase />
+          <span>Jobs</span>
+          <span className="toggle-badge">35</span>
+        </button>
+        <button 
+          className={`view-toggle-btn ${activeView === 'photos' ? 'active' : ''}`}
+          onClick={() => setActiveView('photos')}
+        >
+          <Icons.Gallery />
+          <span>Photos</span>
+          <span className="toggle-badge">{recentPhotos.length}</span>
+        </button>
       </div>
 
-      {/* Jobs Section - First Priority */}
-      <div className="jobs-section">
-        <div className="jobs-header">
-          <h3>Jobs (35)</h3>
-          <div className="jobs-nav">
-            <button className="map-icon-btn">
-              <img src={FigmaAssets.imgMap2} alt="Map" className="map-icon-img" />
-            </button>
-            <div className="date-nav">
-              <button>
-                <img src={FigmaAssets.imgChevronLeft} alt="Previous" className="chevron-icon" />
-              </button>
-              <span>Today</span>
-              <button className="chevron-right">
-                <img src={FigmaAssets.imgChevronLeft} alt="Next" className="chevron-icon" />
-              </button>
-            </div>
-          </div>
-        </div>
-        
-        <div className="stats-grid">
-          <div className="stat-card total-jobs">
-            <span className="stat-label">Total jobs</span>
-            <span className="stat-value">35</span>
-          </div>
-          <div className="stat-card yet-to-start">
-            <span className="stat-label">Yet to start</span>
-            <span className="stat-value">27</span>
-          </div>
-          <div className="stat-card in-progress">
-            <span className="stat-label">In Progress</span>
-            <span className="stat-value">4</span>
-          </div>
-          <div className="stat-card completed">
-            <span className="stat-label">Completed</span>
-            <span className="stat-value">0</span>
-          </div>
-        </div>
-
-        {/* Job Card - Details */}
-        <div className="job-card">
-          <div className="job-card-header">
-            <div className="job-number">
-              <img src={FigmaAssets.imgRepeat} alt="Repeat" className="repeat-icon-img" />
-              #2022 - 1429
-            </div>
-            <span className="job-status new">New</span>
-          </div>
-          <h4 className="job-title">46th Avenue Genese St - Interior Design</h4>
-          <p className="job-time">Today, 10:30 - 11:00 AM</p>
-          <div className="job-details">
-            <div className="job-detail">
-              <div className="job-badge-icon">
-                <img src={FigmaAssets.img3} alt="User" />
-              </div>
-              <span>Richard Mathew (Vodafone Idea)</span>
-            </div>
-            <div className="job-detail">
-              <div className="job-badge-icon">
-                <img src={FigmaAssets.img} alt="Briefcase" />
-              </div>
-              <span>Renovation</span>
-            </div>
-            <div className="job-detail">
-              <div className="job-badge-icon">
-                <img src={FigmaAssets.img1} alt="Location" />
-              </div>
-              <span>Genese Street, 46th Avenue, SW, Seattle</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Recent Photos Section - Below Jobs */}
-      <div className="recent-photos-section">
-        <div className="section-header">
-          <div className="section-title-group">
-            <h3>Recent Photos</h3>
-            <span className="photo-count">{recentPhotos.length} photos</span>
-          </div>
-          <button className="view-more-btn" onClick={() => onNavigate('photo-feed')}>
-            View All
-            <Icons.ChevronRight />
-          </button>
-        </div>
-        
-        <div className="photo-preview-grid">
-          {previewPhotos.map((photo, index) => (
-            <div 
-              key={photo.id} 
-              className={`preview-thumb ${index === 0 ? 'large' : ''} ${photo.type === 'video' ? 'is-video' : ''}`}
-              onClick={() => onNavigate('photo-feed')}
-            >
-              <img src={photo.url} alt={photo.jobTitle || 'Photo'} />
-              {photo.type === 'video' && (
-                <div className="video-badge">
-                  <Icons.Play />
-                  <span>{photo.duration}</span>
+      {/* Conditional Content based on activeView */}
+      {activeView === 'jobs' ? (
+        <>
+          {/* Jobs Section */}
+          <div className="jobs-section">
+            <div className="jobs-header">
+              <h3>Today's Jobs</h3>
+              <div className="jobs-nav">
+                <button className="map-icon-btn">
+                  <img src={FigmaAssets.imgMap2} alt="Map" className="map-icon-img" />
+                </button>
+                <div className="date-nav">
+                  <button>
+                    <img src={FigmaAssets.imgChevronLeft} alt="Previous" className="chevron-icon" />
+                  </button>
+                  <span>Today</span>
+                  <button className="chevron-right">
+                    <img src={FigmaAssets.imgChevronLeft} alt="Next" className="chevron-icon" />
+                  </button>
                 </div>
-              )}
-              {index === 4 && recentPhotos.length > 5 && (
-                <div className="more-overlay">
-                  <span>+{recentPhotos.length - 5}</span>
+              </div>
+            </div>
+            
+            <div className="stats-grid">
+              <div className="stat-card total-jobs">
+                <span className="stat-label">Total jobs</span>
+                <span className="stat-value">35</span>
+              </div>
+              <div className="stat-card yet-to-start">
+                <span className="stat-label">Yet to start</span>
+                <span className="stat-value">27</span>
+              </div>
+              <div className="stat-card in-progress">
+                <span className="stat-label">In Progress</span>
+                <span className="stat-value">4</span>
+              </div>
+              <div className="stat-card completed">
+                <span className="stat-label">Completed</span>
+                <span className="stat-value">0</span>
+              </div>
+            </div>
+
+            {/* Job Card - Details */}
+            <div className="job-card">
+              <div className="job-card-header">
+                <div className="job-number">
+                  <img src={FigmaAssets.imgRepeat} alt="Repeat" className="repeat-icon-img" />
+                  #2022 - 1429
                 </div>
+                <span className="job-status new">New</span>
+              </div>
+              <h4 className="job-title">46th Avenue Genese St - Interior Design</h4>
+              <p className="job-time">Today, 10:30 - 11:00 AM</p>
+              <div className="job-details">
+                <div className="job-detail">
+                  <div className="job-badge-icon">
+                    <img src={FigmaAssets.img3} alt="User" />
+                  </div>
+                  <span>Richard Mathew (Vodafone Idea)</span>
+                </div>
+                <div className="job-detail">
+                  <div className="job-badge-icon">
+                    <img src={FigmaAssets.img} alt="Briefcase" />
+                  </div>
+                  <span>Renovation</span>
+                </div>
+                <div className="job-detail">
+                  <div className="job-badge-icon">
+                    <img src={FigmaAssets.img1} alt="Location" />
+                  </div>
+                  <span>Genese Street, 46th Avenue, SW, Seattle</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Quick peek at photos when in Jobs view */}
+          <div className="photo-peek-section">
+            <div className="peek-header" onClick={() => setActiveView('photos')}>
+              <div className="peek-info">
+                <Icons.Gallery />
+                <span>Recent Photos</span>
+                <span className="peek-count">{recentPhotos.length}</span>
+              </div>
+              <Icons.ChevronRight />
+            </div>
+            <div className="peek-thumbnails" onClick={() => setActiveView('photos')}>
+              {previewPhotos.slice(0, 4).map((photo) => (
+                <img key={photo.id} src={photo.url} alt="" className="peek-thumb" />
+              ))}
+              {recentPhotos.length > 4 && (
+                <div className="peek-more">+{recentPhotos.length - 4}</div>
               )}
             </div>
-          ))}
-        </div>
-      </div>
+          </div>
+        </>
+      ) : (
+        <>
+          {/* Photos Section - Full view */}
+          <div className="photos-section-full">
+            <div className="section-header">
+              <div className="section-title-group">
+                <h3>Recent Photos</h3>
+                <span className="photo-count">{recentPhotos.length} photos</span>
+              </div>
+              <button className="view-more-btn" onClick={() => onNavigate('photo-feed')}>
+                View All
+                <Icons.ChevronRight />
+              </button>
+            </div>
+            
+            <div className="photo-preview-grid">
+              {previewPhotos.map((photo, index) => (
+                <div 
+                  key={photo.id} 
+                  className={`preview-thumb ${index === 0 ? 'large' : ''} ${photo.type === 'video' ? 'is-video' : ''}`}
+                  onClick={() => onNavigate('photo-feed')}
+                >
+                  <img src={photo.url} alt={photo.jobTitle || 'Photo'} />
+                  {photo.type === 'video' && (
+                    <div className="video-badge">
+                      <Icons.Play />
+                      <span>{photo.duration}</span>
+                    </div>
+                  )}
+                  {index === 4 && recentPhotos.length > 5 && (
+                    <div className="more-overlay">
+                      <span>+{recentPhotos.length - 5}</span>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Quick peek at jobs when in Photos view */}
+          <div className="jobs-peek-section">
+            <div className="peek-header" onClick={() => setActiveView('jobs')}>
+              <div className="peek-info">
+                <Icons.Briefcase />
+                <span>Today's Jobs</span>
+                <span className="peek-count">35</span>
+              </div>
+              <Icons.ChevronRight />
+            </div>
+            <div className="jobs-peek-stats" onClick={() => setActiveView('jobs')}>
+              <div className="peek-stat">
+                <span className="peek-stat-value">27</span>
+                <span className="peek-stat-label">To Start</span>
+              </div>
+              <div className="peek-stat">
+                <span className="peek-stat-value">4</span>
+                <span className="peek-stat-label">In Progress</span>
+              </div>
+              <div className="peek-stat">
+                <span className="peek-stat-value">0</span>
+                <span className="peek-stat-label">Done</span>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };
