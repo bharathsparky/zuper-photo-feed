@@ -722,11 +722,74 @@
   grid-template-columns: repeat(4, 1fr);
 }
 
-/* Compact Quick Links Section for Home V2 */
-.quick-links-section.compact-section {
-  gap: 8px;
-  margin-bottom: 4px;
+/* Compact Quick Links - Single row horizontal scroll */
+.quick-links-section.compact {
+  margin-bottom: 8px;
 }
+
+.quick-links-section.compact .section-header.compact {
+  margin-bottom: 8px;
+}
+
+.quick-links-row {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 2px 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.quick-links-row::-webkit-scrollbar {
+  display: none;
+}
+
+.quick-link-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: #fff;
+  border: 1px solid #EBEBEB;
+  border-radius: 24px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #333;
+  white-space: nowrap;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.quick-link-chip:hover {
+  background: #F8F8F8;
+  border-color: #DDD;
+}
+
+.quick-link-chip:active {
+  transform: scale(0.97);
+}
+
+.chip-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.chip-icon svg {
+  width: 14px;
+  height: 14px;
+  color: white;
+}
+
+.chip-icon.schedule { background: #007AFF; }
+.chip-icon.tasks { background: #FF9500; }
+.chip-icon.announcement { background: #34C759; }
+.chip-icon.scan { background: #AF52DE; }
 
 .quick-links-scroll {
   display: flex;

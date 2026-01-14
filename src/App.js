@@ -802,35 +802,35 @@ const HomepageWithPhotos = ({ onNavigate, recentPhotos = [] }) => {
         </div>
       </div>
 
-      {/* Quick Links - Without Photo Feed (moved to preview card) */}
-      <div className="quick-links-section">
-        <div className="section-header">
+      {/* Quick Links - Compact horizontal scroll */}
+      <div className="quick-links-section compact">
+        <div className="section-header compact">
           <h3>Quick Links</h3>
           <button className="add-btn">
             <img src={FigmaAssets.imgPlus} alt="Add" className="add-icon-img" />
           </button>
         </div>
-        <div className="quick-links-grid">
-          <button className="quick-link-item">
-            <div className="quick-link-icon schedule">
+        <div className="quick-links-row">
+          <button className="quick-link-chip">
+            <div className="chip-icon schedule">
               <Icons.Schedule />
             </div>
             <span>Schedule</span>
           </button>
-          <button className="quick-link-item">
-            <div className="quick-link-icon tasks">
+          <button className="quick-link-chip">
+            <div className="chip-icon tasks">
               <Icons.Tasks />
             </div>
-            <span>My Tasks (12)</span>
+            <span>Tasks (12)</span>
           </button>
-          <button className="quick-link-item">
-            <div className="quick-link-icon announcement">
+          <button className="quick-link-chip">
+            <div className="chip-icon announcement">
               <Icons.Megaphone />
             </div>
             <span>Announcements</span>
           </button>
-          <button className="quick-link-item">
-            <div className="quick-link-icon scan">
+          <button className="quick-link-chip">
+            <div className="chip-icon scan">
               <Icons.Scan />
             </div>
             <span>Scan</span>
