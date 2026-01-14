@@ -443,242 +443,112 @@
   flex-shrink: 0;
 }
 
-/* Home View Toggle (Jobs/Photos) */
-.home-view-toggle {
-  display: flex;
-  gap: 8px;
+/* Photo Preview Card (Simple navigation card) */
+.photo-preview-card {
   width: 100%;
   max-width: 359px;
-  margin-bottom: 16px;
-}
-
-.view-toggle-btn {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 14px 16px;
   background: #fff;
-  border: 2px solid #E5E7EB;
-  border-radius: 14px;
-  font-size: 14px;
-  font-weight: 600;
-  color: #6B7280;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-}
-
-.view-toggle-btn svg {
-  width: 18px;
-  height: 18px;
-  transition: all 0.25s ease;
-}
-
-.view-toggle-btn .toggle-badge {
-  background: #F3F4F6;
-  padding: 2px 8px;
-  border-radius: 10px;
-  font-size: 12px;
-  font-weight: 600;
-  color: #6B7280;
-  transition: all 0.25s ease;
-}
-
-.view-toggle-btn.active {
-  background: #007AFF;
-  border-color: #007AFF;
-  color: #fff;
-  box-shadow: 0 4px 12px rgba(0, 122, 255, 0.25);
-}
-
-.view-toggle-btn.active svg {
-  color: #fff;
-}
-
-.view-toggle-btn.active .toggle-badge {
-  background: rgba(255, 255, 255, 0.25);
-  color: #fff;
-}
-
-.view-toggle-btn:hover:not(.active) {
-  border-color: #D1D5DB;
-  background: #F9FAFB;
-}
-
-.view-toggle-btn:active {
-  transform: scale(0.98);
-}
-
-/* Photo Peek Section (shown in Jobs view) */
-.photo-peek-section {
-  width: 100%;
-  max-width: 359px;
-  background: linear-gradient(135deg, #F0F7FF 0%, #E8F4FD 100%);
   border-radius: 16px;
-  padding: 14px 16px;
-  margin-top: 8px;
+  padding: 16px;
+  margin-top: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
-  border: 1px solid rgba(0, 122, 255, 0.1);
+  border: 1px solid #E5E7EB;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
-.photo-peek-section:hover {
-  background: linear-gradient(135deg, #E8F4FD 0%, #DBEAFE 100%);
-  border-color: rgba(0, 122, 255, 0.2);
+.photo-preview-card:hover {
+  border-color: #007AFF;
+  box-shadow: 0 4px 16px rgba(0, 122, 255, 0.12);
 }
 
-.photo-peek-section:active {
+.photo-preview-card:active {
   transform: scale(0.99);
 }
 
-.peek-header {
+.preview-card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
-.peek-info {
+.preview-card-title {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
-.peek-info svg {
-  width: 18px;
-  height: 18px;
+.preview-card-title svg {
+  width: 20px;
+  height: 20px;
   color: #007AFF;
 }
 
-.peek-info span {
-  font-size: 14px;
+.preview-card-title span {
+  font-size: 15px;
   font-weight: 600;
   color: #1F2937;
 }
 
-.peek-count {
-  background: #007AFF;
-  color: #fff !important;
-  padding: 2px 8px;
-  border-radius: 10px;
-  font-size: 12px !important;
-  font-weight: 600 !important;
+.preview-card-action {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.peek-header > svg {
+.photo-count-badge {
+  background: #007AFF;
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.preview-card-action svg {
   width: 18px;
   height: 18px;
   color: #007AFF;
 }
 
-.peek-thumbnails {
+.preview-card-strip {
   display: flex;
-  gap: 6px;
+  gap: 8px;
   align-items: center;
 }
 
-.peek-thumb {
-  width: 52px;
-  height: 52px;
+.strip-thumb {
+  width: 60px;
+  height: 60px;
   border-radius: 10px;
   object-fit: cover;
-  border: 2px solid #fff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
 }
 
-.peek-more {
-  width: 52px;
-  height: 52px;
+.strip-more {
+  width: 60px;
+  height: 60px;
   border-radius: 10px;
-  background: rgba(0, 122, 255, 0.15);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-  font-weight: 600;
-  color: #007AFF;
-  border: 2px solid #fff;
-}
-
-/* Jobs Peek Section (shown in Photos view) */
-.jobs-peek-section {
-  width: 100%;
-  max-width: 359px;
-  background: linear-gradient(135deg, #FFF7ED 0%, #FEF3E7 100%);
-  border-radius: 16px;
-  padding: 14px 16px;
-  margin-top: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  border: 1px solid rgba(234, 88, 12, 0.1);
-}
-
-.jobs-peek-section:hover {
-  background: linear-gradient(135deg, #FEF3E7 0%, #FFEDD5 100%);
-  border-color: rgba(234, 88, 12, 0.2);
-}
-
-.jobs-peek-section:active {
-  transform: scale(0.99);
-}
-
-.jobs-peek-section .peek-info svg {
-  color: #EA580C;
-}
-
-.jobs-peek-section .peek-count {
-  background: #EA580C;
-}
-
-.jobs-peek-section .peek-header > svg {
-  color: #EA580C;
-}
-
-.jobs-peek-stats {
-  display: flex;
-  gap: 16px;
-}
-
-.peek-stat {
+  background: linear-gradient(135deg, #EBF5FF 0%, #DBEAFE 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex: 1;
-  padding: 8px;
-  background: rgba(255, 255, 255, 0.6);
-  border-radius: 10px;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
-.peek-stat-value {
-  font-size: 20px;
+.strip-more span:first-child {
+  font-size: 16px;
   font-weight: 700;
-  color: #EA580C;
+  color: #007AFF;
 }
 
-.peek-stat-label {
-  font-size: 11px;
+.strip-more .more-label {
+  font-size: 10px;
   font-weight: 500;
   color: #6B7280;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-/* Photos Section Full View */
-.photos-section-full {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  width: 100%;
-  max-width: 359px;
-}
-
-.photos-section-full .section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 4px;
 }
 
 /* Recent Photos Section (Homepage V2) */
