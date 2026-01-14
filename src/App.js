@@ -838,12 +838,12 @@ const HomepageWithPhotos = ({ onNavigate, recentPhotos = [] }) => {
         </div>
       </div>
 
-      {/* Recent Photos Preview Card - Prominent placement BEFORE Jobs */}
+      {/* Photo Feed Preview Card - Prominent placement BEFORE Jobs */}
       <div className="photo-preview-card prominent" onClick={() => onNavigate('photo-feed')}>
         <div className="preview-card-header">
           <div className="preview-card-title">
             <Icons.Gallery />
-            <span>Recent Photos</span>
+            <span>Photo Feed</span>
           </div>
           <div className="preview-card-action">
             <span className="photo-count-badge">{recentPhotos.length}</span>

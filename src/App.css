@@ -489,12 +489,12 @@
 .preview-card-title svg {
   width: 18px;
   height: 18px;
-  color: #8E8E93;
+  color: #007AFF;
 }
 
 .preview-card-title span {
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   color: #1A1A1A;
   letter-spacing: -0.2px;
 }
@@ -502,22 +502,22 @@
 .preview-card-action {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
 }
 
 .photo-count-badge {
-  background: #F5F5F5;
-  color: #666;
-  padding: 3px 8px;
-  border-radius: 10px;
+  background: #F0F0F0;
+  color: #555;
+  padding: 4px 10px;
+  border-radius: 12px;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .preview-card-action svg {
   width: 16px;
   height: 16px;
-  color: #C7C7CC;
+  color: #999;
 }
 
 .preview-card-strip {
@@ -529,16 +529,17 @@
 .strip-thumb {
   width: 56px;
   height: 56px;
-  border-radius: 8px;
+  border-radius: 10px;
   object-fit: cover;
   flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .strip-more {
   width: 56px;
   height: 56px;
-  border-radius: 8px;
-  background: #F8F8F8;
+  border-radius: 10px;
+  background: #F5F5F5;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -549,13 +550,13 @@
 .strip-more span:first-child {
   font-size: 14px;
   font-weight: 600;
-  color: #666;
+  color: #333;
 }
 
 .strip-more .more-label {
   font-size: 9px;
   font-weight: 500;
-  color: #999;
+  color: #888;
   text-transform: uppercase;
   letter-spacing: 0.3px;
 }
