@@ -443,46 +443,30 @@
   flex-shrink: 0;
 }
 
-/* Photo Preview Card (Simple navigation card) */
+/* Photo Preview Card (Modern minimal style) */
 .photo-preview-card {
   width: 100%;
   max-width: 359px;
   background: #fff;
-  border-radius: 16px;
-  padding: 16px;
+  border-radius: 14px;
+  padding: 14px;
   margin-top: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
-  border: 1px solid #E5E7EB;
+  border: 1px solid #F0F0F0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
-/* Prominent style for better visibility */
 .photo-preview-card.prominent {
-  background: linear-gradient(135deg, #F0F7FF 0%, #E8F4FD 100%);
-  border: 2px solid rgba(0, 122, 255, 0.2);
-  box-shadow: 0 4px 16px rgba(0, 122, 255, 0.1);
+  background: #fff;
+  border: 1px solid #EAEAEA;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   margin-bottom: 4px;
 }
 
-.photo-preview-card.prominent .preview-card-title svg {
-  color: #007AFF;
-}
-
-.photo-preview-card.prominent .preview-card-title span {
-  color: #1A56DB;
-  font-weight: 600;
-}
-
 .photo-preview-card:hover {
-  border-color: #007AFF;
-  box-shadow: 0 4px 16px rgba(0, 122, 255, 0.12);
-}
-
-.photo-preview-card.prominent:hover {
-  background: linear-gradient(135deg, #E8F4FD 0%, #DBEAFE 100%);
-  border-color: #007AFF;
-  box-shadow: 0 6px 20px rgba(0, 122, 255, 0.18);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-color: #E0E0E0;
 }
 
 .photo-preview-card:active {
@@ -493,67 +477,68 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 
 .preview-card-title {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .preview-card-title svg {
-  width: 20px;
-  height: 20px;
-  color: #007AFF;
+  width: 18px;
+  height: 18px;
+  color: #8E8E93;
 }
 
 .preview-card-title span {
-  font-size: 15px;
-  font-weight: 600;
-  color: #1F2937;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1A1A1A;
+  letter-spacing: -0.2px;
 }
 
 .preview-card-action {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
 }
 
 .photo-count-badge {
-  background: #007AFF;
-  color: #fff;
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-size: 13px;
-  font-weight: 600;
+  background: #F5F5F5;
+  color: #666;
+  padding: 3px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 500;
 }
 
 .preview-card-action svg {
-  width: 18px;
-  height: 18px;
-  color: #007AFF;
+  width: 16px;
+  height: 16px;
+  color: #C7C7CC;
 }
 
 .preview-card-strip {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   align-items: center;
 }
 
 .strip-thumb {
-  width: 60px;
-  height: 60px;
-  border-radius: 10px;
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
   object-fit: cover;
   flex-shrink: 0;
 }
 
 .strip-more {
-  width: 60px;
-  height: 60px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #EBF5FF 0%, #DBEAFE 100%);
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  background: #F8F8F8;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -562,16 +547,17 @@
 }
 
 .strip-more span:first-child {
-  font-size: 16px;
-  font-weight: 700;
-  color: #007AFF;
+  font-size: 14px;
+  font-weight: 600;
+  color: #666;
 }
 
 .strip-more .more-label {
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 500;
-  color: #6B7280;
+  color: #999;
   text-transform: uppercase;
+  letter-spacing: 0.3px;
 }
 
 /* Recent Photos Section (Homepage V2) */
