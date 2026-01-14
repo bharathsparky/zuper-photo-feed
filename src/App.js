@@ -33,6 +33,11 @@ const Icons = {
       <line x1="6" y1="6" x2="18" y2="18" />
     </svg>
   ),
+  ChevronRight: () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="9 18 15 12 9 6" />
+    </svg>
+  ),
   Play: () => (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
       <polygon points="5 3 19 12 5 21 5 3" />
@@ -744,6 +749,168 @@ const Homepage = ({ onNavigate }) => {
               </div>
               <span>Genese Street, 46th Avenue, SW, Seattle</span>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Homepage V2 - With Photo Preview Section
+const HomepageWithPhotos = ({ onNavigate, recentPhotos = [] }) => {
+  // Take first 5 photos for preview
+  const previewPhotos = recentPhotos.slice(0, 5);
+  
+  return (
+    <div className="home-screen">
+      {/* Header */}
+      <div className="home-header">
+        <div className="header-left">
+          <img src={FigmaAssets.imgMenu2} alt="Menu" className="header-icon" />
+          <img src={FigmaAssets.imgImage1} alt="IKEA" className="company-logo-img" />
+        </div>
+        <div className="header-center"></div>
+        <div className="header-actions">
+          <img src={FigmaAssets.imgSearch} alt="Search" className="header-icon" />
+          <img src={FigmaAssets.imgMessage} alt="Message" className="header-icon" />
+          <img src={FigmaAssets.imgBell} alt="Bell" className="header-icon" />
+        </div>
+      </div>
+      <div className="header-separator"></div>
+
+      {/* User Greeting Card */}
+      <div className="greeting-card">
+        <div className="greeting-top">
+          <div className="greeting-content">
+            <h2>Hello, Henry Jones! 👋</h2>
+            <p className="date-text">Friday, January 6th 2022</p>
+          </div>
+          <div className="user-avatar">
+            <img src={FigmaAssets.img5} alt="User" />
+          </div>
+        </div>
+        <div className="greeting-separator"></div>
+        <div className="work-hours-section">
+          <div className="work-hours-info">
+            <span className="work-label">Work hours</span>
+            <span className="work-time">10:00 am to 5:00 pm</span>
+          </div>
+          <button className="start-btn">
+            <img src={FigmaAssets.img6} alt="Play" className="play-icon-img" />
+            <span>Start</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Recent Photos Section */}
+      <div className="recent-photos-section">
+        <div className="section-header">
+          <div className="section-title-group">
+            <h3>Recent Photos</h3>
+            <span className="photo-count">{recentPhotos.length} photos</span>
+          </div>
+          <button className="view-more-btn" onClick={() => onNavigate('photo-feed')}>
+            View All
+            <Icons.ChevronRight />
+          </button>
+        </div>
+        
+        <div className="photo-preview-grid">
+          {previewPhotos.map((photo, index) => (
+            <div 
+              key={photo.id} 
+              className={`preview-thumb ${index === 0 ? 'large' : ''} ${photo.type === 'video' ? 'is-video' : ''}`}
+              onClick={() => onNavigate('photo-feed')}
+            >
+              <img src={photo.url} alt={photo.jobTitle || 'Photo'} />
+              {photo.type === 'video' && (
+                <div className="video-badge">
+                  <Icons.Play />
+                  <span>{photo.duration}</span>
+                </div>
+              )}
+              {index === 4 && recentPhotos.length > 5 && (
+                <div className="more-overlay">
+                  <span>+{recentPhotos.length - 5}</span>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Quick Links - Without Photo Feed */}
+      <div className="quick-links-section">
+        <div className="section-header">
+          <h3>Quick Links</h3>
+          <button className="add-btn">
+            <img src={FigmaAssets.imgPlus} alt="Add" className="add-icon-img" />
+          </button>
+        </div>
+        <div className="quick-links-grid compact">
+          <button className="quick-link-item">
+            <div className="quick-link-icon schedule">
+              <Icons.Schedule />
+            </div>
+            <span>Schedule</span>
+          </button>
+          <button className="quick-link-item">
+            <div className="quick-link-icon tasks">
+              <Icons.Tasks />
+            </div>
+            <span>My Tasks (12)</span>
+          </button>
+          <button className="quick-link-item">
+            <div className="quick-link-icon announcement">
+              <Icons.Megaphone />
+            </div>
+            <span>Announcements</span>
+          </button>
+          <button className="quick-link-item">
+            <div className="quick-link-icon scan">
+              <Icons.Scan />
+            </div>
+            <span>Scan</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Jobs Section */}
+      <div className="jobs-section">
+        <div className="jobs-header">
+          <h3>Jobs (35)</h3>
+          <div className="jobs-nav">
+            <button className="map-icon-btn">
+              <img src={FigmaAssets.imgMap2} alt="Map" className="map-icon-img" />
+            </button>
+            <div className="date-nav">
+              <button>
+                <img src={FigmaAssets.imgChevronLeft} alt="Previous" className="chevron-icon" />
+              </button>
+              <span>Today</span>
+              <button className="chevron-right">
+                <img src={FigmaAssets.imgChevronLeft} alt="Next" className="chevron-icon" />
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div className="stats-grid">
+          <div className="stat-card total-jobs">
+            <span className="stat-label">Total jobs</span>
+            <span className="stat-value">35</span>
+          </div>
+          <div className="stat-card yet-to-start">
+            <span className="stat-label">Yet to start</span>
+            <span className="stat-value">27</span>
+          </div>
+          <div className="stat-card in-progress">
+            <span className="stat-label">In Progress</span>
+            <span className="stat-value">4</span>
+          </div>
+          <div className="stat-card completed">
+            <span className="stat-label">Completed</span>
+            <span className="stat-value">0</span>
           </div>
         </div>
       </div>
@@ -2249,6 +2416,7 @@ function App() {
 
   const screens = [
     { id: 'home', label: 'Home' },
+    { id: 'home-v2', label: 'Home V2' },
     { id: 'feed', label: 'Photo Feed' },
     { id: 'job-view', label: 'Job View' },
     { id: 'filter', label: 'Filter Sheet' },
@@ -2267,6 +2435,13 @@ function App() {
       case 'home':
         return (
           <Homepage onNavigate={() => setCurrentScreen('feed')} />
+        );
+      case 'home-v2':
+        return (
+          <HomepageWithPhotos 
+            onNavigate={() => setCurrentScreen('feed')} 
+            recentPhotos={samplePhotos}
+          />
         );
       case 'feed':
         return (
