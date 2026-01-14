@@ -604,6 +604,58 @@
   grid-template-columns: repeat(4, 1fr);
 }
 
+/* Compact Quick Links Section for Home V2 */
+.quick-links-section.compact-section {
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.quick-links-scroll {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.quick-links-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.quick-link-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: #fff;
+  border: 1px solid #E5E7EB;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.quick-link-chip:hover {
+  background: #F9FAFB;
+  border-color: #D1D5DB;
+}
+
+.quick-link-chip:active {
+  transform: scale(0.97);
+  background: #F3F4F6;
+}
+
+.quick-link-chip svg {
+  width: 16px;
+  height: 16px;
+  color: #6B7280;
+}
+
 .section-header {
   display: flex;
   justify-content: space-between;

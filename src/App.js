@@ -802,80 +802,35 @@ const HomepageWithPhotos = ({ onNavigate, recentPhotos = [] }) => {
         </div>
       </div>
 
-      {/* Recent Photos Section */}
-      <div className="recent-photos-section">
-        <div className="section-header">
-          <div className="section-title-group">
-            <h3>Recent Photos</h3>
-            <span className="photo-count">{recentPhotos.length} photos</span>
-          </div>
-          <button className="view-more-btn" onClick={() => onNavigate('photo-feed')}>
-            View All
-            <Icons.ChevronRight />
-          </button>
-        </div>
-        
-        <div className="photo-preview-grid">
-          {previewPhotos.map((photo, index) => (
-            <div 
-              key={photo.id} 
-              className={`preview-thumb ${index === 0 ? 'large' : ''} ${photo.type === 'video' ? 'is-video' : ''}`}
-              onClick={() => onNavigate('photo-feed')}
-            >
-              <img src={photo.url} alt={photo.jobTitle || 'Photo'} />
-              {photo.type === 'video' && (
-                <div className="video-badge">
-                  <Icons.Play />
-                  <span>{photo.duration}</span>
-                </div>
-              )}
-              {index === 4 && recentPhotos.length > 5 && (
-                <div className="more-overlay">
-                  <span>+{recentPhotos.length - 5}</span>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Quick Links - Without Photo Feed */}
-      <div className="quick-links-section">
+      {/* Quick Links - Horizontal scroll */}
+      <div className="quick-links-section compact-section">
         <div className="section-header">
           <h3>Quick Links</h3>
           <button className="add-btn">
             <img src={FigmaAssets.imgPlus} alt="Add" className="add-icon-img" />
           </button>
         </div>
-        <div className="quick-links-grid compact">
-          <button className="quick-link-item">
-            <div className="quick-link-icon schedule">
-              <Icons.Schedule />
-            </div>
+        <div className="quick-links-scroll">
+          <button className="quick-link-chip">
+            <Icons.Schedule />
             <span>Schedule</span>
           </button>
-          <button className="quick-link-item">
-            <div className="quick-link-icon tasks">
-              <Icons.Tasks />
-            </div>
+          <button className="quick-link-chip">
+            <Icons.Tasks />
             <span>My Tasks (12)</span>
           </button>
-          <button className="quick-link-item">
-            <div className="quick-link-icon announcement">
-              <Icons.Megaphone />
-            </div>
+          <button className="quick-link-chip">
+            <Icons.Megaphone />
             <span>Announcements</span>
           </button>
-          <button className="quick-link-item">
-            <div className="quick-link-icon scan">
-              <Icons.Scan />
-            </div>
+          <button className="quick-link-chip">
+            <Icons.Scan />
             <span>Scan</span>
           </button>
         </div>
       </div>
 
-      {/* Jobs Section */}
+      {/* Jobs Section - First Priority */}
       <div className="jobs-section">
         <div className="jobs-header">
           <h3>Jobs (35)</h3>
@@ -912,6 +867,43 @@ const HomepageWithPhotos = ({ onNavigate, recentPhotos = [] }) => {
             <span className="stat-label">Completed</span>
             <span className="stat-value">0</span>
           </div>
+        </div>
+      </div>
+
+      {/* Recent Photos Section - Below Jobs */}
+      <div className="recent-photos-section">
+        <div className="section-header">
+          <div className="section-title-group">
+            <h3>Recent Photos</h3>
+            <span className="photo-count">{recentPhotos.length} photos</span>
+          </div>
+          <button className="view-more-btn" onClick={() => onNavigate('photo-feed')}>
+            View All
+            <Icons.ChevronRight />
+          </button>
+        </div>
+        
+        <div className="photo-preview-grid">
+          {previewPhotos.map((photo, index) => (
+            <div 
+              key={photo.id} 
+              className={`preview-thumb ${index === 0 ? 'large' : ''} ${photo.type === 'video' ? 'is-video' : ''}`}
+              onClick={() => onNavigate('photo-feed')}
+            >
+              <img src={photo.url} alt={photo.jobTitle || 'Photo'} />
+              {photo.type === 'video' && (
+                <div className="video-badge">
+                  <Icons.Play />
+                  <span>{photo.duration}</span>
+                </div>
+              )}
+              {index === 4 && recentPhotos.length > 5 && (
+                <div className="more-overlay">
+                  <span>+{recentPhotos.length - 5}</span>
+                </div>
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </div>
