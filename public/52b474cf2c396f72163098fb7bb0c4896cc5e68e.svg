@@ -1,0 +1,9 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group">
+<g id="Path">
+</g>
+<path id="Path_2" d="M7 18C4.40175 18 2.29545 15.9853 2.29545 13.5C2.29545 11.0147 4.40175 9 7 9C7.39696 7.23154 8.81206 5.78801 10.7123 5.21317C12.6124 4.63834 14.709 5.01954 16.2123 6.21317C17.7155 7.40681 18.397 9.23154 18 11H19C20.933 11 22.5 12.567 22.5 14.5C22.5 16.433 20.933 18 19 18H7" stroke="var(--stroke-0, #E44A19)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Path_3" d="M12.5 9V12" stroke="var(--stroke-0, #E44A19)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Path_4" d="M12.5 14.9999H12.51" stroke="var(--stroke-0, #E44A19)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</svg>
