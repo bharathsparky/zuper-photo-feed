@@ -802,29 +802,37 @@ const HomepageWithPhotos = ({ onNavigate, recentPhotos = [] }) => {
         </div>
       </div>
 
-      {/* Quick Links - Horizontal scroll */}
-      <div className="quick-links-section compact-section">
+      {/* Quick Links - Same colorful style as main homepage */}
+      <div className="quick-links-section">
         <div className="section-header">
           <h3>Quick Links</h3>
           <button className="add-btn">
             <img src={FigmaAssets.imgPlus} alt="Add" className="add-icon-img" />
           </button>
         </div>
-        <div className="quick-links-scroll">
-          <button className="quick-link-chip">
-            <Icons.Schedule />
+        <div className="quick-links-grid">
+          <button className="quick-link-item">
+            <div className="quick-link-icon schedule">
+              <Icons.Schedule />
+            </div>
             <span>Schedule</span>
           </button>
-          <button className="quick-link-chip">
-            <Icons.Tasks />
+          <button className="quick-link-item">
+            <div className="quick-link-icon tasks">
+              <Icons.Tasks />
+            </div>
             <span>My Tasks (12)</span>
           </button>
-          <button className="quick-link-chip">
-            <Icons.Megaphone />
+          <button className="quick-link-item">
+            <div className="quick-link-icon announcement">
+              <Icons.Megaphone />
+            </div>
             <span>Announcements</span>
           </button>
-          <button className="quick-link-chip">
-            <Icons.Scan />
+          <button className="quick-link-item">
+            <div className="quick-link-icon scan">
+              <Icons.Scan />
+            </div>
             <span>Scan</span>
           </button>
         </div>
@@ -866,6 +874,39 @@ const HomepageWithPhotos = ({ onNavigate, recentPhotos = [] }) => {
           <div className="stat-card completed">
             <span className="stat-label">Completed</span>
             <span className="stat-value">0</span>
+          </div>
+        </div>
+
+        {/* Job Card - Details */}
+        <div className="job-card">
+          <div className="job-card-header">
+            <div className="job-number">
+              <img src={FigmaAssets.imgRepeat} alt="Repeat" className="repeat-icon-img" />
+              #2022 - 1429
+            </div>
+            <span className="job-status new">New</span>
+          </div>
+          <h4 className="job-title">46th Avenue Genese St - Interior Design</h4>
+          <p className="job-time">Today, 10:30 - 11:00 AM</p>
+          <div className="job-details">
+            <div className="job-detail">
+              <div className="job-badge-icon">
+                <img src={FigmaAssets.img3} alt="User" />
+              </div>
+              <span>Richard Mathew (Vodafone Idea)</span>
+            </div>
+            <div className="job-detail">
+              <div className="job-badge-icon">
+                <img src={FigmaAssets.img} alt="Briefcase" />
+              </div>
+              <span>Renovation</span>
+            </div>
+            <div className="job-detail">
+              <div className="job-badge-icon">
+                <img src={FigmaAssets.img1} alt="Location" />
+              </div>
+              <span>Genese Street, 46th Avenue, SW, Seattle</span>
+            </div>
           </div>
         </div>
       </div>
