@@ -771,9 +771,9 @@
 }
 
 .chip-icon {
-  width: 24px;
-  height: 24px;
-  border-radius: 6px;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -781,15 +781,17 @@
 }
 
 .chip-icon svg {
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   color: white;
+  stroke: white;
 }
 
-.chip-icon.schedule { background: #007AFF; }
-.chip-icon.tasks { background: #FF9500; }
-.chip-icon.announcement { background: #34C759; }
-.chip-icon.scan { background: #AF52DE; }
+/* Match main homepage icon colors */
+.chip-icon.schedule { background: #6d95ff; }
+.chip-icon.tasks { background: #fc955f; }
+.chip-icon.announcement { background: #75c498; }
+.chip-icon.scan { background: #b893ff; }
 
 .quick-links-scroll {
   display: flex;
