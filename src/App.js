@@ -4,6 +4,48 @@ import * as FigmaAssets from './figmaAssets';
 
 // Icons Component
 const Icons = {
+  // Grid size toggle icons
+  Grid2: () => (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+      <rect x="2" y="2" width="7" height="7" rx="1.5" />
+      <rect x="11" y="2" width="7" height="7" rx="1.5" />
+      <rect x="2" y="11" width="7" height="7" rx="1.5" />
+      <rect x="11" y="11" width="7" height="7" rx="1.5" />
+    </svg>
+  ),
+  Grid3: () => (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+      <rect x="1" y="1" width="5" height="5" rx="1" />
+      <rect x="7.5" y="1" width="5" height="5" rx="1" />
+      <rect x="14" y="1" width="5" height="5" rx="1" />
+      <rect x="1" y="7.5" width="5" height="5" rx="1" />
+      <rect x="7.5" y="7.5" width="5" height="5" rx="1" />
+      <rect x="14" y="7.5" width="5" height="5" rx="1" />
+      <rect x="1" y="14" width="5" height="5" rx="1" />
+      <rect x="7.5" y="14" width="5" height="5" rx="1" />
+      <rect x="14" y="14" width="5" height="5" rx="1" />
+    </svg>
+  ),
+  Grid4: () => (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+      <rect x="1" y="1" width="3.5" height="3.5" rx="0.75" />
+      <rect x="5.5" y="1" width="3.5" height="3.5" rx="0.75" />
+      <rect x="10" y="1" width="3.5" height="3.5" rx="0.75" />
+      <rect x="14.5" y="1" width="3.5" height="3.5" rx="0.75" />
+      <rect x="1" y="5.5" width="3.5" height="3.5" rx="0.75" />
+      <rect x="5.5" y="5.5" width="3.5" height="3.5" rx="0.75" />
+      <rect x="10" y="5.5" width="3.5" height="3.5" rx="0.75" />
+      <rect x="14.5" y="5.5" width="3.5" height="3.5" rx="0.75" />
+      <rect x="1" y="10" width="3.5" height="3.5" rx="0.75" />
+      <rect x="5.5" y="10" width="3.5" height="3.5" rx="0.75" />
+      <rect x="10" y="10" width="3.5" height="3.5" rx="0.75" />
+      <rect x="14.5" y="10" width="3.5" height="3.5" rx="0.75" />
+      <rect x="1" y="14.5" width="3.5" height="3.5" rx="0.75" />
+      <rect x="5.5" y="14.5" width="3.5" height="3.5" rx="0.75" />
+      <rect x="10" y="14.5" width="3.5" height="3.5" rx="0.75" />
+      <rect x="14.5" y="14.5" width="3.5" height="3.5" rx="0.75" />
+    </svg>
+  ),
   Menu: () => (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
       <line x1="3" y1="6" x2="21" y2="6" />
@@ -233,6 +275,16 @@ const Icons = {
       <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
     </svg>
   ),
+  Heart: () => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+    </svg>
+  ),
+  HeartFilled: () => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="#E44A19" stroke="#E44A19" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+    </svg>
+  ),
   Wifi: () => (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
       <path d="M5 12.55a11 11 0 0 1 14.08 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none"/>
@@ -444,6 +496,18 @@ const samplePhotos = [
   { id: 13, type: 'image', url: 'https://images.unsplash.com/photo-1558036117-15d82a90b9b1?w=400&h=400&fit=crop', job: '#2024-1441', jobTitle: 'General Roof Inspection', customer: null, company: null, uploadedBy: 'Henry Jones', date: getDateString(45), tags: [], description: '' },
   // Edge case: Job deleted (simulated)
   { id: 16, type: 'image', url: 'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=400&h=400&fit=crop', job: null, jobTitle: null, jobDeleted: true, customer: 'Previous Customer', company: 'Old Company', uploadedBy: 'Henry Jones', date: getDateString(60), tags: ['Archive'], description: 'Historical photo - job removed' },
+  
+  // Additional jobs for more map pins
+  { id: 17, type: 'image', url: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=400&h=400&fit=crop', job: '#2024-1442', jobTitle: 'Lakeside Dr - New Construction', customer: 'Amanda Foster', address: '123 Lakeside Dr, Kirkland, WA', company: 'Foster Developments', uploadedBy: 'Henry Jones', date: getDateString(0), tags: ['New Build', 'Installation'], description: 'New construction roof installation' },
+  { id: 18, type: 'image', url: 'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=400&h=400&fit=crop', job: '#2024-1443', jobTitle: 'Highland Ave - Emergency Repair', customer: 'Steven Clark', address: '456 Highland Ave, Tacoma, WA', company: 'Clark Industries', uploadedBy: 'Mike Wilson', date: getDateString(0), tags: ['Emergency', 'Leak'], description: 'Emergency leak repair' },
+  { id: 19, type: 'video', url: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&h=400&fit=crop', duration: '0:55', job: '#2024-1444', jobTitle: 'Westview Rd - Solar Panel Prep', customer: 'Nancy Martinez', address: '789 Westview Rd, Redmond, WA', company: 'Martinez Solar', uploadedBy: 'Tom Anderson', date: getDateString(1), tags: ['Solar', 'Preparation'], description: 'Roof prep for solar installation' },
+  { id: 20, type: 'image', url: 'https://images.unsplash.com/photo-1605146769289-440113cc3d00?w=400&h=400&fit=crop', job: '#2024-1445', jobTitle: 'Birch Street - Ventilation Install', customer: 'Daniel Robinson', address: '321 Birch St, Renton, WA', company: 'Robinson Home Services', uploadedBy: 'Henry Jones', date: getDateString(1), tags: ['Ventilation', 'Attic'], description: 'Attic ventilation installation' },
+  { id: 21, type: 'image', url: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=400&h=400&fit=crop', job: '#2024-1446', jobTitle: 'Northgate Mall - Commercial Flat', customer: 'Northgate Properties', address: '401 Northgate Way, Seattle, WA', company: 'Northgate Mall LLC', uploadedBy: 'Mike Wilson', date: getDateString(2), tags: ['Commercial', 'Flat Roof'], description: 'Commercial flat roof maintenance' },
+  { id: 22, type: 'video', url: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=400&h=400&fit=crop', duration: '1:15', job: '#2024-1447', jobTitle: 'Downtown Tower - High Rise', customer: 'Metro Tower Inc', address: '1000 1st Ave, Seattle, WA', company: 'Metro Tower Management', uploadedBy: 'Tom Anderson', date: getDateString(2), tags: ['High Rise', 'Inspection'], description: 'High rise roof inspection' },
+  { id: 23, type: 'image', url: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=400&h=400&fit=crop', job: '#2024-1448', jobTitle: 'Ballard Market - Waterproofing', customer: 'Ballard Market Co', address: '2200 NW Market St, Seattle, WA', company: 'Ballard Market LLC', uploadedBy: 'Henry Jones', date: getDateString(3), tags: ['Waterproofing', 'Commercial'], description: 'Waterproof membrane application' },
+  { id: 24, type: 'image', url: 'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=400&h=400&fit=crop', job: '#2024-1449', jobTitle: 'Queen Anne - Historic Restoration', customer: 'Historic Seattle', address: '500 Queen Anne Ave N, Seattle, WA', company: 'Historic Preservation Society', uploadedBy: 'Mike Wilson', date: getDateString(3), tags: ['Historic', 'Restoration'], description: 'Historic building roof restoration' },
+  { id: 25, type: 'image', url: 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=400&h=400&fit=crop', job: '#2024-1450', jobTitle: 'Fremont Bridge Area - Apartment Complex', customer: 'Fremont Apartments', address: '3500 Fremont Ave N, Seattle, WA', company: 'Fremont Living', uploadedBy: 'Tom Anderson', date: getDateString(4), tags: ['Multi-family', 'Inspection'], description: 'Apartment complex roof survey' },
+  { id: 26, type: 'video', url: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=400&h=400&fit=crop', duration: '2:00', job: '#2024-1451', jobTitle: 'Capitol Hill - Condo Repair', customer: 'Capitol Hill Condos', address: '1500 Broadway, Seattle, WA', company: 'Capitol Hill HOA', uploadedBy: 'Henry Jones', date: getDateString(5), tags: ['Condo', 'Repair'], description: 'Condo roof repair walkthrough' },
 ];
 
 // Sample customers for filter
@@ -630,7 +694,7 @@ const Homepage = ({ onNavigate }) => {
       <div className="greeting-card">
         <div className="greeting-top">
           <div className="greeting-content">
-            <h2>Hello, Henry Jones! 👋</h2>
+            <h2>Hello, Henry Jones!</h2>
             <p className="date-text">Friday, January 6th 2022</p>
           </div>
           <div className="user-avatar">
@@ -768,223 +832,105 @@ const Homepage = ({ onNavigate }) => {
   );
 };
 
-// Homepage V2 - With Photo Preview Section
-const HomepageWithPhotos = ({ onNavigate, recentPhotos = [] }) => {
-  // Take first 4 photos for preview strip
-  const previewPhotos = recentPhotos.slice(0, 4);
-  
-  return (
-    <div className="home-screen">
-      {/* Header */}
-      <div className="home-header">
-        <div className="header-left">
-          <img src={FigmaAssets.imgMenu2} alt="Menu" className="header-icon" />
-          <img src={FigmaAssets.imgImage1} alt="IKEA" className="company-logo-img" />
-        </div>
-        <div className="header-center"></div>
-        <div className="header-actions">
-          <img src={FigmaAssets.imgSearch} alt="Search" className="header-icon" />
-          <img src={FigmaAssets.imgMessage} alt="Message" className="header-icon" />
-          <img src={FigmaAssets.imgBell} alt="Bell" className="header-icon" />
-        </div>
-      </div>
-      <div className="header-separator"></div>
-
-      {/* User Greeting Card */}
-      <div className="greeting-card">
-        <div className="greeting-top">
-          <div className="greeting-content">
-            <h2>Hello, Henry Jones! 👋</h2>
-            <p className="date-text">Friday, January 6th 2022</p>
-          </div>
-          <div className="user-avatar">
-            <img src={FigmaAssets.img5} alt="User" />
-          </div>
-        </div>
-        <div className="greeting-separator"></div>
-        <div className="work-hours-section">
-          <div className="work-hours-info">
-            <span className="work-label">Work hours</span>
-            <span className="work-time">10:00 am to 5:00 pm</span>
-          </div>
-          <button className="start-btn">
-            <img src={FigmaAssets.img6} alt="Play" className="play-icon-img" />
-            <span>Start</span>
-          </button>
-        </div>
-      </div>
-
-      {/* Quick Links - Compact horizontal scroll */}
-      <div className="quick-links-section compact">
-        <div className="section-header compact">
-          <h3>Quick Links</h3>
-          <button className="add-btn">
-            <img src={FigmaAssets.imgPlus} alt="Add" className="add-icon-img" />
-          </button>
-        </div>
-        <div className="quick-links-row">
-          <button className="quick-link-chip">
-            <div className="chip-icon schedule">
-              <Icons.Schedule />
-            </div>
-            <span>Schedule</span>
-          </button>
-          <button className="quick-link-chip">
-            <div className="chip-icon tasks">
-              <Icons.Tasks />
-            </div>
-            <span>Tasks (12)</span>
-          </button>
-          <button className="quick-link-chip">
-            <div className="chip-icon announcement">
-              <Icons.Megaphone />
-            </div>
-            <span>Announcements</span>
-          </button>
-          <button className="quick-link-chip">
-            <div className="chip-icon scan">
-              <Icons.Scan />
-            </div>
-            <span>Scan</span>
-          </button>
-        </div>
-      </div>
-
-      {/* Photo Feed Preview Card - Prominent placement BEFORE Jobs */}
-      <div className="photo-preview-card prominent" onClick={() => onNavigate('photo-feed')}>
-        <div className="preview-card-header">
-          <div className="preview-card-title">
-            <Icons.Gallery />
-            <span>Photo Feed</span>
-          </div>
-          <div className="preview-card-action">
-            <span className="photo-count-badge">{recentPhotos.length}</span>
-            <Icons.ChevronRight />
-          </div>
-        </div>
-        <div className="preview-card-strip">
-          {previewPhotos.map((photo) => (
-            <img key={photo.id} src={photo.url} alt="" className="strip-thumb" />
-          ))}
-          {recentPhotos.length > 4 && (
-            <div className="strip-more">
-              <span>+{recentPhotos.length - 4}</span>
-              <span className="more-label">more</span>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Jobs Section */}
-      <div className="jobs-section">
-        <div className="jobs-header">
-          <h3>Jobs (35)</h3>
-          <div className="jobs-nav">
-            <button className="map-icon-btn">
-              <img src={FigmaAssets.imgMap2} alt="Map" className="map-icon-img" />
-            </button>
-            <div className="date-nav">
-              <button>
-                <img src={FigmaAssets.imgChevronLeft} alt="Previous" className="chevron-icon" />
-              </button>
-              <span>Today</span>
-              <button className="chevron-right">
-                <img src={FigmaAssets.imgChevronLeft} alt="Next" className="chevron-icon" />
-              </button>
-            </div>
-          </div>
-        </div>
-        
-        <div className="stats-grid">
-          <div className="stat-card total-jobs">
-            <span className="stat-label">Total jobs</span>
-            <span className="stat-value">35</span>
-          </div>
-          <div className="stat-card yet-to-start">
-            <span className="stat-label">Yet to start</span>
-            <span className="stat-value">27</span>
-          </div>
-          <div className="stat-card in-progress">
-            <span className="stat-label">In Progress</span>
-            <span className="stat-value">4</span>
-          </div>
-          <div className="stat-card completed">
-            <span className="stat-label">Completed</span>
-            <span className="stat-value">0</span>
-          </div>
-        </div>
-
-        {/* Job Card - Details */}
-        <div className="job-card">
-          <div className="job-card-header">
-            <div className="job-number">
-              <img src={FigmaAssets.imgRepeat} alt="Repeat" className="repeat-icon-img" />
-              #2022 - 1429
-            </div>
-            <span className="job-status new">New</span>
-          </div>
-          <h4 className="job-title">46th Avenue Genese St - Interior Design</h4>
-          <p className="job-time">Today, 10:30 - 11:00 AM</p>
-          <div className="job-details">
-            <div className="job-detail">
-              <div className="job-badge-icon">
-                <img src={FigmaAssets.img3} alt="User" />
-              </div>
-              <span>Richard Mathew (Vodafone Idea)</span>
-            </div>
-            <div className="job-detail">
-              <div className="job-badge-icon">
-                <img src={FigmaAssets.img} alt="Briefcase" />
-              </div>
-              <span>Renovation</span>
-            </div>
-            <div className="job-detail">
-              <div className="job-badge-icon">
-                <img src={FigmaAssets.img1} alt="Location" />
-              </div>
-              <span>Genese Street, 46th Avenue, SW, Seattle</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// Map View Component
+// Map View Component - Enhanced with Tech Delighters
 const MapView = ({ jobs, onJobClick, onPhotoClick }) => {
   const [selectedJob, setSelectedJob] = useState(null);
   const [sheetState, setSheetState] = useState('collapsed'); // collapsed, half, full
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
+  const [statusFilter, setStatusFilter] = useState('all'); // all, today, urgent, new, in-progress
+  const [showRouteOptimizer, setShowRouteOptimizer] = useState(false);
 
-  // Sample job locations with addresses
+  // Job statuses for visual differentiation
+  const jobStatuses = ['new', 'in-progress', 'scheduled', 'urgent'];
+  const distances = ['0.3 mi', '0.8 mi', '1.2 mi', '2.1 mi', '3.5 mi'];
+  const driveTimes = ['2 min', '5 min', '8 min', '12 min', '18 min'];
+
+  // Sample job locations with enhanced data - spread across the map for visibility
+  const pinPositions = [
+    { lat: 47.62, lng: -122.35, area: 'Downtown' },
+    { lat: 47.58, lng: -122.30, area: 'Capitol Hill' },
+    { lat: 47.65, lng: -122.38, area: 'Ballard' },
+    { lat: 47.55, lng: -122.35, area: 'Fremont' },
+    { lat: 47.60, lng: -122.28, area: 'Queen Anne' },
+    { lat: 47.63, lng: -122.32, area: 'Northgate' },
+    { lat: 47.57, lng: -122.40, area: 'West Seattle' },
+    { lat: 47.68, lng: -122.34, area: 'Shoreline' },
+    { lat: 47.52, lng: -122.29, area: 'Renton' },
+    { lat: 47.61, lng: -122.42, area: 'Magnolia' },
+    { lat: 47.66, lng: -122.30, area: 'University' },
+    { lat: 47.54, lng: -122.38, area: 'Burien' },
+    { lat: 47.59, lng: -122.33, area: 'Beacon Hill' },
+    { lat: 47.64, lng: -122.36, area: 'Greenwood' },
+    { lat: 47.56, lng: -122.32, area: 'Columbia City' },
+    { lat: 47.67, lng: -122.39, area: 'Bitter Lake' },
+    { lat: 47.53, lng: -122.34, area: 'Tukwila' },
+    { lat: 47.60, lng: -122.37, area: 'Interbay' },
+    { lat: 47.58, lng: -122.28, area: 'Leschi' },
+    { lat: 47.62, lng: -122.40, area: 'Sunset Hill' },
+  ];
+  
   const jobLocations = jobs.map((job, index) => ({
     ...job,
-    lat: 47.6062 + (Math.random() - 0.5) * 0.1,
-    lng: -122.3321 + (Math.random() - 0.5) * 0.1,
-    area: ['Downtown', 'Capitol Hill', 'Ballard', 'Fremont', 'Queen Anne'][index % 5],
+    lat: pinPositions[index % pinPositions.length].lat + (Math.random() - 0.5) * 0.01,
+    lng: pinPositions[index % pinPositions.length].lng + (Math.random() - 0.5) * 0.01,
+    area: pinPositions[index % pinPositions.length].area,
+    status: jobStatuses[index % 4],
+    distance: distances[index % 5],
+    driveTime: driveTimes[index % 5],
+    isToday: index < 3, // First 3 jobs are today's
+    isUrgent: index === 0, // First job is urgent
+    hasNewPhotos: index < 2, // First 2 have new photos
+    customerPhone: '+1 (555) 123-4567',
+    scheduledTime: ['9:00 AM', '10:30 AM', '1:00 PM', '3:30 PM', '4:45 PM'][index % 5],
   }));
 
-  // Filter jobs based on search
-  const filteredJobs = searchQuery 
-    ? jobLocations.filter(job => 
-        job.jobTitle?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        job.address?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        job.customer?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        job.area?.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-    : jobLocations;
+  // Stats
+  const todayJobsCount = jobLocations.filter(j => j.isToday).length;
+  const urgentJobsCount = jobLocations.filter(j => j.isUrgent).length;
+  const totalPhotosNearby = jobLocations.reduce((sum, j) => sum + (j.photos?.length || 0), 0);
+
+  // Filter jobs based on search and status filter
+  const filteredJobs = jobLocations.filter(job => {
+    const matchesSearch = !searchQuery || 
+      job.jobTitle?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      job.address?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      job.customer?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      job.area?.toLowerCase().includes(searchQuery.toLowerCase());
+    
+    const matchesStatus = statusFilter === 'all' || 
+      (statusFilter === 'today' && job.isToday) ||
+      (statusFilter === 'urgent' && job.isUrgent) ||
+      (statusFilter === 'new' && job.status === 'new') ||
+      (statusFilter === 'in-progress' && job.status === 'in-progress');
+    
+    return matchesSearch && matchesStatus;
+  });
 
   const handlePinClick = (job) => {
     setSelectedJob(job);
-    setSheetState('collapsed');
+    setSheetState('half'); // Default to half-expanded view
     setIsSearching(false);
   };
 
+  // Navigate to next/previous job in carousel
+  const handleNextJob = () => {
+    const currentIndex = filteredJobs.findIndex(j => j.jobId === selectedJob?.jobId);
+    const nextIndex = (currentIndex + 1) % filteredJobs.length;
+    setSelectedJob(filteredJobs[nextIndex]);
+  };
+
+  const handlePrevJob = () => {
+    const currentIndex = filteredJobs.findIndex(j => j.jobId === selectedJob?.jobId);
+    const prevIndex = currentIndex === 0 ? filteredJobs.length - 1 : currentIndex - 1;
+    setSelectedJob(filteredJobs[prevIndex]);
+  };
+
+  // Get current job index for display
+  const currentJobIndex = selectedJob ? filteredJobs.findIndex(j => j.jobId === selectedJob?.jobId) + 1 : 0;
+
   const handleSheetDrag = () => {
-    if (sheetState === 'collapsed') setSheetState('half');
-    else if (sheetState === 'half') setSheetState('full');
+    if (sheetState === 'half') setSheetState('full');
     else setSheetState('collapsed');
   };
 
@@ -998,15 +944,25 @@ const MapView = ({ jobs, onJobClick, onPhotoClick }) => {
     setIsSearching(false);
   };
 
+  const handleNavigate = (job) => {
+    // Simulate opening maps app
+    alert(`Opening navigation to: ${job.address}`);
+  };
+
+  const handleCall = (job) => {
+    // Simulate calling customer
+    alert(`Calling customer: ${job.customerPhone}`);
+  };
+
   return (
     <div className="map-view-container">
-      {/* Search Bar */}
+      {/* Clean Search Bar */}
       <div className={`map-search-bar ${isSearching ? 'focused' : ''}`}>
         <form onSubmit={handleSearchSubmit}>
           <Icons.Search />
           <input 
             type="text"
-            placeholder="Search jobs, addresses, areas..."
+            placeholder="Search jobs..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onFocus={() => setIsSearching(true)}
@@ -1024,26 +980,25 @@ const MapView = ({ jobs, onJobClick, onPhotoClick }) => {
         <div className="map-search-results">
           {filteredJobs.length > 0 ? (
             <>
-              <div className="search-results-header">Jobs matching "{searchQuery}"</div>
               {filteredJobs.slice(0, 5).map(job => (
                 <button 
                   key={job.jobId} 
                   className="search-result-item"
                   onClick={() => handlePinClick(job)}
                 >
-                  <Icons.Briefcase />
+                  <div className="result-thumb">
+                    <img src={job.photos?.[0]?.url} alt="" />
+                  </div>
                   <div className="result-info">
                     <span className="result-title">{job.jobTitle}</span>
                     <span className="result-address">{job.address}</span>
                   </div>
-                  <span className="result-photos">{job.photos.length} photos</span>
                 </button>
               ))}
             </>
           ) : (
             <div className="no-results">
-              <span>No jobs found for "{searchQuery}"</span>
-              <span className="suggestion">Try searching by job name, address, or area</span>
+              <span>No jobs found</span>
             </div>
           )}
         </div>
@@ -1093,27 +1048,32 @@ const MapView = ({ jobs, onJobClick, onPhotoClick }) => {
           <div className="map-street-label vertical" style={{ top: '50%', left: '23%' }}>1st St</div>
         </div>
         
-        {/* Map Pins - Job Locations */}
+        {/* Map Pins - Clean Photo Thumbnails */}
         <div className="map-pins-layer">
-          {filteredJobs.map((job, index) => (
-            <div 
-              key={job.jobId}
-              className={`map-pin job-pin ${selectedJob?.jobId === job.jobId ? 'selected' : ''} ${searchQuery && filteredJobs.includes(job) ? 'highlighted' : ''}`}
-              style={{
-                left: `${12 + (index % 4) * 22}%`,
-                top: `${18 + Math.floor(index / 4) * 28}%`,
-              }}
-              onClick={() => handlePinClick(job)}
-            >
-              <div className="pin-icon-wrapper">
-                <Icons.Briefcase />
+          {filteredJobs.map((job, index) => {
+            // Grid layout: 5 columns x 4 rows = 20 pins max
+            const col = index % 5;
+            const row = Math.floor(index / 5);
+            // Position pins in a grid, leaving space for search bar and water
+            const leftPos = 8 + col * 18; // 8%, 26%, 44%, 62%, 80%
+            const topPos = 15 + row * 18;  // 15%, 33%, 51%, 69%
+            
+            return (
+              <div 
+                key={job.jobId || `job-${index}`}
+                className={`map-pin photo-pin-clean ${selectedJob?.jobId === job.jobId ? 'selected' : ''}`}
+                style={{
+                  left: `${leftPos}%`,
+                  top: `${topPos}%`,
+                }}
+                onClick={() => handlePinClick(job)}
+              >
+                <div className="pin-photo-clean">
+                  <img src={job.photos?.[0]?.url || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=100'} alt="" />
+                </div>
               </div>
-              {job.photos.length > 0 && (
-                <span className="photo-count-badge">{job.photos.length}</span>
-              )}
-              <div className="pin-pointer"></div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Current Location Marker */}
@@ -1148,29 +1108,24 @@ const MapView = ({ jobs, onJobClick, onPhotoClick }) => {
             <div className="drag-indicator"></div>
           </div>
 
-          {sheetState === 'collapsed' && (
-            <div className="sheet-collapsed-content">
-              <div className="job-preview-thumb">
-                <img src={selectedJob.photos[0]?.url} alt="" />
-              </div>
-              <div className="job-preview-info">
-                <h3 className="job-preview-title">{selectedJob.jobTitle}</h3>
-                <p className="job-preview-address">{selectedJob.address}</p>
-                <p className="job-preview-count">
-                  {selectedJob.photos.length} photos
-                </p>
-              </div>
-              <Icons.ChevronRight />
-            </div>
-          )}
-
           {sheetState === 'half' && (
             <div className="sheet-half-content">
-              <div className="job-info-header">
-                <h3>{selectedJob.jobTitle}</h3>
-                <p className="job-address">{selectedJob.address}</p>
-                <p className="job-meta">{selectedJob.photos.length} photos · {selectedJob.photos[0]?.date?.split(',')[0]}</p>
+              {/* Job Title with Navigation Arrows */}
+              <div className="job-title-row">
+                <button className="nav-arrow" onClick={handlePrevJob} disabled={currentJobIndex === 1}>
+                  <Icons.ChevronLeft />
+                </button>
+                <div className="job-title-center">
+                  <h3>{selectedJob.jobTitle}</h3>
+                </div>
+                <button className="nav-arrow" onClick={handleNextJob} disabled={currentJobIndex === filteredJobs.length}>
+                  <Icons.ChevronRight />
+                </button>
               </div>
+              
+              {/* Address - separate row */}
+              <p className="job-address-row">{selectedJob.address}</p>
+
               <div className="photo-strip">
                 {selectedJob.photos.slice(0, 4).map((photo, i) => (
                   <div key={photo.id} className="strip-photo" onClick={() => onPhotoClick(photo.originalIndex)}>
@@ -1183,13 +1138,8 @@ const MapView = ({ jobs, onJobClick, onPhotoClick }) => {
                     )}
                   </div>
                 ))}
-                {selectedJob.photos.length > 4 && (
-                  <div className="strip-more-photos" onClick={() => setSheetState('full')}>
-                    +{selectedJob.photos.length - 4}
-                  </div>
-                )}
               </div>
-              <button className="view-all-btn" onClick={() => setSheetState('full')}>
+              <button className="view-all-btn primary-subtle" onClick={() => setSheetState('full')}>
                 View All Photos
               </button>
             </div>
@@ -1201,7 +1151,6 @@ const MapView = ({ jobs, onJobClick, onPhotoClick }) => {
                 <div>
                   <h3>{selectedJob.jobTitle}</h3>
                   <p className="job-address">{selectedJob.address}</p>
-                  <p className="job-meta">{selectedJob.photos.length} photos</p>
                 </div>
                 <button className="close-sheet-btn" onClick={handleCloseSheet}>
                   <Icons.Close />
@@ -1223,7 +1172,6 @@ const MapView = ({ jobs, onJobClick, onPhotoClick }) => {
                     <div key={date} className="timeline-date-section">
                       <div className="timeline-date-header">
                         <span className="timeline-date">{date}</span>
-                        <span className="timeline-count">{photos.length} {photos.length === 1 ? 'photo' : 'photos'}</span>
                       </div>
                       <div className="timeline-photos-grid">
                         {photos.map((photo) => (
@@ -1258,7 +1206,7 @@ const MapView = ({ jobs, onJobClick, onPhotoClick }) => {
       {/* Empty State */}
       {jobs.length === 0 && (
         <div className="map-empty-state">
-          <div className="empty-icon">🗺️ 📷</div>
+          <div className="empty-icon"><Icons.MapPin /></div>
           <h3>No job photos yet</h3>
           <p>Photos uploaded to jobs will appear on the map</p>
           <button className="browse-jobs-btn">Browse Jobs</button>
@@ -1285,6 +1233,8 @@ const PhotoFeedGrid = ({
   userRole = USER_ROLES.TEAM_LEADER,
   isOffline = false,
   activeFilterDetails = {},
+  favoritedPhotos: propFavoritedPhotos,
+  onToggleFavorite: propOnToggleFavorite,
   onRemoveFilter,
   onClearAllFilters,
   showMetadata = false,
@@ -1292,12 +1242,73 @@ const PhotoFeedGrid = ({
   onBack
 }) => {
   const [activeTab, setActiveTab] = useState('my');
-  const [viewMode, setViewMode] = useState(initialViewMode); // 'grid' or 'job'
+  const [viewMode, setViewMode] = useState(initialViewMode); // 'grid', 'job', or 'map'
+  
+  // Helper function to get initials from name (e.g., "John Doe" -> "JD")
+  const getInitials = (name) => {
+    if (!name) return '??';
+    const parts = name.trim().split(' ');
+    if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+  };
+  
+  // Check if uploader avatar should be shown (only for Team Leader and Admin)
+  const showUploaderAvatar = userRole === USER_ROLES.TEAM_LEADER || userRole === USER_ROLES.ADMIN;
+  
+  // Inline filter states for Photos tab
+  const [activeInlineFilter, setActiveInlineFilter] = useState(null); // 'mediaType', 'tags', 'date', 'jobDate', 'uploadedBy'
+  const [selectedMediaType, setSelectedMediaType] = useState('all'); // 'all', 'photos', 'videos'
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [selectedDateRange, setSelectedDateRange] = useState(null); // { from, to } or preset like 'today', 'week'
+  const [selectedUploadedBy, setSelectedUploadedBy] = useState(null); // For Jobs tab - Team Leader/Admin only
+  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false); // Favorites filter
+  const [gridSize, setGridSize] = useState(3); // 2, 3, or 4 columns
+  
+  // Use prop favoritedPhotos if provided, otherwise use empty set (controlled by parent)
+  const favoritedPhotos = propFavoritedPhotos || new Set();
+  
+  // Cycle through grid sizes
+  const cycleGridSize = () => {
+    setGridSize(prev => {
+      if (prev === 3) return 2;
+      if (prev === 2) return 4;
+      return 3;
+    });
+  };
+  
+  // Get the appropriate grid icon
+  const GridIcon = gridSize === 2 ? Icons.Grid2 : gridSize === 4 ? Icons.Grid4 : Icons.Grid3;
+  
+  // Available tags (would come from backend)
+  const availableTags = ['Before', 'After', 'Damage', 'Progress', 'Complete', 'Issue', 'Inspection'];
+  
+  // Team members (would come from backend)
+  const teamMembers = [
+    { id: 1, name: 'John Smith' },
+    { id: 2, name: 'Sarah Johnson' },
+    { id: 3, name: 'Mike Wilson' },
+    { id: 4, name: 'Emily Davis' },
+    { id: 5, name: 'Chris Brown' },
+  ];
+  
+  // Date presets
+  const datePresets = [
+    { id: 'today', label: 'Today' },
+    { id: 'yesterday', label: 'Yesterday' },
+    { id: 'week', label: 'Last 7 days' },
+    { id: 'month', label: 'Last 30 days' },
+    { id: 'custom', label: 'Custom range' }
+  ];
 
   // Sync viewMode with initialViewMode when it changes (for navigation)
   useEffect(() => {
     setViewMode(initialViewMode);
   }, [initialViewMode]);
+  
+  // Close inline filter when clicking outside
+  const handleCloseInlineFilter = () => {
+    setActiveInlineFilter(null);
+  };
 
   // Group photos by job for job view
   const groupPhotosByJob = (photos) => {
@@ -1319,30 +1330,105 @@ const PhotoFeedGrid = ({
     return Object.values(jobGroups);
   };
 
+  // Group jobs by date for timeline view in Jobs tab
+  const groupJobsByDate = (photos) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+    
+    // Format date for display
+    const formatDateShort = (date) => {
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      return `${months[date.getMonth()]} ${date.getDate()}`;
+    };
+
+    // First, group photos by job
+    const jobsMap = {};
+    photos.forEach((photo, index) => {
+      const jobKey = photo.job || 'unassigned';
+      if (!jobsMap[jobKey]) {
+        jobsMap[jobKey] = {
+          jobId: photo.job,
+          jobTitle: photo.jobTitle,
+          customer: photo.customer,
+          address: photo.address,
+          jobDeleted: photo.jobDeleted,
+          photos: [],
+          latestPhotoDate: null
+        };
+      }
+      jobsMap[jobKey].photos.push({ ...photo, originalIndex: index });
+      
+      // Track the latest photo date for this job
+      const photoDate = new Date(photo.timestamp || Date.now());
+      if (!jobsMap[jobKey].latestPhotoDate || photoDate > jobsMap[jobKey].latestPhotoDate) {
+        jobsMap[jobKey].latestPhotoDate = photoDate;
+      }
+    });
+
+    // Now group jobs by their latest photo date
+    const dateJobGroups = {};
+    Object.values(jobsMap).forEach(job => {
+      const photoDate = job.latestPhotoDate || new Date();
+      photoDate.setHours(0, 0, 0, 0);
+      
+      let dateKey;
+      let displayDate;
+      let dateSubtitle = null;
+      
+      if (photoDate.getTime() === today.getTime()) {
+        dateKey = 'today';
+        displayDate = `Today ${formatDateShort(today)}`;
+      } else if (photoDate.getTime() === yesterday.getTime()) {
+        dateKey = 'yesterday';
+        displayDate = `Yesterday ${formatDateShort(yesterday)}`;
+      } else {
+        // Use specific date
+        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        dateKey = photoDate.toISOString().split('T')[0];
+        displayDate = `${days[photoDate.getDay()]} ${formatDateShort(photoDate)}`;
+      }
+
+      if (!dateJobGroups[dateKey]) {
+        dateJobGroups[dateKey] = {
+          date: dateKey,
+          displayDate,
+          dateSubtitle,
+          timestamp: photoDate.getTime(),
+          jobs: []
+        };
+      }
+      dateJobGroups[dateKey].jobs.push(job);
+    });
+
+    // Sort by date (newest first) and return
+    return Object.keys(dateJobGroups)
+      .sort((a, b) => dateJobGroups[b].timestamp - dateJobGroups[a].timestamp)
+      .map(key => dateJobGroups[key])
+      .filter(group => group.jobs.length > 0);
+  };
+
   // Group photos by date for gallery view - using relative periods
   const groupPhotosByDate = (photos) => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const yesterday = new Date(today);
     yesterday.setDate(yesterday.getDate() - 1);
-    const lastWeek = new Date(today);
-    lastWeek.setDate(lastWeek.getDate() - 7);
-    const lastMonth = new Date(today);
-    lastMonth.setMonth(lastMonth.getMonth() - 1);
     
-    // Format date for subtitle
+    // Format date for display
     const formatDateShort = (date) => {
       const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
       return `${months[date.getMonth()]} ${date.getDate()}`;
     };
     
-    const dateGroups = {
-      'Today': { displayDate: 'Today', dateSubtitle: formatDateShort(today), photos: [] },
-      'Yesterday': { displayDate: 'Yesterday', dateSubtitle: formatDateShort(yesterday), photos: [] },
-      'Last Week': { displayDate: 'Last Week', dateSubtitle: `${formatDateShort(lastWeek)} - ${formatDateShort(yesterday)}`, photos: [] },
-      'Last Month': { displayDate: 'Last Month', dateSubtitle: `${formatDateShort(lastMonth)} - ${formatDateShort(lastWeek)}`, photos: [] },
-      'Older': { displayDate: 'Older', dateSubtitle: '', photos: [] }
+    // Format full date key for grouping
+    const getDateKey = (date) => {
+      return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
     };
+    
+    const dateGroups = {};
+    const dateOrder = [];
     
     photos.forEach((photo, index) => {
       // Parse date
@@ -1353,29 +1439,51 @@ const PhotoFeedGrid = ({
       const photoDate = new Date(`${month} ${day}, ${year}`);
       photoDate.setHours(0, 0, 0, 0);
       
-      let groupKey = 'Older';
+      let displayDate;
+      let dateSubtitle = '';
+      const dateKey = getDateKey(photoDate);
+      
       if (photoDate.getTime() === today.getTime()) {
-        groupKey = 'Today';
+        displayDate = 'Today';
+        dateSubtitle = formatDateShort(today);
       } else if (photoDate.getTime() === yesterday.getTime()) {
-        groupKey = 'Yesterday';
-      } else if (photoDate > lastWeek && photoDate < yesterday) {
-        groupKey = 'Last Week';
-      } else if (photoDate >= lastMonth && photoDate <= lastWeek) {
-        groupKey = 'Last Month';
+        displayDate = 'Yesterday';
+        dateSubtitle = formatDateShort(yesterday);
+      } else {
+        // Show actual date for all other days
+        displayDate = formatDateShort(photoDate);
+        dateSubtitle = '';
       }
       
-      dateGroups[groupKey].photos.push({ ...photo, originalIndex: index });
+      if (!dateGroups[dateKey]) {
+        dateGroups[dateKey] = { 
+          displayDate, 
+          dateSubtitle, 
+          photos: [],
+          timestamp: photoDate.getTime()
+        };
+        dateOrder.push(dateKey);
+      }
+      
+      dateGroups[dateKey].photos.push({ ...photo, originalIndex: index });
     });
     
-    // Return only groups that have photos, in order
-    const order = ['Today', 'Yesterday', 'Last Week', 'Last Month', 'Older'];
-    return order
+    // Sort by date (most recent first) and return
+    return dateOrder
+      .sort((a, b) => dateGroups[b].timestamp - dateGroups[a].timestamp)
       .map(key => dateGroups[key])
       .filter(group => group.photos.length > 0);
   };
 
   const jobGroups = groupPhotosByJob(photos);
-  const dateGroups = groupPhotosByDate(photos);
+  
+  // Filter photos for favorites if enabled
+  const filteredPhotosForGrid = showFavoritesOnly 
+    ? photos.filter((_, index) => favoritedPhotos.has(index))
+    : photos;
+  
+  const dateGroups = groupPhotosByDate(filteredPhotosForGrid);
+  const jobDateGroups = groupJobsByDate(photos);
 
   // Get tabs based on user role
   const getTabs = () => {
@@ -1416,15 +1524,14 @@ const PhotoFeedGrid = ({
           <>
             <button className="header-btn" onClick={onBack}><Icons.Back /></button>
             <h1 className="header-title">Photo Feed</h1>
-            <div className="header-actions">
-              <button className={`header-btn ${activeFilters > 0 ? 'has-filters' : ''}`} onClick={onFilterClick}>
-                <Icons.Filter />
-                {activeFilters > 0 && <span className="filter-dot" />}
+            {/* Grid size toggle - only show in Photos view */}
+            {(viewMode === 'grid' || viewMode === 'favorites') ? (
+              <button className="header-btn grid-toggle" onClick={cycleGridSize} title={`${gridSize} columns`}>
+                <GridIcon />
               </button>
-              <button className="header-btn" onClick={onSearchClick}>
-                <Icons.Search />
-              </button>
-            </div>
+            ) : (
+              <div style={{ width: '40px' }} />
+            )}
           </>
         )}
       </div>
@@ -1434,21 +1541,21 @@ const PhotoFeedGrid = ({
         <div className="feed-tabs view-tabs three-tabs">
           <button 
             className={`tab-btn ${viewMode === 'grid' ? 'active' : ''}`}
-            onClick={() => setViewMode('grid')}
+            onClick={() => { setViewMode('grid'); setShowFavoritesOnly(false); }}
           >
             <Icons.Grid />
             Photos
           </button>
           <button 
             className={`tab-btn ${viewMode === 'job' ? 'active' : ''}`}
-            onClick={() => setViewMode('job')}
+            onClick={() => { setViewMode('job'); setShowFavoritesOnly(false); }}
           >
             <Icons.Briefcase />
             Jobs
           </button>
           <button 
             className={`tab-btn ${viewMode === 'map' ? 'active' : ''}`}
-            onClick={() => setViewMode('map')}
+            onClick={() => { setViewMode('map'); setShowFavoritesOnly(false); }}
           >
             <Icons.MapPin />
             Map
@@ -1456,13 +1563,196 @@ const PhotoFeedGrid = ({
         </div>
       )}
 
-      {/* Active Filters Chips */}
-      {!multiSelectMode && activeFilters > 0 && (
-        <ActiveFiltersChips 
-          filters={activeFilterDetails}
-          onRemove={onRemoveFilter}
-          onClearAll={onClearAllFilters}
-        />
+      {/* Inline Filter Pills - Only for Photos tab */}
+      {!multiSelectMode && viewMode === 'grid' && (
+        <div className="inline-filters">
+          {/* Media Type Filter */}
+          <div className="filter-pill-wrapper">
+            <button 
+              className={`filter-pill ${selectedMediaType !== 'all' ? 'active' : ''} ${activeInlineFilter === 'mediaType' ? 'open' : ''}`}
+              onClick={() => setActiveInlineFilter(activeInlineFilter === 'mediaType' ? null : 'mediaType')}
+            >
+              <span>Media type</span>
+              <Icons.ChevronDown />
+            </button>
+            {activeInlineFilter === 'mediaType' && (
+              <div className="filter-dropdown">
+                <button 
+                  className={`dropdown-option ${selectedMediaType === 'all' ? 'selected' : ''}`}
+                  onClick={() => { setSelectedMediaType('all'); setActiveInlineFilter(null); }}
+                >
+                  All
+                </button>
+                <button 
+                  className={`dropdown-option ${selectedMediaType === 'photos' ? 'selected' : ''}`}
+                  onClick={() => { setSelectedMediaType('photos'); setActiveInlineFilter(null); }}
+                >
+                  Photos only
+                </button>
+                <button 
+                  className={`dropdown-option ${selectedMediaType === 'videos' ? 'selected' : ''}`}
+                  onClick={() => { setSelectedMediaType('videos'); setActiveInlineFilter(null); }}
+                >
+                  Videos only
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Tags Filter */}
+          <div className="filter-pill-wrapper">
+            <button 
+              className={`filter-pill ${selectedTags.length > 0 ? 'active' : ''} ${activeInlineFilter === 'tags' ? 'open' : ''}`}
+              onClick={() => setActiveInlineFilter(activeInlineFilter === 'tags' ? null : 'tags')}
+            >
+              <span>Tags{selectedTags.length > 0 ? ` (${selectedTags.length})` : ''}</span>
+              <Icons.ChevronDown />
+            </button>
+            {activeInlineFilter === 'tags' && (
+              <div className="filter-dropdown tags-dropdown">
+                {availableTags.map(tag => (
+                  <button 
+                    key={tag}
+                    className={`dropdown-option ${selectedTags.includes(tag) ? 'selected' : ''}`}
+                    onClick={() => {
+                      setSelectedTags(prev => 
+                        prev.includes(tag) 
+                          ? prev.filter(t => t !== tag)
+                          : [...prev, tag]
+                      );
+                    }}
+                  >
+                    <span className="tag-checkbox">{selectedTags.includes(tag) ? '✓' : ''}</span>
+                    {tag}
+                  </button>
+                ))}
+                {selectedTags.length > 0 && (
+                  <button 
+                    className="dropdown-option clear-option"
+                    onClick={() => { setSelectedTags([]); setActiveInlineFilter(null); }}
+                  >
+                    Clear all
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* Date Filter */}
+          <div className="filter-pill-wrapper">
+            <button 
+              className={`filter-pill ${selectedDateRange ? 'active' : ''} ${activeInlineFilter === 'date' ? 'open' : ''}`}
+              onClick={() => setActiveInlineFilter(activeInlineFilter === 'date' ? null : 'date')}
+            >
+              <span>Date</span>
+              <Icons.ChevronDown />
+            </button>
+            {activeInlineFilter === 'date' && (
+              <div className="filter-dropdown">
+                {datePresets.map(preset => (
+                  <button 
+                    key={preset.id}
+                    className={`dropdown-option ${selectedDateRange === preset.id ? 'selected' : ''}`}
+                    onClick={() => { 
+                      setSelectedDateRange(selectedDateRange === preset.id ? null : preset.id); 
+                      if (preset.id !== 'custom') setActiveInlineFilter(null);
+                    }}
+                  >
+                    {preset.label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Overlay to close filters when clicking outside */}
+      {activeInlineFilter && (
+        <div className="filter-overlay" onClick={handleCloseInlineFilter} />
+      )}
+
+      {/* Jobs Search and Date Filter - Only for Jobs tab */}
+      {!multiSelectMode && viewMode === 'job' && (
+        <div className="jobs-search-filter">
+          {/* Search Bar */}
+          <div className="jobs-search-bar">
+            <Icons.Search />
+            <input 
+              type="text" 
+              placeholder="Search jobs by name or address..." 
+              className="jobs-search-input"
+            />
+          </div>
+          
+          {/* Filter Pills Row */}
+          <div className="jobs-filter-pills">
+            {/* Date Filter */}
+            <div className="filter-pill-wrapper">
+              <button 
+                className={`filter-pill ${selectedDateRange ? 'active' : ''} ${activeInlineFilter === 'jobDate' ? 'open' : ''}`}
+                onClick={() => setActiveInlineFilter(activeInlineFilter === 'jobDate' ? null : 'jobDate')}
+              >
+                <span>{selectedDateRange || 'Date'}</span>
+                <Icons.ChevronDown />
+              </button>
+              {activeInlineFilter === 'jobDate' && (
+                <div className="filter-dropdown">
+                  {datePresets.map(preset => (
+                    <button 
+                      key={preset.id}
+                      className={`dropdown-option ${selectedDateRange === preset.label ? 'selected' : ''}`}
+                      onClick={() => { 
+                        setSelectedDateRange(preset.id === 'all' ? null : preset.label); 
+                        setActiveInlineFilter(null); 
+                      }}
+                    >
+                      {preset.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Uploaded By Filter - Team Leader & Admin Only */}
+            {(userRole === USER_ROLES.TEAM_LEADER || userRole === USER_ROLES.ADMIN) && (
+              <div className="filter-pill-wrapper">
+                <button 
+                  className={`filter-pill ${selectedUploadedBy ? 'active' : ''} ${activeInlineFilter === 'uploadedBy' ? 'open' : ''}`}
+                  onClick={() => setActiveInlineFilter(activeInlineFilter === 'uploadedBy' ? null : 'uploadedBy')}
+                >
+                  <span>{selectedUploadedBy || 'Uploaded by'}</span>
+                  <Icons.ChevronDown />
+                </button>
+                {activeInlineFilter === 'uploadedBy' && (
+                  <div className="filter-dropdown">
+                    <button 
+                      className={`dropdown-option ${!selectedUploadedBy ? 'selected' : ''}`}
+                      onClick={() => { 
+                        setSelectedUploadedBy(null); 
+                        setActiveInlineFilter(null); 
+                      }}
+                    >
+                      All
+                    </button>
+                    {teamMembers.map(member => (
+                      <button 
+                        key={member.id}
+                        className={`dropdown-option ${selectedUploadedBy === member.name ? 'selected' : ''}`}
+                        onClick={() => { 
+                          setSelectedUploadedBy(member.name); 
+                          setActiveInlineFilter(null); 
+                        }}
+                      >
+                        {member.name}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
       )}
 
       {/* Stats Bar - Only show in Job View mode */}
@@ -1484,8 +1774,18 @@ const PhotoFeedGrid = ({
       )}
 
       {/* Photo Gallery, Job View, or Map View */}
-      {viewMode === 'grid' && (
+      {(viewMode === 'grid' || viewMode === 'favorites') && (
         <div className="photo-gallery">
+          {/* Empty state for favorites */}
+          {showFavoritesOnly && dateGroups.length === 0 && (
+            <div className="favorites-empty-state">
+              <div className="empty-icon">
+                <Icons.Heart />
+              </div>
+              <h3>No favorites yet</h3>
+              <p>Tap the heart icon when viewing a photo to add it to your favorites</p>
+            </div>
+          )}
           {dateGroups.map((group, groupIndex) => (
             <div key={group.date} className="gallery-date-section">
               {/* Date Header */}
@@ -1494,22 +1794,30 @@ const PhotoFeedGrid = ({
                   <span className="date-title">{group.displayDate}</span>
                   {group.dateSubtitle && <span className="date-subtitle">{group.dateSubtitle}</span>}
                 </div>
-                <span className="date-count">
-                  {group.photos.length}
-                  <span className="date-count-label"> {group.photos.length === 1 ? 'photo' : 'photos'}</span>
-                </span>
               </div>
               
               {/* Photos Grid */}
-              <div className={`gallery-grid ${showMetadata ? 'with-metadata' : ''}`}>
+              <div className={`gallery-grid grid-cols-${gridSize} ${showMetadata ? 'with-metadata' : ''}`}>
                 {group.photos.map((photo, photoIndex) => (
                   <div 
                     key={photo.id}
-                    className={`gallery-thumb ${photo.type === 'video' ? 'is-video' : ''} ${multiSelectMode ? 'selectable' : ''} ${selectedPhotos.includes(photo.id) ? 'selected' : ''} ${showMetadata ? 'show-metadata' : ''}`}
+                    className={`gallery-thumb ${photo.type === 'video' ? 'is-video' : ''} ${multiSelectMode ? 'selectable' : ''} ${selectedPhotos.includes(photo.id) ? 'selected' : ''} ${showMetadata ? 'show-metadata' : ''} ${favoritedPhotos.has(photo.originalIndex) ? 'is-favorited' : ''}`}
                     onClick={() => multiSelectMode ? onToggleSelect(photo.id) : onPhotoClick(photo.originalIndex)}
                     onContextMenu={(e) => { e.preventDefault(); onLongPress(photo.id); }}
                   >
                     <img src={photo.url} alt="" loading="lazy" />
+                    {/* Uploader avatar - only for Team Leader and Admin */}
+                    {showUploaderAvatar && photo.uploadedBy && !multiSelectMode && (
+                      <div className="uploader-avatar" title={photo.uploadedBy}>
+                        {getInitials(photo.uploadedBy)}
+                      </div>
+                    )}
+                    {/* Small favorite indicator - only shown if favorited */}
+                    {favoritedPhotos.has(photo.originalIndex) && !multiSelectMode && (
+                      <div className="favorite-indicator">
+                        <Icons.HeartFilled />
+                      </div>
+                    )}
                     {photo.type === 'video' && (
                       <div className="gallery-video-badge">
                         <Icons.Play />
@@ -1550,75 +1858,93 @@ const PhotoFeedGrid = ({
 
       {viewMode === 'job' && (
         <div className="job-gallery">
-          {jobGroups.map((group) => {
-            const videoCount = group.photos.filter(p => p.type === 'video').length;
-            const imageCount = group.photos.length - videoCount;
-            const latestDate = group.photos[group.photos.length - 1]?.date;
-            // Get relative date
-            const getRelativeDate = (dateStr) => {
-              if (!dateStr) return '';
-              const parts = dateStr.split(',');
-              return parts[0] || dateStr;
-            };
-            // Format counts
-            const totalCount = group.photos.length;
-            const countText = `${totalCount} ${totalCount === 1 ? 'photo' : 'photos'}${videoCount > 0 ? `, ${videoCount} video${videoCount > 1 ? 's' : ''}` : ''}`;
-            
-            return (
-            <div key={group.jobId || 'unassigned'} className="job-section">
-              {/* Minimal Section Header - 2 lines max */}
-              <div className="job-section-header">
-                {group.jobDeleted ? (
-                  <div className="job-deleted-state">
-                    <Icons.AlertCircle />
-                    <span>Job no longer exists</span>
-                  </div>
-                ) : (
-                  <>
-                    <div className="job-header-row">
-                      <div className="job-header-info">
-                        <span className="job-header-title">{group.jobTitle}</span>
-                        <span className="job-header-meta">
-                          {group.address && <>{group.address}</>}
-                          {group.address && <> · </>}
-                          <span className="job-photo-count">{countText}</span>
-                        </span>
-                      </div>
-                      <button className="job-camera-btn" title="Add photo to this job">
-                        <Icons.Camera />
-                      </button>
-                    </div>
-                  </>
-                )}
+          {jobDateGroups.map((dateGroup) => (
+            <div key={dateGroup.date} className="job-date-section">
+              {/* Date Header - Same style as Photos tab */}
+              <div className="gallery-date-header">
+                <div className="date-header-content">
+                  <span className="date-title">{dateGroup.displayDate}</span>
+                </div>
               </div>
 
-              {/* Photo Grid - SAME AS GRID VIEW */}
-              <div className="job-photo-grid">
-                {group.photos.map((photo) => (
-                  <div 
-                    key={photo.id}
-                    className={`gallery-thumb ${photo.type === 'video' ? 'is-video' : ''} ${multiSelectMode ? 'selectable' : ''} ${selectedPhotos.includes(photo.id) ? 'selected' : ''}`}
-                    onClick={() => multiSelectMode ? onToggleSelect(photo.id) : onPhotoClick(photo.originalIndex)}
-                    onContextMenu={(e) => { e.preventDefault(); onLongPress(photo.id); }}
-                  >
-                    <img src={photo.url} alt="" loading="lazy" />
-                    {photo.type === 'video' && (
-                      <div className="gallery-video-badge">
-                        <Icons.Play />
-                        <span>{photo.duration}</span>
+              {/* Jobs under this date */}
+              {dateGroup.jobs.map((group) => (
+                <div key={group.jobId || 'unassigned'} className="job-section">
+                  {/* Minimal Section Header - 2 lines max */}
+                  <div className="job-section-header">
+                    {group.jobDeleted ? (
+                      <div className="job-deleted-state">
+                        <Icons.AlertCircle />
+                        <span>Job no longer exists</span>
                       </div>
-                    )}
-                    {multiSelectMode && (
-                      <div className={`gallery-checkbox ${selectedPhotos.includes(photo.id) ? 'checked' : ''}`}>
-                        {selectedPhotos.includes(photo.id) && <Icons.Check />}
-                      </div>
+                    ) : (
+                      <>
+                        <div className="job-header-row">
+                          <div className="job-header-info">
+                            <span className="job-header-title">{group.jobTitle}</span>
+                            <span className="job-header-meta">
+                              {group.address && <>{group.address}</>}
+                            </span>
+                          </div>
+                          <button className="job-camera-btn" title="Add photo to this job">
+                            <Icons.Camera />
+                          </button>
+                        </div>
+                      </>
                     )}
                   </div>
-                ))}
-              </div>
+
+                  {/* Photo Grid - Show max 6 photos with "View More" */}
+                  <div className="job-photo-grid">
+                    {group.photos.slice(0, 6).map((photo, index) => {
+                      const isLastVisible = index === 5 && group.photos.length > 6;
+                      
+                      return (
+                        <div 
+                          key={photo.id}
+                          className={`gallery-thumb ${photo.type === 'video' ? 'is-video' : ''} ${multiSelectMode ? 'selectable' : ''} ${selectedPhotos.includes(photo.id) ? 'selected' : ''} ${isLastVisible ? 'has-more-overlay' : ''}`}
+                          onClick={() => {
+                            if (isLastVisible) {
+                              onPhotoClick(photo.originalIndex);
+                            } else if (multiSelectMode) {
+                              onToggleSelect(photo.id);
+                            } else {
+                              onPhotoClick(photo.originalIndex);
+                            }
+                          }}
+                          onContextMenu={(e) => { e.preventDefault(); onLongPress(photo.id); }}
+                        >
+                          <img src={photo.url} alt="" loading="lazy" />
+                          {/* Uploader avatar - only for Team Leader and Admin */}
+                          {showUploaderAvatar && photo.uploadedBy && !multiSelectMode && !isLastVisible && (
+                            <div className="uploader-avatar" title={photo.uploadedBy}>
+                              {getInitials(photo.uploadedBy)}
+                            </div>
+                          )}
+                          {photo.type === 'video' && !isLastVisible && (
+                            <div className="gallery-video-badge">
+                              <Icons.Play />
+                              <span>{photo.duration}</span>
+                            </div>
+                          )}
+                          {isLastVisible && (
+                            <div className="view-more-overlay">
+                              <span className="view-more-text">View All</span>
+                            </div>
+                          )}
+                          {multiSelectMode && !isLastVisible && (
+                            <div className={`gallery-checkbox ${selectedPhotos.includes(photo.id) ? 'checked' : ''}`}>
+                              {selectedPhotos.includes(photo.id) && <Icons.Check />}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
             </div>
-            );
-          })}
+          ))}
         </div>
       )}
 
@@ -1634,17 +1960,29 @@ const PhotoFeedGrid = ({
       {/* Bulk Actions Bar */}
       {multiSelectMode && selectedPhotos.length > 0 && (
         <div className="bulk-actions-bar">
-          <button className="bulk-action" onClick={() => onBulkAction('tag')}>
-            <Icons.Tag />
-            <span>Tag</span>
+          <button className="bulk-action" onClick={() => onBulkAction('share')}>
+            <Icons.Share />
+            <span>Share</span>
           </button>
-          <button className="bulk-action" onClick={() => onBulkAction('download')}>
-            <Icons.Download />
-            <span>Download</span>
+        </div>
+      )}
+
+      {/* Bottom Navigation - Only show in Photos/Grid view */}
+      {!multiSelectMode && (viewMode === 'grid' || viewMode === 'favorites') && (
+        <div className="feed-bottom-nav">
+          <button 
+            className={`bottom-nav-item ${!showFavoritesOnly ? 'active' : ''}`}
+            onClick={() => { setShowFavoritesOnly(false); setViewMode('grid'); }}
+          >
+            <Icons.Grid />
+            <span>All Photos</span>
           </button>
-          <button className="bulk-action delete" onClick={() => onBulkAction('delete')}>
-            <Icons.Trash />
-            <span>Delete</span>
+          <button 
+            className={`bottom-nav-item ${showFavoritesOnly ? 'active' : ''}`}
+            onClick={() => { setShowFavoritesOnly(true); setViewMode('grid'); }}
+          >
+            {showFavoritesOnly ? <Icons.HeartFilled /> : <Icons.Heart />}
+            <span>Favorites</span>
           </button>
         </div>
       )}
@@ -2200,7 +2538,7 @@ const SearchScreen = ({ onClose, photos, onPhotoClick }) => {
 };
 
 // Media Viewer
-const MediaViewer = ({ photos, currentIndex, onClose, onNavigate, onShowDetails, onToast }) => {
+const MediaViewer = ({ photos, currentIndex, onClose, onNavigate, onShowDetails, onToast, favoritedPhotos, onToggleFavorite }) => {
   const [showControls, setShowControls] = useState(true);
   const [showOptionsMenu, setShowOptionsMenu] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -2252,9 +2590,17 @@ const MediaViewer = ({ photos, currentIndex, onClose, onNavigate, onShowDetails,
           <Icons.Close />
         </button>
         <span className="photo-counter">{currentIndex + 1} of {photos.length}</span>
-        <button className="viewer-btn" onClick={(e) => { e.stopPropagation(); setShowOptionsMenu(true); }}>
-          <Icons.MoreVertical />
-        </button>
+        <div className="viewer-top-actions">
+          <button 
+            className={`viewer-btn favorite-viewer-btn ${favoritedPhotos?.has(currentIndex) ? 'favorited' : ''}`}
+            onClick={(e) => { e.stopPropagation(); onToggleFavorite?.(currentIndex); }}
+          >
+            {favoritedPhotos?.has(currentIndex) ? <Icons.HeartFilled /> : <Icons.Heart />}
+          </button>
+          <button className="viewer-btn" onClick={(e) => { e.stopPropagation(); setShowOptionsMenu(true); }}>
+            <Icons.MoreVertical />
+          </button>
+        </div>
       </div>
 
       {/* Media Content */}
@@ -2663,14 +3009,12 @@ const LoadingGrid = () => (
     <div className="feed-header">
       <button className="header-btn"><Icons.Back /></button>
       <h1 className="header-title">Photo Feed</h1>
-      <div className="header-actions">
-        <button className="header-btn"><Icons.Filter /></button>
-        <button className="header-btn"><Icons.Search /></button>
-      </div>
+      <div style={{ width: '40px' }} />
     </div>
-    <div className="feed-tabs">
-      <button className="tab-btn active">My Uploads</button>
-      <button className="tab-btn">Team Uploads</button>
+    <div className="feed-tabs view-tabs three-tabs">
+      <button className="tab-btn active"><Icons.Grid /> Photos</button>
+      <button className="tab-btn"><Icons.Briefcase /> Jobs</button>
+      <button className="tab-btn"><Icons.MapPin /> Map</button>
     </div>
     <div className="photo-grid">
       {[...Array(12)].map((_, i) => (
@@ -2732,6 +3076,20 @@ function App() {
   const [showTagSheet, setShowTagSheet] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showMetadata, setShowMetadata] = useState(false);
+  const [favoritedPhotos, setFavoritedPhotos] = useState(new Set([0, 3, 7])); // App-level favorites
+
+  // Toggle favorite for a photo
+  const handleToggleFavorite = (photoIndex) => {
+    setFavoritedPhotos(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(photoIndex)) {
+        newSet.delete(photoIndex);
+      } else {
+        newSet.add(photoIndex);
+      }
+      return newSet;
+    });
+  };
 
   const handlePhotoClick = (index) => {
     setCurrentPhotoIndex(index);
@@ -2783,11 +3141,8 @@ function App() {
 
   const screens = [
     { id: 'home', label: 'Home' },
-    { id: 'home-v2', label: 'Home V2' },
     { id: 'feed', label: 'Photo Feed' },
     { id: 'job-view', label: 'Job View' },
-    { id: 'filter', label: 'Filter Sheet' },
-    { id: 'search', label: 'Search' },
     { id: 'viewer', label: 'Media Viewer' },
     { id: 'video-player', label: 'Video Player' },
     { id: 'multiselect', label: 'Multi-Select' },
@@ -2802,13 +3157,6 @@ function App() {
       case 'home':
         return (
           <Homepage onNavigate={() => setCurrentScreen('feed')} />
-        );
-      case 'home-v2':
-        return (
-          <HomepageWithPhotos 
-            onNavigate={() => setCurrentScreen('feed')} 
-            recentPhotos={samplePhotos}
-          />
         );
       case 'feed':
         return (
@@ -2829,6 +3177,8 @@ function App() {
               userRole={currentRole}
               showMetadata={showMetadata}
               onBack={() => setCurrentScreen('home')}
+              favoritedPhotos={favoritedPhotos}
+              onToggleFavorite={handleToggleFavorite}
             />
             <FilterSheet 
               isOpen={showFilter} 
@@ -2852,6 +3202,8 @@ function App() {
                 onClose={() => setShowViewer(false)}
                 onNavigate={setCurrentPhotoIndex}
                 onShowDetails={() => setShowDetails(true)}
+                favoritedPhotos={favoritedPhotos}
+                onToggleFavorite={handleToggleFavorite}
               />
             )}
             {showDetails && (
@@ -2885,6 +3237,8 @@ function App() {
               onToggleMetadata={() => setShowMetadata(!showMetadata)}
               initialViewMode="job"
               onBack={() => setCurrentScreen('home')}
+              favoritedPhotos={favoritedPhotos}
+              onToggleFavorite={handleToggleFavorite}
             />
             <FilterSheet 
               isOpen={showFilter} 
@@ -2908,6 +3262,8 @@ function App() {
                 onClose={() => setShowViewer(false)}
                 onNavigate={setCurrentPhotoIndex}
                 onShowDetails={() => setShowDetails(true)}
+                favoritedPhotos={favoritedPhotos}
+                onToggleFavorite={handleToggleFavorite}
               />
             )}
             {showDetails && (
@@ -2920,36 +3276,6 @@ function App() {
             )}
           </>
         );
-      case 'filter':
-        return (
-          <>
-            <PhotoFeedGrid 
-              photos={samplePhotos.slice(0, 12)}
-              onPhotoClick={() => {}}
-              onFilterClick={() => {}}
-              onSearchClick={() => {}}
-              activeFilters={0}
-              multiSelectMode={false}
-              selectedPhotos={[]}
-              onToggleSelect={() => {}}
-              onLongPress={() => {}}
-              onCancelSelect={() => {}}
-              onSelectAll={() => {}}
-              onBulkAction={() => {}}
-              userRole={currentRole}
-              onBack={() => setCurrentScreen('home')}
-            />
-            <FilterSheet isOpen={true} onClose={() => {}} onApply={() => {}} userRole={currentRole} />
-          </>
-        );
-      case 'search':
-        return (
-          <SearchScreen 
-            onClose={() => setCurrentScreen('feed')}
-            photos={samplePhotos}
-            onPhotoClick={() => {}}
-          />
-        );
       case 'viewer':
         return (
           <>
@@ -2959,6 +3285,8 @@ function App() {
               onClose={() => setCurrentScreen('feed')}
               onNavigate={() => {}}
               onShowDetails={() => setShowDetails(!showDetails)}
+              favoritedPhotos={favoritedPhotos}
+              onToggleFavorite={handleToggleFavorite}
             />
             {showDetails && (
               <MediaDetailsPanel 
@@ -2978,6 +3306,8 @@ function App() {
             onClose={() => setCurrentScreen('feed')}
             onNavigate={() => {}}
             onShowDetails={() => {}}
+            favoritedPhotos={favoritedPhotos}
+            onToggleFavorite={handleToggleFavorite}
           />
         );
       case 'multiselect':
@@ -2997,6 +3327,8 @@ function App() {
               onSelectAll={handleSelectAll}
               onBulkAction={handleBulkAction}
               onBack={() => setCurrentScreen('home')}
+              favoritedPhotos={favoritedPhotos}
+              onToggleFavorite={handleToggleFavorite}
             />
             <BulkTagSheet 
               isOpen={showTagSheet}
@@ -3037,14 +3369,12 @@ function App() {
             <div className="feed-header">
               <button className="header-btn" onClick={() => setCurrentScreen('home')}><Icons.Back /></button>
               <h1 className="header-title">Photo Feed</h1>
-              <div className="header-actions">
-                <button className="header-btn"><Icons.Filter /></button>
-                <button className="header-btn"><Icons.Search /></button>
-              </div>
+              <div style={{ width: '40px' }} />
             </div>
-            <div className="feed-tabs">
-              <button className="tab-btn active">My Uploads</button>
-              <button className="tab-btn">Team Uploads</button>
+            <div className="feed-tabs view-tabs three-tabs">
+              <button className="tab-btn active"><Icons.Grid /> Photos</button>
+              <button className="tab-btn"><Icons.Briefcase /> Jobs</button>
+              <button className="tab-btn"><Icons.MapPin /> Map</button>
             </div>
             <EmptyState type="no-photos" />
           </div>
@@ -3057,10 +3387,12 @@ function App() {
             <div className="feed-header">
               <button className="header-btn" onClick={() => setCurrentScreen('home')}><Icons.Back /></button>
               <h1 className="header-title">Photo Feed</h1>
-              <div className="header-actions">
-                <button className="header-btn"><Icons.Filter /></button>
-                <button className="header-btn"><Icons.Search /></button>
-              </div>
+              <div style={{ width: '40px' }} />
+            </div>
+            <div className="feed-tabs view-tabs three-tabs">
+              <button className="tab-btn active"><Icons.Grid /> Photos</button>
+              <button className="tab-btn"><Icons.Briefcase /> Jobs</button>
+              <button className="tab-btn"><Icons.MapPin /> Map</button>
             </div>
             <EmptyState type="error" />
           </div>
