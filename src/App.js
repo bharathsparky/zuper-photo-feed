@@ -280,6 +280,18 @@ const Icons = {
       <rect x="14" y="14" width="7" height="7" />
     </svg>
   ),
+  MapPin: () => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+      <circle cx="12" cy="10" r="3" />
+    </svg>
+  ),
+  MyLocation: () => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+      <circle cx="12" cy="12" r="4" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2" />
+    </svg>
+  ),
   List: () => (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
       <line x1="8" y1="6" x2="21" y2="6" />
@@ -939,6 +951,323 @@ const HomepageWithPhotos = ({ onNavigate, recentPhotos = [] }) => {
   );
 };
 
+// Map View Component
+const MapView = ({ jobs, onJobClick, onPhotoClick }) => {
+  const [selectedJob, setSelectedJob] = useState(null);
+  const [sheetState, setSheetState] = useState('collapsed'); // collapsed, half, full
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isSearching, setIsSearching] = useState(false);
+
+  // Sample job locations with addresses
+  const jobLocations = jobs.map((job, index) => ({
+    ...job,
+    lat: 47.6062 + (Math.random() - 0.5) * 0.1,
+    lng: -122.3321 + (Math.random() - 0.5) * 0.1,
+    area: ['Downtown', 'Capitol Hill', 'Ballard', 'Fremont', 'Queen Anne'][index % 5],
+  }));
+
+  // Filter jobs based on search
+  const filteredJobs = searchQuery 
+    ? jobLocations.filter(job => 
+        job.jobTitle?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        job.address?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        job.customer?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        job.area?.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : jobLocations;
+
+  const handlePinClick = (job) => {
+    setSelectedJob(job);
+    setSheetState('collapsed');
+    setIsSearching(false);
+  };
+
+  const handleSheetDrag = () => {
+    if (sheetState === 'collapsed') setSheetState('half');
+    else if (sheetState === 'half') setSheetState('full');
+    else setSheetState('collapsed');
+  };
+
+  const handleCloseSheet = () => {
+    setSelectedJob(null);
+    setSheetState('collapsed');
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    setIsSearching(false);
+  };
+
+  return (
+    <div className="map-view-container">
+      {/* Search Bar */}
+      <div className={`map-search-bar ${isSearching ? 'focused' : ''}`}>
+        <form onSubmit={handleSearchSubmit}>
+          <Icons.Search />
+          <input 
+            type="text"
+            placeholder="Search jobs, addresses, areas..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onFocus={() => setIsSearching(true)}
+          />
+          {searchQuery && (
+            <button type="button" className="clear-search" onClick={() => { setSearchQuery(''); setIsSearching(false); }}>
+              <Icons.Close />
+            </button>
+          )}
+        </form>
+      </div>
+
+      {/* Search Results Dropdown */}
+      {isSearching && searchQuery && (
+        <div className="map-search-results">
+          {filteredJobs.length > 0 ? (
+            <>
+              <div className="search-results-header">Jobs matching "{searchQuery}"</div>
+              {filteredJobs.slice(0, 5).map(job => (
+                <button 
+                  key={job.jobId} 
+                  className="search-result-item"
+                  onClick={() => handlePinClick(job)}
+                >
+                  <Icons.Briefcase />
+                  <div className="result-info">
+                    <span className="result-title">{job.jobTitle}</span>
+                    <span className="result-address">{job.address}</span>
+                  </div>
+                  <span className="result-photos">{job.photos.length} photos</span>
+                </button>
+              ))}
+            </>
+          ) : (
+            <div className="no-results">
+              <span>No jobs found for "{searchQuery}"</span>
+              <span className="suggestion">Try searching by job name, address, or area</span>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Realistic Map Background */}
+      <div className="map-background">
+        {/* Map Base Layer - mimics real map */}
+        <div className="map-base-layer">
+          {/* Parks/Green Areas */}
+          <div className="map-park" style={{ top: '60%', left: '10%', width: '25%', height: '30%' }}></div>
+          <div className="map-park" style={{ top: '5%', left: '70%', width: '20%', height: '15%' }}></div>
+          
+          {/* Water Body */}
+          <div className="map-water" style={{ top: '75%', left: '50%', width: '45%', height: '20%' }}></div>
+          
+          {/* Main Roads */}
+          <div className="map-road main-road horizontal" style={{ top: '30%' }}></div>
+          <div className="map-road main-road horizontal" style={{ top: '65%' }}></div>
+          <div className="map-road main-road vertical" style={{ left: '25%' }}></div>
+          <div className="map-road main-road vertical" style={{ left: '60%' }}></div>
+          
+          {/* Secondary Roads */}
+          <div className="map-road secondary horizontal" style={{ top: '15%' }}></div>
+          <div className="map-road secondary horizontal" style={{ top: '45%' }}></div>
+          <div className="map-road secondary horizontal" style={{ top: '80%' }}></div>
+          <div className="map-road secondary vertical" style={{ left: '10%' }}></div>
+          <div className="map-road secondary vertical" style={{ left: '42%' }}></div>
+          <div className="map-road secondary vertical" style={{ left: '78%' }}></div>
+          
+          {/* Buildings/Blocks */}
+          <div className="map-block" style={{ top: '8%', left: '12%', width: '10%', height: '18%' }}></div>
+          <div className="map-block" style={{ top: '8%', left: '28%', width: '12%', height: '18%' }}></div>
+          <div className="map-block" style={{ top: '8%', left: '45%', width: '13%', height: '18%' }}></div>
+          <div className="map-block" style={{ top: '35%', left: '5%', width: '18%', height: '22%' }}></div>
+          <div className="map-block" style={{ top: '35%', left: '28%', width: '12%', height: '22%' }}></div>
+          <div className="map-block" style={{ top: '35%', left: '45%', width: '13%', height: '12%' }}></div>
+          <div className="map-block" style={{ top: '50%', left: '45%', width: '13%', height: '10%' }}></div>
+          <div className="map-block" style={{ top: '35%', left: '63%', width: '15%', height: '22%' }}></div>
+          <div className="map-block" style={{ top: '35%', left: '82%', width: '12%', height: '22%' }}></div>
+          <div className="map-block" style={{ top: '70%', left: '5%', width: '8%', height: '12%' }}></div>
+          <div className="map-block" style={{ top: '70%', left: '28%', width: '12%', height: '15%' }}></div>
+          
+          {/* Street Labels */}
+          <div className="map-street-label" style={{ top: '28%', left: '35%' }}>Main St</div>
+          <div className="map-street-label" style={{ top: '63%', left: '35%' }}>Oak Ave</div>
+          <div className="map-street-label vertical" style={{ top: '50%', left: '23%' }}>1st St</div>
+        </div>
+        
+        {/* Map Pins - Job Locations */}
+        <div className="map-pins-layer">
+          {filteredJobs.map((job, index) => (
+            <div 
+              key={job.jobId}
+              className={`map-pin job-pin ${selectedJob?.jobId === job.jobId ? 'selected' : ''} ${searchQuery && filteredJobs.includes(job) ? 'highlighted' : ''}`}
+              style={{
+                left: `${12 + (index % 4) * 22}%`,
+                top: `${18 + Math.floor(index / 4) * 28}%`,
+              }}
+              onClick={() => handlePinClick(job)}
+            >
+              <div className="pin-icon-wrapper">
+                <Icons.Briefcase />
+              </div>
+              {job.photos.length > 0 && (
+                <span className="photo-count-badge">{job.photos.length}</span>
+              )}
+              <div className="pin-pointer"></div>
+            </div>
+          ))}
+        </div>
+
+        {/* Current Location Marker */}
+        <div className="current-location-marker">
+          <div className="location-dot"></div>
+          <div className="location-pulse"></div>
+        </div>
+      </div>
+
+      {/* Current Location Button - Hide when bottom sheet is open */}
+      {!selectedJob && (
+        <button className="current-location-btn">
+          <Icons.MyLocation />
+        </button>
+      )}
+
+      {/* Zoom Controls - Hide when bottom sheet is open */}
+      {!selectedJob && (
+        <div className="zoom-controls">
+          <button className="zoom-btn">+</button>
+          <button className="zoom-btn">−</button>
+        </div>
+      )}
+
+      {/* Map Attribution */}
+      <div className="map-attribution">Map data simulated</div>
+
+      {/* Bottom Sheet */}
+      {selectedJob && (
+        <div className={`map-bottom-sheet ${sheetState}`}>
+          <div className="sheet-drag-handle" onClick={handleSheetDrag}>
+            <div className="drag-indicator"></div>
+          </div>
+
+          {sheetState === 'collapsed' && (
+            <div className="sheet-collapsed-content">
+              <div className="job-preview-thumb">
+                <img src={selectedJob.photos[0]?.url} alt="" />
+              </div>
+              <div className="job-preview-info">
+                <h3 className="job-preview-title">{selectedJob.jobTitle}</h3>
+                <p className="job-preview-address">{selectedJob.address}</p>
+                <p className="job-preview-count">
+                  {selectedJob.photos.length} photos
+                </p>
+              </div>
+              <Icons.ChevronRight />
+            </div>
+          )}
+
+          {sheetState === 'half' && (
+            <div className="sheet-half-content">
+              <div className="job-info-header">
+                <h3>{selectedJob.jobTitle}</h3>
+                <p className="job-address">{selectedJob.address}</p>
+                <p className="job-meta">{selectedJob.photos.length} photos · {selectedJob.photos[0]?.date?.split(',')[0]}</p>
+              </div>
+              <div className="photo-strip">
+                {selectedJob.photos.slice(0, 4).map((photo, i) => (
+                  <div key={photo.id} className="strip-photo" onClick={() => onPhotoClick(photo.originalIndex)}>
+                    <img src={photo.url} alt="" />
+                    {photo.type === 'video' && (
+                      <div className="video-indicator">
+                        <Icons.Play />
+                        <span>{photo.duration}</span>
+                      </div>
+                    )}
+                  </div>
+                ))}
+                {selectedJob.photos.length > 4 && (
+                  <div className="strip-more-photos" onClick={() => setSheetState('full')}>
+                    +{selectedJob.photos.length - 4}
+                  </div>
+                )}
+              </div>
+              <button className="view-all-btn" onClick={() => setSheetState('full')}>
+                View All Photos
+              </button>
+            </div>
+          )}
+
+          {sheetState === 'full' && (
+            <div className="sheet-full-content">
+              <div className="full-header">
+                <div>
+                  <h3>{selectedJob.jobTitle}</h3>
+                  <p className="job-address">{selectedJob.address}</p>
+                  <p className="job-meta">{selectedJob.photos.length} photos</p>
+                </div>
+                <button className="close-sheet-btn" onClick={handleCloseSheet}>
+                  <Icons.Close />
+                </button>
+              </div>
+              
+              {/* Photos organized by date timeline */}
+              <div className="photos-timeline">
+                {(() => {
+                  // Group photos by date
+                  const photosByDate = selectedJob.photos.reduce((groups, photo) => {
+                    const dateKey = photo.date?.split(',')[0] || 'Unknown';
+                    if (!groups[dateKey]) groups[dateKey] = [];
+                    groups[dateKey].push(photo);
+                    return groups;
+                  }, {});
+                  
+                  return Object.entries(photosByDate).map(([date, photos]) => (
+                    <div key={date} className="timeline-date-section">
+                      <div className="timeline-date-header">
+                        <span className="timeline-date">{date}</span>
+                        <span className="timeline-count">{photos.length} {photos.length === 1 ? 'photo' : 'photos'}</span>
+                      </div>
+                      <div className="timeline-photos-grid">
+                        {photos.map((photo) => (
+                          <div 
+                            key={photo.id} 
+                            className={`grid-photo ${photo.type === 'video' ? 'is-video' : ''}`}
+                            onClick={() => onPhotoClick(photo.originalIndex)}
+                          >
+                            <img src={photo.url} alt="" />
+                            {photo.type === 'video' && (
+                              <div className="video-badge">
+                                <Icons.Play />
+                                <span>{photo.duration}</span>
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ));
+                })()}
+              </div>
+              
+              <button className="go-to-job-btn">
+                Go to Job Details
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Empty State */}
+      {jobs.length === 0 && (
+        <div className="map-empty-state">
+          <div className="empty-icon">🗺️ 📷</div>
+          <h3>No job photos yet</h3>
+          <p>Photos uploaded to jobs will appear on the map</p>
+          <button className="browse-jobs-btn">Browse Jobs</button>
+        </div>
+      )}
+    </div>
+  );
+};
+
 // Photo Feed Main Grid
 const PhotoFeedGrid = ({ 
   photos, 
@@ -1100,9 +1429,9 @@ const PhotoFeedGrid = ({
         )}
       </div>
 
-      {/* View Switcher - Photos / Jobs */}
+      {/* View Switcher - Photos / Jobs / Map */}
       {!multiSelectMode && (
-        <div className="feed-tabs view-tabs">
+        <div className="feed-tabs view-tabs three-tabs">
           <button 
             className={`tab-btn ${viewMode === 'grid' ? 'active' : ''}`}
             onClick={() => setViewMode('grid')}
@@ -1116,6 +1445,13 @@ const PhotoFeedGrid = ({
           >
             <Icons.Briefcase />
             Jobs
+          </button>
+          <button 
+            className={`tab-btn ${viewMode === 'map' ? 'active' : ''}`}
+            onClick={() => setViewMode('map')}
+          >
+            <Icons.MapPin />
+            Map
           </button>
         </div>
       )}
@@ -1147,8 +1483,8 @@ const PhotoFeedGrid = ({
         </div>
       )}
 
-      {/* Photo Gallery or Job View */}
-      {viewMode === 'grid' ? (
+      {/* Photo Gallery, Job View, or Map View */}
+      {viewMode === 'grid' && (
         <div className="photo-gallery">
           {dateGroups.map((group, groupIndex) => (
             <div key={group.date} className="gallery-date-section">
@@ -1210,7 +1546,9 @@ const PhotoFeedGrid = ({
             </div>
           ))}
         </div>
-      ) : (
+      )}
+
+      {viewMode === 'job' && (
         <div className="job-gallery">
           {jobGroups.map((group) => {
             const videoCount = group.photos.filter(p => p.type === 'video').length;
@@ -1284,6 +1622,14 @@ const PhotoFeedGrid = ({
         </div>
       )}
 
+      {/* Map View */}
+      {viewMode === 'map' && (
+        <MapView 
+          jobs={jobGroups} 
+          onJobClick={(job) => console.log('Job clicked:', job)}
+          onPhotoClick={onPhotoClick}
+        />
+      )}
 
       {/* Bulk Actions Bar */}
       {multiSelectMode && selectedPhotos.length > 0 && (
