@@ -1532,12 +1532,32 @@
   padding: 10px 16px 12px;
   background: #FFFFFF;
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  position: relative;
+  z-index: 200;
+  overflow: visible;
 }
 
 .jobs-filter-pills {
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+/* Jobs filter dropdown - use fixed positioning to escape overflow:hidden */
+.jobs-filter-pills .filter-pill-wrapper {
+  position: static;
+}
+
+.jobs-filter-pills .filter-dropdown {
+  position: fixed;
+  top: 280px; /* Positioned below the filter pills in the phone frame */
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 250px;
+  max-width: 340px;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 9999;
 }
 
 .jobs-search-bar {
@@ -1575,15 +1595,6 @@
   flex-shrink: 0;
 }
 
-.jobs-search-filter .filter-pill-wrapper {
-  position: relative;
-  z-index: 101;
-}
-
-.jobs-search-filter .filter-dropdown {
-  right: 0;
-  left: auto;
-}
 
 .filter-pill-wrapper {
   position: relative;
