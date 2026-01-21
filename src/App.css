@@ -1522,6 +1522,15 @@
   position: relative;
   z-index: 100;
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  overflow-x: auto;
+  flex-wrap: nowrap;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.inline-filters::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
 }
 
 /* Jobs Search and Filter */
@@ -1599,6 +1608,7 @@
 .filter-pill-wrapper {
   position: relative;
   z-index: 101;
+  flex-shrink: 0;
 }
 
 .filter-pill {
