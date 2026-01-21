@@ -192,8 +192,8 @@
   height: 100%;
   background: #fff;
   border-radius: 46px;
-  overflow: hidden;
   position: relative;
+  /* Allow dropdowns to overflow, but clip at the border-radius */
 }
 
 /* Status Bar */
@@ -1271,7 +1271,7 @@
   display: flex;
   flex-direction: column;
   background: #f8f9fa;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .feed-header {
@@ -1534,30 +1534,30 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   position: relative;
   z-index: 200;
-  overflow: visible;
 }
 
 .jobs-filter-pills {
   display: flex;
   align-items: center;
   gap: 8px;
+  position: relative;
 }
 
-/* Jobs filter dropdown - use fixed positioning to escape overflow:hidden */
+/* Jobs filter dropdown - positioned absolutely within the filter pills area */
 .jobs-filter-pills .filter-pill-wrapper {
-  position: static;
+  position: relative;
+  z-index: 1000;
 }
 
 .jobs-filter-pills .filter-dropdown {
-  position: fixed;
-  top: 280px; /* Positioned below the filter pills in the phone frame */
-  left: 50%;
-  transform: translateX(-50%);
-  min-width: 250px;
-  max-width: 340px;
-  max-height: 300px;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 180px;
+  max-height: 240px;
   overflow-y: auto;
   z-index: 9999;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
 }
 
 .jobs-search-bar {
