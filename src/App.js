@@ -1664,6 +1664,44 @@ const PhotoFeedGrid = ({
               </div>
             )}
           </div>
+
+          {/* Uploaded By Filter - Team Leader & Admin Only */}
+          {(userRole === USER_ROLES.TEAM_LEADER || userRole === USER_ROLES.ADMIN) && (
+            <div className="filter-pill-wrapper">
+              <button 
+                className={`filter-pill ${selectedUploadedBy ? 'active' : ''} ${activeInlineFilter === 'uploadedBy' ? 'open' : ''}`}
+                onClick={() => setActiveInlineFilter(activeInlineFilter === 'uploadedBy' ? null : 'uploadedBy')}
+              >
+                <span>{selectedUploadedBy || 'Uploaded by'}</span>
+                <Icons.ChevronDown />
+              </button>
+              {activeInlineFilter === 'uploadedBy' && (
+                <div className="filter-dropdown">
+                  <button 
+                    className={`dropdown-option ${!selectedUploadedBy ? 'selected' : ''}`}
+                    onClick={() => { 
+                      setSelectedUploadedBy(null); 
+                      setActiveInlineFilter(null); 
+                    }}
+                  >
+                    All
+                  </button>
+                  {teamMembers.map(member => (
+                    <button 
+                      key={member.id}
+                      className={`dropdown-option ${selectedUploadedBy === member.name ? 'selected' : ''}`}
+                      onClick={() => { 
+                        setSelectedUploadedBy(member.name); 
+                        setActiveInlineFilter(null); 
+                      }}
+                    >
+                      {member.name}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       )}
 
@@ -1713,44 +1751,6 @@ const PhotoFeedGrid = ({
                 </div>
               )}
             </div>
-
-            {/* Uploaded By Filter - Team Leader & Admin Only */}
-            {(userRole === USER_ROLES.TEAM_LEADER || userRole === USER_ROLES.ADMIN) && (
-              <div className="filter-pill-wrapper">
-                <button 
-                  className={`filter-pill ${selectedUploadedBy ? 'active' : ''} ${activeInlineFilter === 'uploadedBy' ? 'open' : ''}`}
-                  onClick={() => setActiveInlineFilter(activeInlineFilter === 'uploadedBy' ? null : 'uploadedBy')}
-                >
-                  <span>{selectedUploadedBy || 'Uploaded by'}</span>
-                  <Icons.ChevronDown />
-                </button>
-                {activeInlineFilter === 'uploadedBy' && (
-                  <div className="filter-dropdown">
-                    <button 
-                      className={`dropdown-option ${!selectedUploadedBy ? 'selected' : ''}`}
-                      onClick={() => { 
-                        setSelectedUploadedBy(null); 
-                        setActiveInlineFilter(null); 
-                      }}
-                    >
-                      All
-                    </button>
-                    {teamMembers.map(member => (
-                      <button 
-                        key={member.id}
-                        className={`dropdown-option ${selectedUploadedBy === member.name ? 'selected' : ''}`}
-                        onClick={() => { 
-                          setSelectedUploadedBy(member.name); 
-                          setActiveInlineFilter(null); 
-                        }}
-                      >
-                        {member.name}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
           </div>
         </div>
       )}
