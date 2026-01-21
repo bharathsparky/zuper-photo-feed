@@ -1575,8 +1575,53 @@ const PhotoFeedGrid = ({
               <span>Media type</span>
               <Icons.ChevronDown />
             </button>
+          </div>
+
+          {/* Tags Filter */}
+          <div className="filter-pill-wrapper">
+            <button 
+              className={`filter-pill ${selectedTags.length > 0 ? 'active' : ''} ${activeInlineFilter === 'tags' ? 'open' : ''}`}
+              onClick={() => setActiveInlineFilter(activeInlineFilter === 'tags' ? null : 'tags')}
+            >
+              <span>Tags{selectedTags.length > 0 ? ` (${selectedTags.length})` : ''}</span>
+              <Icons.ChevronDown />
+            </button>
+          </div>
+
+          {/* Date Filter */}
+          <div className="filter-pill-wrapper">
+            <button 
+              className={`filter-pill ${selectedDateRange ? 'active' : ''} ${activeInlineFilter === 'date' ? 'open' : ''}`}
+              onClick={() => setActiveInlineFilter(activeInlineFilter === 'date' ? null : 'date')}
+            >
+              <span>Date</span>
+              <Icons.ChevronDown />
+            </button>
+          </div>
+
+          {/* Uploaded By Filter - Team Leader & Admin Only */}
+          {(userRole === USER_ROLES.TEAM_LEADER || userRole === USER_ROLES.ADMIN) && (
+            <div className="filter-pill-wrapper">
+              <button 
+                className={`filter-pill ${selectedUploadedBy ? 'active' : ''} ${activeInlineFilter === 'uploadedBy' ? 'open' : ''}`}
+                onClick={() => setActiveInlineFilter(activeInlineFilter === 'uploadedBy' ? null : 'uploadedBy')}
+              >
+                <span>{selectedUploadedBy || 'Uploaded by'}</span>
+                <Icons.ChevronDown />
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Filter Dropdown - Rendered outside the scrolling container */}
+      {activeInlineFilter && ['mediaType', 'tags', 'date', 'uploadedBy'].includes(activeInlineFilter) && (
+        <>
+          <div className="filter-overlay" onClick={handleCloseInlineFilter} />
+          <div className="photos-filter-dropdown">
+            {/* Media Type Options */}
             {activeInlineFilter === 'mediaType' && (
-              <div className="filter-dropdown">
+              <>
                 <button 
                   className={`dropdown-option ${selectedMediaType === 'all' ? 'selected' : ''}`}
                   onClick={() => { setSelectedMediaType('all'); setActiveInlineFilter(null); }}
@@ -1595,21 +1640,12 @@ const PhotoFeedGrid = ({
                 >
                   Videos only
                 </button>
-              </div>
+              </>
             )}
-          </div>
 
-          {/* Tags Filter */}
-          <div className="filter-pill-wrapper">
-            <button 
-              className={`filter-pill ${selectedTags.length > 0 ? 'active' : ''} ${activeInlineFilter === 'tags' ? 'open' : ''}`}
-              onClick={() => setActiveInlineFilter(activeInlineFilter === 'tags' ? null : 'tags')}
-            >
-              <span>Tags{selectedTags.length > 0 ? ` (${selectedTags.length})` : ''}</span>
-              <Icons.ChevronDown />
-            </button>
+            {/* Tags Options */}
             {activeInlineFilter === 'tags' && (
-              <div className="filter-dropdown tags-dropdown">
+              <>
                 {availableTags.map(tag => (
                   <button 
                     key={tag}
@@ -1634,21 +1670,12 @@ const PhotoFeedGrid = ({
                     Clear all
                   </button>
                 )}
-              </div>
+              </>
             )}
-          </div>
 
-          {/* Date Filter */}
-          <div className="filter-pill-wrapper">
-            <button 
-              className={`filter-pill ${selectedDateRange ? 'active' : ''} ${activeInlineFilter === 'date' ? 'open' : ''}`}
-              onClick={() => setActiveInlineFilter(activeInlineFilter === 'date' ? null : 'date')}
-            >
-              <span>Date</span>
-              <Icons.ChevronDown />
-            </button>
+            {/* Date Options */}
             {activeInlineFilter === 'date' && (
-              <div className="filter-dropdown">
+              <>
                 {datePresets.map(preset => (
                   <button 
                     key={preset.id}
@@ -1661,53 +1688,52 @@ const PhotoFeedGrid = ({
                     {preset.label}
                   </button>
                 ))}
-              </div>
+              </>
+            )}
+
+            {/* Uploaded By Options */}
+            {activeInlineFilter === 'uploadedBy' && (
+              <>
+                <button 
+                  className={`dropdown-option ${!selectedUploadedBy ? 'selected' : ''}`}
+                  onClick={() => { setSelectedUploadedBy(null); setActiveInlineFilter(null); }}
+                >
+                  All
+                </button>
+                {teamMembers.map(member => (
+                  <button 
+                    key={member.id}
+                    className={`dropdown-option ${selectedUploadedBy === member.name ? 'selected' : ''}`}
+                    onClick={() => { setSelectedUploadedBy(member.name); setActiveInlineFilter(null); }}
+                  >
+                    {member.name}
+                  </button>
+                ))}
+              </>
             )}
           </div>
-
-          {/* Uploaded By Filter - Team Leader & Admin Only */}
-          {(userRole === USER_ROLES.TEAM_LEADER || userRole === USER_ROLES.ADMIN) && (
-            <div className="filter-pill-wrapper">
-              <button 
-                className={`filter-pill ${selectedUploadedBy ? 'active' : ''} ${activeInlineFilter === 'uploadedBy' ? 'open' : ''}`}
-                onClick={() => setActiveInlineFilter(activeInlineFilter === 'uploadedBy' ? null : 'uploadedBy')}
-              >
-                <span>{selectedUploadedBy || 'Uploaded by'}</span>
-                <Icons.ChevronDown />
-              </button>
-              {activeInlineFilter === 'uploadedBy' && (
-                <div className="filter-dropdown">
-                  <button 
-                    className={`dropdown-option ${!selectedUploadedBy ? 'selected' : ''}`}
-                    onClick={() => { 
-                      setSelectedUploadedBy(null); 
-                      setActiveInlineFilter(null); 
-                    }}
-                  >
-                    All
-                  </button>
-                  {teamMembers.map(member => (
-                    <button 
-                      key={member.id}
-                      className={`dropdown-option ${selectedUploadedBy === member.name ? 'selected' : ''}`}
-                      onClick={() => { 
-                        setSelectedUploadedBy(member.name); 
-                        setActiveInlineFilter(null); 
-                      }}
-                    >
-                      {member.name}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
-        </div>
+        </>
       )}
 
-      {/* Overlay to close filters when clicking outside */}
-      {activeInlineFilter && (
-        <div className="filter-overlay" onClick={handleCloseInlineFilter} />
+      {/* Jobs Date Filter Dropdown */}
+      {activeInlineFilter === 'jobDate' && (
+        <>
+          <div className="filter-overlay" onClick={handleCloseInlineFilter} />
+          <div className="photos-filter-dropdown">
+            {datePresets.map(preset => (
+              <button 
+                key={preset.id}
+                className={`dropdown-option ${selectedDateRange === preset.label ? 'selected' : ''}`}
+                onClick={() => { 
+                  setSelectedDateRange(preset.id === 'all' ? null : preset.label); 
+                  setActiveInlineFilter(null); 
+                }}
+              >
+                {preset.label}
+              </button>
+            ))}
+          </div>
+        </>
       )}
 
       {/* Jobs Search and Date Filter - Only for Jobs tab */}
@@ -1734,22 +1760,6 @@ const PhotoFeedGrid = ({
                 <span>{selectedDateRange || 'Date'}</span>
                 <Icons.ChevronDown />
               </button>
-              {activeInlineFilter === 'jobDate' && (
-                <div className="filter-dropdown">
-                  {datePresets.map(preset => (
-                    <button 
-                      key={preset.id}
-                      className={`dropdown-option ${selectedDateRange === preset.label ? 'selected' : ''}`}
-                      onClick={() => { 
-                        setSelectedDateRange(preset.id === 'all' ? null : preset.label); 
-                        setActiveInlineFilter(null); 
-                      }}
-                    >
-                      {preset.label}
-                    </button>
-                  ))}
-                </div>
-              )}
             </div>
           </div>
         </div>
