@@ -1260,7 +1260,7 @@ const PhotoFeedGrid = ({
   const [selectedMediaType, setSelectedMediaType] = useState('all'); // 'all', 'photos', 'videos'
   const [selectedTags, setSelectedTags] = useState([]);
   const [selectedDateRange, setSelectedDateRange] = useState(null); // { from, to } or preset like 'today', 'week'
-  const [selectedUploadedBy, setSelectedUploadedBy] = useState(null); // For Jobs tab - Team Leader/Admin only
+  const [selectedUploadedBy, setSelectedUploadedBy] = useState([]); // For Photos tab - Team Leader/Admin only (multi-select)
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false); // Favorites filter
   const [gridSize, setGridSize] = useState(3); // 2, 3, or 4 columns
   
@@ -1603,10 +1603,10 @@ const PhotoFeedGrid = ({
           {(userRole === USER_ROLES.TEAM_LEADER || userRole === USER_ROLES.ADMIN) && (
             <div className="filter-pill-wrapper">
               <button 
-                className={`filter-pill ${selectedUploadedBy ? 'active' : ''} ${activeInlineFilter === 'uploadedBy' ? 'open' : ''}`}
+                className={`filter-pill ${selectedUploadedBy.length > 0 ? 'active' : ''} ${activeInlineFilter === 'uploadedBy' ? 'open' : ''}`}
                 onClick={() => setActiveInlineFilter(activeInlineFilter === 'uploadedBy' ? null : 'uploadedBy')}
               >
-                <span>{selectedUploadedBy || 'Uploaded by'}</span>
+                <span>Uploaded by{selectedUploadedBy.length > 0 ? ` (${selectedUploadedBy.length})` : ''}</span>
                 <Icons.ChevronDown />
               </button>
             </div>
@@ -1691,24 +1691,33 @@ const PhotoFeedGrid = ({
               </>
             )}
 
-            {/* Uploaded By Options */}
+            {/* Uploaded By Options - Multi-select */}
             {activeInlineFilter === 'uploadedBy' && (
               <>
-                <button 
-                  className={`dropdown-option ${!selectedUploadedBy ? 'selected' : ''}`}
-                  onClick={() => { setSelectedUploadedBy(null); setActiveInlineFilter(null); }}
-                >
-                  All
-                </button>
                 {teamMembers.map(member => (
                   <button 
                     key={member.id}
-                    className={`dropdown-option ${selectedUploadedBy === member.name ? 'selected' : ''}`}
-                    onClick={() => { setSelectedUploadedBy(member.name); setActiveInlineFilter(null); }}
+                    className={`dropdown-option ${selectedUploadedBy.includes(member.name) ? 'selected' : ''}`}
+                    onClick={() => {
+                      setSelectedUploadedBy(prev => 
+                        prev.includes(member.name) 
+                          ? prev.filter(n => n !== member.name)
+                          : [...prev, member.name]
+                      );
+                    }}
                   >
+                    <span className="tag-checkbox">{selectedUploadedBy.includes(member.name) ? '✓' : ''}</span>
                     {member.name}
                   </button>
                 ))}
+                {selectedUploadedBy.length > 0 && (
+                  <button 
+                    className="dropdown-option clear-option"
+                    onClick={() => { setSelectedUploadedBy([]); setActiveInlineFilter(null); }}
+                  >
+                    Clear all
+                  </button>
+                )}
               </>
             )}
           </div>
