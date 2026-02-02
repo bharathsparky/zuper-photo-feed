@@ -7486,6 +7486,23 @@
 
 /* ============================================
    PHOTO EDITOR STYLES
+   ============================================
+   
+   Spacing Scale (8px base):
+   - 4px:  Micro spacing
+   - 8px:  Small spacing
+   - 12px: Medium-small spacing
+   - 16px: Medium spacing
+   - 24px: Large spacing
+   - 32px: Extra large spacing
+   
+   Touch Targets:
+   - 44px: Standard interactive elements
+   - 36px: Secondary/compact elements
+   
+   Icon Sizes:
+   - 20px: Small icons
+   - 24px: Standard icons
    ============================================ */
 
 .photo-editor {
@@ -7502,55 +7519,57 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 40px 16px 12px;
+  padding: 12px 16px;
+  padding-top: 44px;
   background: #000;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   z-index: 10;
 }
 
-.editor-header-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
 .editor-btn {
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: transparent;
+  background: rgba(255, 255, 255, 0.12);
   border: none;
   color: #fff;
   cursor: pointer;
   border-radius: 50%;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
 }
 
 .editor-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.18);
 }
 
 .editor-btn:active {
-  background: rgba(255, 255, 255, 0.2);
   transform: scale(0.95);
 }
 
-.editor-btn.disabled {
-  opacity: 0.3;
-  pointer-events: none;
+.editor-btn svg {
+  width: 20px;
+  height: 20px;
 }
 
-.editor-btn.close-btn svg {
-  width: 24px;
-  height: 24px;
+.editor-save-btn {
+  padding: 10px 28px;
+  background: rgba(139, 90, 70, 0.9);
+  color: #fff;
+  border: none;
+  border-radius: 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
 }
 
-.editor-header-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.editor-save-btn:hover {
+  background: rgba(139, 90, 70, 1);
+}
+
+.editor-save-btn:active {
+  transform: scale(0.97);
 }
 
 /* Active Tool Controls in Header */
@@ -7559,9 +7578,8 @@
   align-items: center;
   gap: 8px;
   background: rgba(255, 255, 255, 0.1);
-  padding: 6px 10px;
-  border-radius: 20px;
-  margin-right: 8px;
+  padding: 8px 12px;
+  border-radius: 24px;
 }
 
 .header-color-btn {
@@ -7570,7 +7588,8 @@
   border-radius: 50%;
   border: 2px solid rgba(255, 255, 255, 0.5);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
 }
 
 .header-color-btn:hover {
@@ -7579,14 +7598,15 @@
 }
 
 .header-tool-name {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   color: #fff;
+  white-space: nowrap;
 }
 
 .header-tool-close {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.15);
   border: none;
@@ -7596,6 +7616,8 @@
   justify-content: center;
   cursor: pointer;
   padding: 0;
+  flex-shrink: 0;
+  transition: all 0.15s ease;
 }
 
 .header-tool-close:hover {
@@ -7603,43 +7625,27 @@
 }
 
 .header-tool-close svg {
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
 }
 
-/* Color Popover from Header */
-.header-color-popover {
-  position: absolute;
-  top: 60px;
-  right: 100px;
-  background: rgba(40, 40, 40, 0.95);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: 12px;
-  padding: 10px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  z-index: 100;
-}
-
+/* Editor Copy Button */
 .editor-copy-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
   background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: none;
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
 }
 
 .editor-copy-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.15);
 }
 
 .editor-copy-btn:active {
@@ -7651,16 +7657,18 @@
   height: 20px;
 }
 
+/* Editor Save Button */
 .editor-save-btn {
-  padding: 10px 20px;
+  height: 44px;
+  padding: 0 24px;
   background: #E44A19;
   color: #fff;
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
 }
 
 .editor-save-btn:hover {
@@ -7671,21 +7679,12 @@
   transform: scale(0.95);
 }
 
-/* Main Editor Area - Canvas + Sidebar */
+/* Main Editor Area - Canvas */
 .editor-main {
   flex: 1;
   display: flex;
   overflow: hidden;
   position: relative;
-}
-
-/* Position sidebar as overlay on top of canvas */
-.editor-main .editor-sidebar {
-  position: absolute;
-  right: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
 }
 
 /* Canvas Container */
@@ -7706,44 +7705,13 @@
   cursor: crosshair;
 }
 
-/* Right Sidebar - Transparent Overlay */
-.editor-sidebar {
-  width: 56px;
-  border-radius: 16px;
-  background: rgba(80, 80, 80, 0.4);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 12px 8px;
-  gap: 6px;
-}
-
-/* Large Color Button */
-.sidebar-color-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 3px solid rgba(255, 255, 255, 0.3);
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  position: relative;
-}
-
-.sidebar-color-btn:hover {
-  transform: scale(1.05);
-  border-color: rgba(255, 255, 255, 0.5);
-}
-
-/* Color Picker Popover */
-.color-picker-popover {
+/* Header Color Popover - positioned below header when tool active */
+.header-color-popover {
   position: absolute;
-  right: 64px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(60, 60, 60, 0.85);
+  top: 56px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(40, 40, 40, 0.95);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-radius: 12px;
@@ -7753,17 +7721,17 @@
   gap: 6px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   z-index: 100;
-  animation: popoverIn 0.15s ease-out;
+  animation: popoverSlideDown 0.15s ease-out;
 }
 
-@keyframes popoverIn {
+@keyframes popoverSlideDown {
   from {
     opacity: 0;
-    transform: translateX(8px);
+    transform: translateX(-50%) translateY(-8px);
   }
   to {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateX(-50%) translateY(0);
   }
 }
 
@@ -7784,47 +7752,6 @@
 .popover-color.active {
   border-color: #fff;
   transform: scale(1.1);
-}
-
-/* Sidebar Divider */
-.sidebar-divider {
-  width: 24px;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.15);
-  margin: 2px 0;
-}
-
-/* Sidebar Tools */
-.sidebar-tools {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  flex: 1;
-  overflow-y: auto;
-  scrollbar-width: none;
-}
-
-.sidebar-tools::-webkit-scrollbar {
-  display: none;
-}
-
-.sidebar-tool-btn {
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  background: transparent;
-  border: none;
-  color: rgba(255, 255, 255, 0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.sidebar-tool-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
 }
 
 .sidebar-tool-btn.active {
@@ -7865,33 +7792,35 @@
   white-space: nowrap;
 }
 
+/* Selection handles are now drawn on canvas for better performance */
+
 /* Selection Controls */
 .selection-controls {
   position: absolute;
-  bottom: 16px;
+  bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   gap: 8px;
   z-index: 50;
   background: rgba(0, 0, 0, 0.9);
-  padding: 8px 14px;
-  border-radius: 24px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  padding: 8px 12px;
+  border-radius: 28px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
 }
 
 .selection-action-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   background: rgba(255, 255, 255, 0.1);
   color: #fff;
   border: none;
   border-radius: 50%;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
 }
 
 .selection-action-btn:hover {
@@ -7907,27 +7836,26 @@
 }
 
 .selection-action-btn svg {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
 }
 
 .selection-delete-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   background: #FF3B30;
   color: #fff;
   border: none;
   border-radius: 50%;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
 }
 
 .selection-delete-btn:hover {
   background: #E5352B;
-  transform: scale(1.05);
 }
 
 .selection-delete-btn:active {
@@ -7935,8 +7863,8 @@
 }
 
 .selection-delete-btn svg {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
 }
 
 /* Arrow Head Style Options */
@@ -8049,114 +7977,224 @@
   transform: scale(0.95);
 }
 
-/* Bottom Toolbar */
+/* Bottom Toolbar - Two Row Layout */
 .editor-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px 20px 36px;
+  background: #000;
+}
+
+/* Colors Row - Above tools */
+.toolbar-colors-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  padding: 12px 20px;
+}
+
+.toolbar-colors-row::-webkit-scrollbar {
+  display: none;
+}
+
+.toolbar-color {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.toolbar-color:hover {
+  transform: scale(1.08);
+}
+
+.toolbar-color.active {
+  box-shadow: 0 0 0 3px #fff;
+}
+
+/* White/light colors need visible border */
+.toolbar-color[style*="rgb(255, 255, 255)"],
+.toolbar-color[style*="#FFFFFF"],
+.toolbar-color[style*="#ffffff"] {
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.toolbar-color[style*="rgb(255, 255, 255)"].active,
+.toolbar-color[style*="#FFFFFF"].active,
+.toolbar-color[style*="#ffffff"].active {
+  box-shadow: 0 0 0 3px #fff;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Tools Row */
+.toolbar-tools-row {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 12px 16px 28px;
-  background: #1A1A1A;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 16px;
+  padding: 0 20px;
 }
 
-.toolbar-section {
+/* More tools section */
+.more-tools-section {
   position: relative;
-}
-
-.toolbar-tools {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  flex-shrink: 0;
 }
 
 /* Color Picker Button */
 .color-picker-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 3px solid #fff;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-}
-
-.color-picker-btn:active {
-  transform: scale(0.9);
-}
-
-.color-picker-dropdown {
-  position: absolute;
-  bottom: 52px;
-  left: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding: 12px;
-  background: #2A2A2A;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-  width: 164px;
-  z-index: 100;
-}
-
-.color-option {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  border: 2px solid transparent;
+  border: 3px solid rgba(255, 255, 255, 0.5);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
 }
 
-.color-option:hover {
-  transform: scale(1.1);
-}
-
-.color-option.active {
+.color-picker-btn.active {
   border-color: #fff;
-  box-shadow: 0 0 0 2px #E44A19;
 }
 
-/* Tool Buttons */
-.tool-btn {
-  width: 44px;
-  height: 44px;
+.color-picker-btn:active {
+  transform: scale(0.95);
+}
+
+/* Tool Buttons - Compact icon-only style */
+.editor-toolbar .tool-btn {
+  width: auto;
+  height: auto;
   display: flex;
   align-items: center;
   justify-content: center;
   background: transparent;
   border: none;
-  color: #999;
+  color: rgba(255, 255, 255, 0.7);
   cursor: pointer;
-  border-radius: 10px;
-  transition: all 0.2s ease;
+  padding: 8px;
+  transition: color 0.15s ease;
+  flex-shrink: 0;
 }
 
-.tool-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
+.editor-toolbar .tool-btn:hover {
   color: #fff;
+  background: transparent;
 }
 
-.tool-btn.active {
-  background: #E44A19;
+.editor-toolbar .tool-btn.active {
+  color: #E8764A;
+  background: transparent;
+  transform: none;
+  box-shadow: none;
+}
+
+.editor-toolbar .tool-btn:active {
+  transform: scale(0.95);
+}
+
+.editor-toolbar .tool-btn svg {
+  width: 26px;
+  height: 26px;
+}
+
+/* More Tools Trigger */
+.editor-toolbar .more-tools-trigger {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.editor-toolbar .more-tools-trigger svg {
+  width: 26px;
+  height: 26px;
+}
+
+.editor-toolbar .more-tools-trigger.active {
+  color: #E8764A;
+}
+
+/* More Tools Popover */
+.more-tools-popover {
+  position: absolute;
+  bottom: 56px;
+  right: -8px;
+  background: #2A2A2A;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  z-index: 100;
+  min-width: 180px;
+  animation: popoverSlideUp 0.15s ease-out;
+}
+
+@keyframes popoverSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.more-tool-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 14px 20px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   color: #fff;
+  font-size: 15px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  text-align: left;
 }
 
-.tool-btn:active {
-  transform: scale(0.9);
+.more-tool-item:last-child {
+  border-bottom: none;
 }
 
-.tool-btn svg {
+.more-tool-item svg {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.more-tool-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.more-tool-item.active {
+  background: rgba(228, 74, 25, 0.15);
+  color: #E44A19;
+}
+
+.more-tool-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 24px;
   height: 24px;
+  color: inherit;
 }
 
-.more-tools-btn {
-  background: #333;
+.more-tool-icon svg {
+  width: 20px;
+  height: 20px;
 }
 
-.more-tools-btn.active {
-  background: #E44A19;
+.more-tool-label {
+  font-weight: 400;
 }
 
 /* Stroke Width Button */
@@ -8223,7 +8261,8 @@
   background: rgba(228, 74, 25, 0.2);
 }
 
-.stroke-preview-item {
+.stroke-preview-item,
+.stroke-option-preview {
   width: 40px;
   background: #fff;
   border-radius: 4px;
@@ -8299,14 +8338,15 @@
   display: flex;
   align-items: center;
   background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 4px;
+  gap: 2px;
 }
 
 .undo-redo-btn {
   position: relative;
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -8314,8 +8354,8 @@
   border: none;
   color: #fff;
   cursor: pointer;
-  border-radius: 8px;
-  transition: all 0.2s ease;
+  border-radius: 10px;
+  transition: all 0.15s ease;
 }
 
 .undo-redo-btn:hover:not(.disabled) {
@@ -8323,13 +8363,13 @@
 }
 
 .undo-redo-btn.disabled {
-  color: #555;
+  color: rgba(255, 255, 255, 0.25);
   pointer-events: none;
 }
 
 .undo-redo-btn svg {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
 }
 
 .editor-save-btn.has-changes {
@@ -8338,10 +8378,10 @@
 
 /* Context Bar */
 .editor-context-bar {
-  background: #242424;
+  background: #1A1A1A;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 8px 12px;
-  min-height: 52px;
+  padding: 12px 16px;
+  min-height: 56px;
   display: flex;
   align-items: center;
 }
@@ -8351,39 +8391,44 @@
   align-items: center;
   width: 100%;
   overflow-x: auto;
-  gap: 8px;
+  gap: 12px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.context-drawing::-webkit-scrollbar {
+  display: none;
 }
 
 .quick-colors {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 .quick-color {
-  width: 26px;
-  height: 26px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   border: 2px solid transparent;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
   flex-shrink: 0;
 }
 
 .quick-color:hover {
-  transform: scale(1.15);
+  transform: scale(1.1);
 }
 
 .quick-color.active {
   border-color: #fff;
   box-shadow: 0 0 0 2px #E44A19;
-  transform: scale(1.1);
 }
 
 .context-divider {
   width: 1px;
-  height: 28px;
-  background: rgba(255, 255, 255, 0.15);
+  height: 24px;
+  background: rgba(255, 255, 255, 0.12);
   margin: 0 4px;
   flex-shrink: 0;
 }
@@ -8395,16 +8440,16 @@
 }
 
 .quick-stroke {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: transparent;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
   flex-shrink: 0;
 }
 
@@ -8413,32 +8458,32 @@
 }
 
 .quick-stroke.active {
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .stroke-line {
-  width: 18px;
+  width: 20px;
   border-radius: 2px;
 }
 
 .fill-toggle {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 10px;
+  gap: 8px;
+  padding: 8px 12px;
   background: transparent;
   border: none;
-  border-radius: 6px;
-  color: #999;
-  font-size: 12px;
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 13px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
   flex-shrink: 0;
 }
 
 .fill-toggle:hover {
   background: rgba(255, 255, 255, 0.1);
+  color: #fff;
 }
 
 .fill-toggle.active {
@@ -8447,8 +8492,8 @@
 }
 
 .fill-icon {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   border: 2px solid currentColor;
   border-radius: 4px;
 }
@@ -8811,7 +8856,7 @@
 .sticker-picker-modal {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.85);
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -8820,7 +8865,7 @@
 
 .sticker-picker-content {
   background: #1A1A1A;
-  border-radius: 20px 20px 0 0;
+  border-radius: 24px 24px 0 0;
   width: 100%;
   max-height: 50%;
   overflow: hidden;
@@ -8830,39 +8875,41 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .sticker-picker-header span {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 600;
   color: #fff;
+  letter-spacing: -0.2px;
 }
 
 .sticker-picker-header button {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #333;
+  background: rgba(255, 255, 255, 0.1);
   border: none;
   border-radius: 50%;
-  color: #999;
+  color: rgba(255, 255, 255, 0.7);
   cursor: pointer;
+  transition: all 0.15s ease;
 }
 
 .sticker-picker-header button:hover {
-  background: #444;
+  background: rgba(255, 255, 255, 0.15);
   color: #fff;
 }
 
 .sticker-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  padding: 16px;
+  gap: 12px;
+  padding: 20px 24px;
   overflow-y: auto;
   max-height: 280px;
 }
@@ -8872,20 +8919,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #2A2A2A;
+  background: rgba(255, 255, 255, 0.06);
   border: none;
-  border-radius: 12px;
+  border-radius: 16px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
 }
 
 .sticker-option:hover {
-  background: #333;
-  transform: scale(1.05);
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.02);
 }
 
 .sticker-option:active {
-  transform: scale(0.95);
+  transform: scale(0.96);
 }
 
 .sticker-preview {
@@ -8895,9 +8942,9 @@
 .stamp-preview {
   font-size: 10px;
   font-weight: 700;
-  padding: 6px 8px;
+  padding: 8px 10px;
   border: 2px solid;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
 /* Photo Detail View (Pre-editor) */
@@ -8917,44 +8964,61 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 16px;
+  padding: 16px 20px;
   background: #000;
 }
 
 .photo-detail-header .back-btn {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #333;
+  background: rgba(255, 255, 255, 0.1);
   border: none;
   border-radius: 50%;
   color: #fff;
   cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.photo-detail-header .back-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
 }
 
 .photo-filename {
   flex: 1;
-  background: #333;
+  background: rgba(255, 255, 255, 0.08);
   border: none;
-  border-radius: 8px;
-  padding: 10px 14px;
+  border-radius: 12px;
+  padding: 12px 16px;
   color: #fff;
-  font-size: 14px;
+  font-size: 15px;
   outline: none;
+  transition: all 0.15s ease;
+}
+
+.photo-filename:focus {
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .photo-detail-header .action-btn {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: transparent;
   border: none;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.8);
   cursor: pointer;
+  border-radius: 50%;
+  transition: all 0.15s ease;
+}
+
+.photo-detail-header .action-btn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .photo-detail-content {
@@ -8962,52 +9026,54 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 24px;
 }
 
 .photo-detail-content img {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
-  border-radius: 8px;
+  border-radius: 12px;
 }
 
 .photo-detail-footer {
-  padding: 16px 20px 32px;
+  padding: 20px 24px 36px;
   background: #000;
 }
 
 .add-tag-btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 8px 16px;
+  gap: 8px;
+  padding: 10px 20px;
   background: #E44A19;
   color: #fff;
   border: none;
-  border-radius: 20px;
+  border-radius: 24px;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   margin-bottom: 16px;
+  transition: all 0.15s ease;
 }
 
 .add-tag-btn:hover {
   background: #D43D12;
+  transform: translateY(-1px);
 }
 
 .add-description-row {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  color: #999;
+  padding: 16px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.5);
   font-size: 15px;
 }
 
 .add-description-row svg {
-  color: #666;
+  color: rgba(255, 255, 255, 0.4);
 }
 
 .attachment-row {
@@ -9015,34 +9081,36 @@
   align-items: center;
   justify-content: space-between;
   padding: 16px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .attachment-info {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
 }
 
 .attachment-count {
   color: #fff;
   font-size: 15px;
+  font-weight: 500;
 }
 
 .attachment-size {
-  color: #666;
+  color: rgba(255, 255, 255, 0.5);
   font-size: 13px;
 }
 
 .attach-btn {
-  padding: 10px 24px;
+  padding: 12px 24px;
   background: #E44A19;
   color: #fff;
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
+  transition: all 0.15s ease;
 }
 
 .attach-btn:hover {
@@ -9053,17 +9121,17 @@
 .fisheye-picker-modal {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.85);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 500;
-  padding: 20px;
+  padding: 24px;
 }
 
 .fisheye-picker-content {
   background: #1A1A1A;
-  border-radius: 16px;
+  border-radius: 20px;
   width: 100%;
   max-width: 300px;
   overflow: hidden;
@@ -9073,40 +9141,42 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .fisheye-picker-header span {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 600;
   color: #fff;
+  letter-spacing: -0.2px;
 }
 
 .fisheye-picker-header button {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #333;
+  background: rgba(255, 255, 255, 0.1);
   border: none;
   border-radius: 50%;
-  color: #999;
+  color: rgba(255, 255, 255, 0.7);
   cursor: pointer;
+  transition: all 0.15s ease;
 }
 
 .fisheye-picker-header button:hover {
-  background: #444;
+  background: rgba(255, 255, 255, 0.15);
   color: #fff;
 }
 
 .fisheye-settings {
-  padding: 16px;
+  padding: 20px 24px;
 }
 
 .fisheye-setting {
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .fisheye-setting:last-child {
@@ -9115,42 +9185,42 @@
 
 .fisheye-setting label {
   display: block;
-  font-size: 13px;
-  font-weight: 500;
-  color: #999;
-  margin-bottom: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 12px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.8px;
 }
 
 .fisheye-options {
   display: flex;
-  gap: 8px;
+  gap: 10px;
 }
 
 .fisheye-option {
   flex: 1;
-  padding: 12px 8px;
-  background: #2A2A2A;
+  padding: 14px 10px;
+  background: rgba(255, 255, 255, 0.06);
   border: 2px solid transparent;
-  border-radius: 10px;
+  border-radius: 12px;
   color: #fff;
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .fisheye-option:hover {
-  background: #333;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .fisheye-option.active {
   border-color: #E44A19;
-  background: rgba(228, 74, 25, 0.2);
+  background: rgba(228, 74, 25, 0.15);
 }
 
 .size-preview {
@@ -9163,8 +9233,8 @@
 .fisheye-preview-container {
   display: flex;
   justify-content: center;
-  padding: 20px 0;
-  margin-top: 10px;
+  padding: 24px 0;
+  margin-top: 8px;
 }
 
 .fisheye-preview {

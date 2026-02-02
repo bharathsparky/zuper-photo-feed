@@ -2925,7 +2925,7 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
   const canvasRef = React.useRef(null);
   const containerRef = React.useRef(null);
   const [isDrawing, setIsDrawing] = React.useState(false);
-  const [currentTool, setCurrentTool] = React.useState('freehand');
+  const [currentTool, setCurrentTool] = React.useState(null); // No tool selected by default
   const [strokeColor, setStrokeColor] = React.useState('#FF3B30');
   const [strokeWidth, setStrokeWidth] = React.useState(4);
   const [annotations, setAnnotations] = React.useState([]);
@@ -2943,6 +2943,7 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
   const [showColorPicker, setShowColorPicker] = React.useState(false);
   const [showMoreTools, setShowMoreTools] = React.useState(false);
   const [showStrokeWidth, setShowStrokeWidth] = React.useState(false);
+  const [canvasCursor, setCanvasCursor] = React.useState('default');
   const [undoStack, setUndoStack] = React.useState([]);
   const [redoStack, setRedoStack] = React.useState([]);
   const [textInput, setTextInput] = React.useState('');
@@ -2962,7 +2963,7 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
   const [editingTextId, setEditingTextId] = React.useState(null);
   const imageRef = React.useRef(null);
 
-  const COLORS = ['#FF3B30', '#FF9500', '#FFCC00', '#34C759', '#007AFF', '#AF52DE', '#FFFFFF', '#000000'];
+  const COLORS = ['#1A1A1A', '#FFFFFF', '#FF3B30', '#FF9500', '#FFCC00', '#32D74B', '#00C7BE', '#007AFF', '#AF52DE', '#FF2D92'];
   const STROKE_WIDTHS = [2, 4, 6, 8, 12];
 
   // Stickers/stamps for roofing industry
@@ -3164,155 +3165,69 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
     img.src = photo.url;
   }, [imageLoaded, annotations, currentPath, strokeColor, strokeWidth, photo.url, currentTool, polylinePoints, selectedAnnotationId, loupePosition]);
 
-  // Draw selection indicator around annotation
+  // Draw selection indicator around annotation - Professional Figma-style
   const drawSelectionIndicator = (ctx, annotation) => {
+    const bounds = getSelectionBounds(annotation);
+    if (!bounds) return;
+    
     ctx.save();
-    ctx.strokeStyle = '#007AFF';
-    ctx.lineWidth = 2;
-    ctx.setLineDash([5, 5]);
     
-    const padding = 10;
-    let bounds = null;
+    const rotation = annotation.rotation || 0;
+    const centerX = bounds.x + bounds.width / 2;
+    const centerY = bounds.y + bounds.height / 2;
     
-    switch (annotation.type) {
-      case 'rectangle':
-        bounds = {
-          x: annotation.x - padding,
-          y: annotation.y - padding,
-          width: annotation.width + padding * 2,
-          height: annotation.height + padding * 2
-        };
-        break;
-      case 'ellipse':
-        bounds = {
-          x: annotation.cx - annotation.rx - padding,
-          y: annotation.cy - annotation.ry - padding,
-          width: (annotation.rx + padding) * 2,
-          height: (annotation.ry + padding) * 2
-        };
-        break;
-      case 'arrow':
-      case 'measure':
-        const minX = Math.min(annotation.start.x, annotation.end.x);
-        const minY = Math.min(annotation.start.y, annotation.end.y);
-        const maxX = Math.max(annotation.start.x, annotation.end.x);
-        const maxY = Math.max(annotation.start.y, annotation.end.y);
-        bounds = {
-          x: minX - padding,
-          y: minY - padding,
-          width: maxX - minX + padding * 2,
-          height: maxY - minY + padding * 2
-        };
-        break;
-      case 'text':
-      case 'sticker':
-        bounds = {
-          x: annotation.x - 40,
-          y: annotation.y - 40,
-          width: 80,
-          height: 80
-        };
-        break;
-      case 'fisheye':
-        bounds = {
-          x: annotation.cx - annotation.radius - padding,
-          y: annotation.cy - annotation.radius - padding,
-          width: (annotation.radius + padding) * 2,
-          height: (annotation.radius + padding) * 2
-        };
-        break;
-      case 'freehand':
-      case 'polyline':
-      case 'polygon':
-        if (annotation.points && annotation.points.length > 0) {
-          let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
-          annotation.points.forEach(p => {
-            minX = Math.min(minX, p.x);
-            minY = Math.min(minY, p.y);
-            maxX = Math.max(maxX, p.x);
-            maxY = Math.max(maxY, p.y);
-          });
-          bounds = {
-            x: minX - padding,
-            y: minY - padding,
-            width: maxX - minX + padding * 2,
-            height: maxY - minY + padding * 2
-          };
-        }
-        break;
-      default:
-        break;
-    }
+    // Apply rotation transform
+    ctx.translate(centerX, centerY);
+    ctx.rotate(rotation);
+    ctx.translate(-centerX, -centerY);
     
-    if (bounds) {
-      const rotation = annotation.rotation || 0;
-      const centerX = bounds.x + bounds.width / 2;
-      const centerY = bounds.y + bounds.height / 2;
-      
-      // Apply rotation to selection indicator
-      ctx.translate(centerX, centerY);
-      ctx.rotate(rotation * Math.PI / 180);
-      ctx.translate(-centerX, -centerY);
-      
-      // Draw dashed rectangle
-      ctx.strokeRect(bounds.x, bounds.y, bounds.width, bounds.height);
-      
-      // Draw corner resize handles - larger for easier touch
-      ctx.setLineDash([]);
-      const handleSize = 18;
-      const corners = [
-        { x: bounds.x, y: bounds.y, id: 'nw' },
-        { x: bounds.x + bounds.width, y: bounds.y, id: 'ne' },
-        { x: bounds.x, y: bounds.y + bounds.height, id: 'sw' },
-        { x: bounds.x + bounds.width, y: bounds.y + bounds.height, id: 'se' }
-      ];
-      
-      corners.forEach(corner => {
-        // White fill with shadow effect
-        ctx.fillStyle = '#FFFFFF';
-        ctx.beginPath();
-        ctx.arc(corner.x, corner.y, handleSize/2, 0, Math.PI * 2);
-        ctx.fill();
-        // Blue border
-        ctx.strokeStyle = '#007AFF';
-        ctx.lineWidth = 2.5;
-        ctx.stroke();
-      });
-      
-      // Draw rotation handle (circle above the selection)
-      const rotateHandleY = bounds.y - 30;
-      const rotateHandleX = centerX;
-      
-      // Line connecting to rotation handle
-      ctx.beginPath();
-      ctx.strokeStyle = '#007AFF';
-      ctx.lineWidth = 1;
-      ctx.moveTo(centerX, bounds.y);
-      ctx.lineTo(rotateHandleX, rotateHandleY + 10);
-      ctx.stroke();
-      
-      // Rotation handle circle
-      ctx.beginPath();
-      ctx.arc(rotateHandleX, rotateHandleY, 10, 0, Math.PI * 2);
-      ctx.fillStyle = '#FFFFFF';
-      ctx.fill();
-      ctx.strokeStyle = '#007AFF';
-      ctx.lineWidth = 2;
-      ctx.stroke();
-      
-      // Rotation icon (curved arrow)
-      ctx.beginPath();
-      ctx.strokeStyle = '#007AFF';
-      ctx.lineWidth = 2;
-      ctx.arc(rotateHandleX, rotateHandleY, 5, -Math.PI * 0.75, Math.PI * 0.5);
-      ctx.stroke();
-      // Arrow tip
-      ctx.beginPath();
-      ctx.moveTo(rotateHandleX + 4, rotateHandleY + 4);
-      ctx.lineTo(rotateHandleX + 6, rotateHandleY + 1);
-      ctx.lineTo(rotateHandleX + 2, rotateHandleY + 2);
-      ctx.stroke();
-    }
+    // 1. Draw selection border - clean solid line (Figma style)
+    ctx.strokeStyle = '#0D99FF';
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([]);
+    ctx.strokeRect(bounds.x, bounds.y, bounds.width, bounds.height);
+    
+    // 2. Draw corner resize handles - small squares (Figma style)
+    const handleSize = 8;
+    ctx.fillStyle = '#FFFFFF';
+    ctx.strokeStyle = '#0D99FF';
+    ctx.lineWidth = 1.5;
+    
+    const corners = [
+      { x: bounds.x, y: bounds.y },
+      { x: bounds.x + bounds.width, y: bounds.y },
+      { x: bounds.x, y: bounds.y + bounds.height },
+      { x: bounds.x + bounds.width, y: bounds.y + bounds.height }
+    ];
+    
+    corners.forEach(corner => {
+      ctx.fillRect(corner.x - handleSize/2, corner.y - handleSize/2, handleSize, handleSize);
+      ctx.strokeRect(corner.x - handleSize/2, corner.y - handleSize/2, handleSize, handleSize);
+    });
+    
+    // 3. Draw rotation handle - stem + circle at top center
+    const stemLength = 24;
+    const handleRadius = 5;
+    const topCenterX = bounds.x + bounds.width / 2;
+    const topCenterY = bounds.y;
+    const rotateHandleY = topCenterY - stemLength;
+    
+    // Stem line
+    ctx.beginPath();
+    ctx.strokeStyle = '#0D99FF';
+    ctx.lineWidth = 1.5;
+    ctx.moveTo(topCenterX, topCenterY);
+    ctx.lineTo(topCenterX, rotateHandleY + handleRadius);
+    ctx.stroke();
+    
+    // Rotation handle circle
+    ctx.beginPath();
+    ctx.arc(topCenterX, rotateHandleY, handleRadius, 0, Math.PI * 2);
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fill();
+    ctx.strokeStyle = '#0D99FF';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
     
     ctx.restore();
   };
@@ -3372,10 +3287,23 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
     const bounds = getSelectionBounds(annotation);
     if (!bounds) return false;
     
+    const rotation = annotation.rotation || 0;
     const centerX = bounds.x + bounds.width / 2;
-    const rotateHandleY = bounds.y - 30;
-    const dist = Math.sqrt(Math.pow(pos.x - centerX, 2) + Math.pow(pos.y - rotateHandleY, 2));
-    return dist <= 15;
+    const centerY = bounds.y + bounds.height / 2;
+    
+    // Handle is at top center, but rotated with the selection
+    const stemLength = 24;
+    const localHandleX = 0;
+    const localHandleY = -(bounds.height / 2 + stemLength);
+    
+    // Rotate handle position
+    const cos = Math.cos(rotation);
+    const sin = Math.sin(rotation);
+    const handleX = centerX + localHandleX * cos - localHandleY * sin;
+    const handleY = centerY + localHandleX * sin + localHandleY * cos;
+    
+    const dist = Math.sqrt(Math.pow(pos.x - handleX, 2) + Math.pow(pos.y - handleY, 2));
+    return dist <= 12;
   };
   
   // Check if point is on resize handle - larger hit area for easier touch
@@ -3625,7 +3553,7 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
         ctx.save();
         if (rotation !== 0) {
           ctx.translate(centerX, centerY);
-          ctx.rotate(rotation * Math.PI / 180);
+          ctx.rotate(rotation);
           ctx.translate(-centerX, -centerY);
         }
         
@@ -3680,7 +3608,7 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
         
         ctx.save();
         ctx.translate(rectCenterX, rectCenterY);
-        if (rectRotation !== 0) ctx.rotate(rectRotation * Math.PI / 180);
+        if (rectRotation !== 0) ctx.rotate(rectRotation);
         if (rectScale !== 1) ctx.scale(rectScale, rectScale);
         ctx.translate(-rectCenterX, -rectCenterY);
         
@@ -3705,7 +3633,7 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
         
         ctx.save();
         ctx.translate(annotation.cx, annotation.cy);
-        if (ellipseRotation !== 0) ctx.rotate(ellipseRotation * Math.PI / 180);
+        if (ellipseRotation !== 0) ctx.rotate(ellipseRotation);
         if (ellipseScale !== 1) ctx.scale(ellipseScale, ellipseScale);
         ctx.translate(-annotation.cx, -annotation.cy);
         
@@ -4260,15 +4188,16 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
       setLoupePosition(pos);
     }
     
-    // Handle rotation
+    // Handle rotation - smooth cursor following
     if (isRotating && selectedAnnotationId) {
+      setCanvasCursor('grabbing');
       const selectedAnn = annotations.find(a => a.id === selectedAnnotationId);
       if (selectedAnn) {
         const bounds = getSelectionBounds(selectedAnn);
         const centerX = bounds.x + bounds.width / 2;
         const centerY = bounds.y + bounds.height / 2;
         const currentAngle = Math.atan2(pos.y - centerY, pos.x - centerX);
-        const deltaAngle = (currentAngle - rotateStartAngle) * (180 / Math.PI);
+        const deltaAngle = currentAngle - rotateStartAngle;
         rotateAnnotation(selectedAnnotationId, deltaAngle);
         setRotateStartAngle(currentAngle);
       }
@@ -4286,11 +4215,46 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
     
     // Handle dragging selected annotation (works with any tool)
     if (isDragging && selectedAnnotationId) {
+      setCanvasCursor('move');
       const deltaX = pos.x - dragOffset.x;
       const deltaY = pos.y - dragOffset.y;
       moveAnnotation(selectedAnnotationId, deltaX, deltaY);
       setDragOffset({ x: pos.x, y: pos.y });
       return;
+    }
+    
+    // Update cursor based on what's being hovered (when not dragging/rotating)
+    if (selectedAnnotationId && !isDrawing) {
+      const selectedAnn = annotations.find(a => a.id === selectedAnnotationId);
+      if (selectedAnn) {
+        if (hitTestRotationHandle(pos, selectedAnn)) {
+          setCanvasCursor('grab');
+          return;
+        }
+        const handle = hitTestResizeHandle(pos, selectedAnn);
+        if (handle) {
+          // Set cursor based on resize handle position
+          const cursors = {
+            'nw': 'nwse-resize',
+            'se': 'nwse-resize',
+            'ne': 'nesw-resize',
+            'sw': 'nesw-resize'
+          };
+          setCanvasCursor(cursors[handle] || 'pointer');
+          return;
+        }
+        if (hitTestAnnotation(pos)?.id === selectedAnnotationId) {
+          setCanvasCursor('move');
+          return;
+        }
+      }
+    }
+    
+    // Default cursor based on tool
+    if (currentTool === 'select') {
+      setCanvasCursor('default');
+    } else {
+      setCanvasCursor('crosshair');
     }
     
     if (!isDrawing) return;
@@ -4557,77 +4521,41 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
     onClose();
   };
 
-  // All tools in one vertical sidebar
-  const allTools = [
+  // Primary tools shown in bottom toolbar
+  const primaryTools = [
     { id: 'freehand', icon: <Icons.Draw />, label: 'Draw' },
     { id: 'arrow', icon: <Icons.Arrow />, label: 'Arrow' },
-    { id: 'ellipse', icon: <Icons.Circle />, label: 'Circle' },
-    { id: 'rectangle', icon: <Icons.Rectangle />, label: 'Rect' },
-    { id: 'polyline', icon: <Icons.Polyline />, label: 'Pen' },
     { id: 'text', icon: <Icons.TextTool />, label: 'Text' },
+    { id: 'ellipse', icon: <Icons.Circle />, label: 'Circle' },
+  ];
+  
+  // Secondary tools shown in the "more" menu
+  const moreTools = [
+    { id: 'rectangle', icon: <Icons.Rectangle />, label: 'Rectangle' },
+    { id: 'polyline', icon: <Icons.Polyline />, label: 'Polyline' },
     { id: 'sticker', icon: <Icons.Sticker />, label: 'Sticker' },
     { id: 'fisheye', icon: <Icons.Magnifier />, label: 'Magnify' },
-    { id: 'measure', icon: <Icons.Ruler />, label: 'Measure' },
   ];
+  
+  // Combined for reference
+  const allTools = [...primaryTools, ...moreTools];
 
   return (
     <div className="photo-editor">
-      {/* Header - Clean with prominent undo/redo */}
+      {/* Header - Simple: X on left, Save on right */}
       <div className="editor-header">
         <button className="editor-btn close-btn" onClick={onClose}>
           <Icons.Close />
         </button>
-        <div className="editor-header-center">
-          <div className="undo-redo-group">
-            <button 
-              className={`undo-redo-btn ${undoStack.length === 0 ? 'disabled' : ''}`}
-              onClick={handleUndo}
-              disabled={undoStack.length === 0}
-              title="Undo"
-            >
-              <Icons.Undo />
-            </button>
-            <button 
-              className={`undo-redo-btn ${redoStack.length === 0 ? 'disabled' : ''}`}
-              onClick={handleRedo}
-              disabled={redoStack.length === 0}
-              title="Redo"
-            >
-              <Icons.Redo />
-            </button>
-          </div>
-        </div>
-        <div className="editor-header-actions">
-          {/* Active Tool & Color in Header when tool selected */}
-          {currentTool && (
-            <div className="header-active-tool">
-              <button 
-                className="header-color-btn"
-                style={{ backgroundColor: strokeColor }}
-                onClick={() => setShowColorPicker(!showColorPicker)}
-              />
-              <span className="header-tool-name">
-                {allTools.find(t => t.id === currentTool)?.label}
-              </span>
-              <button 
-                className="header-tool-close"
-                onClick={() => setCurrentTool(null)}
-              >
-                <Icons.Close />
-              </button>
-            </div>
-          )}
-          
-          <button 
-            className={`editor-save-btn ${annotations.length > 0 ? 'has-changes' : ''}`} 
-            onClick={handleSave}
-          >
-            {annotations.length > 0 ? 'Save' : 'Done'}
-          </button>
-        </div>
+        <button 
+          className="editor-save-btn" 
+          onClick={handleSave}
+        >
+          Save
+        </button>
       </div>
 
-      {/* Main Editor Area - Canvas + Right Sidebar */}
+      {/* Main Editor Area - Canvas */}
       <div className="editor-main">
         {/* Canvas Area */}
         <div className="editor-canvas-container" ref={containerRef}>
@@ -4637,6 +4565,7 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
               width={canvasSize.width}
               height={canvasSize.height}
               className="editor-canvas"
+              style={{ cursor: canvasCursor }}
               onMouseDown={handlePointerDown}
               onMouseMove={handlePointerMove}
               onMouseUp={handlePointerUp}
@@ -4646,6 +4575,7 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
               onTouchEnd={handlePointerUp}
             />
           )}
+          
           
           {/* Selection controls - show when annotation is selected */}
           {selectedAnnotationId && (() => {
@@ -4728,73 +4658,82 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
             </div>
           )}
         </div>
+      </div>
 
-        {/* Right Sidebar - Only show when no tool is active */}
-        {!currentTool && (
-          <div className="editor-sidebar">
-            {/* Color Picker Button */}
-            <button 
-              className="sidebar-color-btn"
-              style={{ backgroundColor: strokeColor }}
-              onClick={() => setShowColorPicker(!showColorPicker)}
-            />
-            
-            {showColorPicker && (
-              <div className="color-picker-popover">
-                {COLORS.map(color => (
-                  <button
-                    key={color}
-                    className={`popover-color ${strokeColor === color ? 'active' : ''}`}
-                    style={{ backgroundColor: color }}
-                    onClick={() => {
-                      setStrokeColor(color);
-                      if (selectedAnnotationId) changeSelectedColor(color);
-                      setShowColorPicker(false);
-                    }}
-                  />
-                ))}
-              </div>
-            )}
-            
-            <div className="sidebar-divider" />
-            
-            {/* Tools */}
-            <div className="sidebar-tools">
-              {allTools.map(tool => (
-                <button
-                  key={tool.id}
-                  className="sidebar-tool-btn"
-                  onClick={() => {
-                    if (tool.id === 'sticker') {
-                      setShowStickerPicker(true);
-                    } else {
-                      setCurrentTool(tool.id);
-                    }
-                  }}
-                >
-                  {tool.icon}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-        
-        {/* Color Picker Popover when tool active (positioned from header) */}
-        {currentTool && showColorPicker && (
-          <div className="header-color-popover">
+      {/* Bottom Toolbar - Two rows */}
+      <div className="editor-toolbar">
+        {/* Color Row - Shows when color picker is active */}
+        {showColorPicker && (
+          <div className="toolbar-colors-row">
             {COLORS.map(color => (
               <button
                 key={color}
-                className={`popover-color ${strokeColor === color ? 'active' : ''}`}
+                className={`toolbar-color ${strokeColor === color ? 'active' : ''}`}
                 style={{ backgroundColor: color }}
                 onClick={() => {
                   setStrokeColor(color);
-                  setShowColorPicker(false);
+                  if (selectedAnnotationId) changeSelectedColor(color);
                 }}
               />
             ))}
           </div>
         )}
+        
+        {/* Tools Row - Always visible */}
+        <div className="toolbar-tools-row">
+          {/* Color Picker Button */}
+          <button 
+            className={`color-picker-btn ${showColorPicker ? 'active' : ''}`}
+            style={{ backgroundColor: strokeColor }}
+            onClick={() => setShowColorPicker(!showColorPicker)}
+          />
+          
+          {/* Primary Tools */}
+          {primaryTools.map(tool => (
+            <button
+              key={tool.id}
+              className={`tool-btn ${currentTool === tool.id ? 'active' : ''}`}
+              onClick={() => {
+                setCurrentTool(currentTool === tool.id ? null : tool.id);
+                setShowMoreTools(false);
+              }}
+              title={tool.label}
+            >
+              {tool.icon}
+            </button>
+          ))}
+          
+          {/* More Tools Button */}
+          <div className="more-tools-section">
+            <button 
+              className={`tool-btn more-tools-trigger ${showMoreTools ? 'active' : ''}`}
+              onClick={() => setShowMoreTools(!showMoreTools)}
+            >
+              <Icons.Plus />
+            </button>
+            {showMoreTools && (
+              <div className="more-tools-popover">
+                {moreTools.map(tool => (
+                  <button
+                    key={tool.id}
+                    className={`more-tool-item ${currentTool === tool.id ? 'active' : ''}`}
+                    onClick={() => {
+                      if (tool.id === 'sticker') {
+                        setShowStickerPicker(true);
+                      } else {
+                        setCurrentTool(currentTool === tool.id ? null : tool.id);
+                      }
+                      setShowMoreTools(false);
+                    }}
+                  >
+                    <span className="more-tool-icon">{tool.icon}</span>
+                    <span className="more-tool-label">{tool.label}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* Text Input Modal */}
