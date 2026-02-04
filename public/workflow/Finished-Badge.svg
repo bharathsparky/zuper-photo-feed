@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 100">
-  <!-- Speech bubble body -->
-  <path d="M10 8 H130 C145 8 150 18 150 28 V52 C150 62 145 72 130 72 H75 L55 92 L55 72 H20 C10 72 10 62 10 52 V28 C10 18 10 8 20 8 Z" 
-        fill="#ffffff" stroke="#222222" stroke-width="5" stroke-linejoin="round"/>
-  <!-- Text -->
-  <text x="80" y="50" text-anchor="middle" dominant-baseline="middle" font-family="Arial Black, Helvetica, sans-serif" font-weight="900" font-size="24" fill="#222222" letter-spacing="1">FINISHED</text>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 95">
+  <!-- Clean speech bubble -->
+  <path d="M16 8 H144 C152 8 156 12 156 20 V56 C156 64 152 68 144 68 H70 L50 88 L50 68 H16 C8 68 4 64 4 56 V20 C4 12 8 8 16 8 Z" 
+        fill="#ffffff" stroke="#222222" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+  <text x="80" y="44" text-anchor="middle" dominant-baseline="middle" font-family="Arial Black, Helvetica, sans-serif" font-weight="900" font-size="24" fill="#222222">FINISHED</text>
 </svg>

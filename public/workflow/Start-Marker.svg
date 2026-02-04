@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 100">
-  <!-- Speech bubble body - filled black -->
-  <path d="M10 8 H100 C115 8 120 18 120 28 V52 C120 62 115 72 100 72 H65 L45 92 L45 72 H20 C10 72 10 62 10 52 V28 C10 18 10 8 20 8 Z" 
-        fill="#222222" stroke="#222222" stroke-width="5" stroke-linejoin="round"/>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 95">
+  <!-- Clean speech bubble - black fill -->
+  <path d="M16 8 H104 C112 8 116 12 116 20 V56 C116 64 112 68 104 68 H60 L40 88 L40 68 H16 C8 68 4 64 4 56 V20 C4 12 8 8 16 8 Z" 
+        fill="#222222" stroke="#222222" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
   <!-- Inner white border -->
-  <path d="M16 14 H96 C106 14 110 20 110 28 V52 C110 60 106 66 96 66 H62 L48 80 L48 66 H24 C16 66 16 60 16 52 V28 C16 20 16 14 24 14 Z" 
-        fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linejoin="round"/>
-  <!-- Text -->
-  <text x="65" y="47" text-anchor="middle" dominant-baseline="middle" font-family="Arial Black, Helvetica, sans-serif" font-weight="900" font-size="24" fill="#ffffff" letter-spacing="1">START</text>
+  <path d="M20 14 H100 C106 14 108 16 108 22 V52 C108 58 106 60 100 60 H56 L42 74 L42 60 H20 C14 60 12 58 12 52 V22 C12 16 14 14 20 14 Z" 
+        fill="none" stroke="#ffffff" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+  <text x="60" y="42" text-anchor="middle" dominant-baseline="middle" font-family="Arial Black, Helvetica, sans-serif" font-weight="900" font-size="22" fill="#ffffff">START</text>
 </svg>
