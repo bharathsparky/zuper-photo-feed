@@ -2,189 +2,36 @@ import React, { useState, useEffect, useCallback } from 'react';
 import './App.css';
 import * as FigmaAssets from './figmaAssets';
 
-// Professional Sticker SVG Assets - Matching the sticker aesthetic
-const StickerAssets = {
-  // Checkmark sticker - green check in white box with black outline
-  check: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-    <g filter="url(#shadow)">
-      <rect x="8" y="8" width="48" height="48" rx="6" fill="white" stroke="#333" stroke-width="3"/>
-      <path d="M20 32 L28 40 L44 24" stroke="#22C55E" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-    </g>
-    <defs><filter id="shadow"><feDropShadow dx="1" dy="1" stdDeviation="1" flood-opacity="0.2"/></filter></defs>
-  </svg>`,
+// Sticker file paths - using professional SVG stickers from public/SVG folder
+const StickerFiles = {
+  // Status/Approval
+  'approved': '/SVG/Approved.svg',
+  'rejected': '/SVG/Rejected.svg',
+  'certification': '/SVG/Certification.svg',
+  'guarantee': '/SVG/Guarantee.svg',
   
-  // X mark sticker - red X with black outline
-  'x-mark': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-    <g filter="url(#shadow)">
-      <rect x="8" y="8" width="48" height="48" rx="6" fill="white" stroke="#333" stroke-width="3"/>
-      <path d="M22 22 L42 42 M42 22 L22 42" stroke="#EF4444" stroke-width="6" stroke-linecap="round" fill="none"/>
-    </g>
-    <defs><filter id="shadow"><feDropShadow dx="1" dy="1" stdDeviation="1" flood-opacity="0.2"/></filter></defs>
-  </svg>`,
+  // Quality Ratings
+  'excellent-quality': '/SVG/Excellent Quality.svg',
+  'good-quality': '/SVG/Good Quality.svg',
+  'average-quality': '/SVG/Average Quality.svg',
+  'poor-quality': '/SVG/Poor Quality.svg',
   
-  // Thumbs up sticker
-  'thumbs-up': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-    <g filter="url(#shadow)">
-      <path d="M12 28 C12 28 16 28 18 28 L18 52 L12 52 C10 52 8 50 8 48 L8 32 C8 30 10 28 12 28 Z" fill="white" stroke="#333" stroke-width="2.5"/>
-      <path d="M22 52 L22 30 L28 20 C28 18 30 16 32 16 C34 16 36 18 36 20 L36 28 L50 28 C52 28 54 30 54 32 L54 34 C54 35 53.5 36 53 37 C54 38 54 39 54 40 L54 41 C54 42 53.5 43 53 44 C54 45 54 46 54 47 L54 48 C54 50 52 52 50 52 L22 52 Z" fill="white" stroke="#333" stroke-width="2.5"/>
-    </g>
-    <defs><filter id="shadow"><feDropShadow dx="1" dy="1" stdDeviation="1" flood-opacity="0.2"/></filter></defs>
-  </svg>`,
+  // Feedback
+  'good-review': '/SVG/Good Review.svg',
+  'bad-review': '/SVG/Bad Review.svg',
+  'satisfaction': '/SVG/Satisfaction.svg',
   
-  // Thumbs down sticker
-  'thumbs-down': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-    <g filter="url(#shadow)">
-      <path d="M12 36 C12 36 16 36 18 36 L18 12 L12 12 C10 12 8 14 8 16 L8 32 C8 34 10 36 12 36 Z" fill="white" stroke="#333" stroke-width="2.5"/>
-      <path d="M22 12 L22 34 L28 44 C28 46 30 48 32 48 C34 48 36 46 36 44 L36 36 L50 36 C52 36 54 34 54 32 L54 30 C54 29 53.5 28 53 27 C54 26 54 25 54 24 L54 23 C54 22 53.5 21 53 20 C54 19 54 18 54 17 L54 16 C54 14 52 12 50 12 L22 12 Z" fill="white" stroke="#333" stroke-width="2.5"/>
-    </g>
-    <defs><filter id="shadow"><feDropShadow dx="1" dy="1" stdDeviation="1" flood-opacity="0.2"/></filter></defs>
-  </svg>`,
+  // Issues/Maintenance
+  'bug-fix': '/SVG/Bug Fix.svg',
+  'repair': '/SVG/Repair.svg',
+  'troubleshooting': '/SVG/Troubleshooting.svg',
+  'improvement': '/SVG/Improvement.svg',
   
-  // Warning triangle sticker
-  warning: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-    <g filter="url(#shadow)">
-      <path d="M32 8 L58 52 L6 52 Z" fill="#FBBF24" stroke="#333" stroke-width="3" stroke-linejoin="round"/>
-      <path d="M32 8 L58 52 L6 52 Z" fill="none" stroke="white" stroke-width="6" stroke-linejoin="round" transform="translate(0,0) scale(0.85)" transform-origin="32 36"/>
-      <path d="M32 8 L58 52 L6 52 Z" fill="#FBBF24" stroke="#333" stroke-width="3" stroke-linejoin="round"/>
-      <circle cx="32" cy="44" r="3" fill="#333"/>
-      <rect x="30" y="24" width="4" height="14" rx="2" fill="#333"/>
-    </g>
-    <defs><filter id="shadow"><feDropShadow dx="1" dy="1" stdDeviation="1" flood-opacity="0.2"/></filter></defs>
-  </svg>`,
-  
-  // Location pin sticker  
-  location: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-    <g filter="url(#shadow)">
-      <path d="M32 4 C20 4 12 14 12 24 C12 38 32 60 32 60 C32 60 52 38 52 24 C52 14 44 4 32 4 Z" fill="#EF4444" stroke="#333" stroke-width="3"/>
-      <path d="M32 4 C20 4 12 14 12 24 C12 38 32 60 32 60 C32 60 52 38 52 24 C52 14 44 4 32 4 Z" fill="none" stroke="white" stroke-width="5" transform="scale(0.88)" transform-origin="32 32"/>
-      <path d="M32 4 C20 4 12 14 12 24 C12 38 32 60 32 60 C32 60 52 38 52 24 C52 14 44 4 32 4 Z" fill="#EF4444" stroke="#333" stroke-width="3"/>
-      <circle cx="32" cy="24" r="8" fill="white"/>
-    </g>
-    <defs><filter id="shadow"><feDropShadow dx="1" dy="1" stdDeviation="1" flood-opacity="0.2"/></filter></defs>
-  </svg>`,
-  
-  // Speech bubble - APPROVED
-  approved: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50">
-    <g filter="url(#shadow)">
-      <path d="M8 4 L92 4 C94 4 96 6 96 8 L96 34 C96 36 94 38 92 38 L55 38 L50 46 L45 38 L8 38 C6 38 4 36 4 34 L4 8 C4 6 6 4 8 4 Z" fill="white" stroke="#333" stroke-width="3"/>
-      <text x="50" y="26" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="14" font-weight="900" fill="#333">APPROVED</text>
-    </g>
-    <defs><filter id="shadow"><feDropShadow dx="1" dy="1" stdDeviation="1" flood-opacity="0.2"/></filter></defs>
-  </svg>`,
-  
-  // Speech bubble - FINISHED
-  finished: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50">
-    <g filter="url(#shadow)">
-      <path d="M8 4 L92 4 C94 4 96 6 96 8 L96 34 C96 36 94 38 92 38 L55 38 L50 46 L45 38 L8 38 C6 38 4 36 4 34 L4 8 C4 6 6 4 8 4 Z" fill="white" stroke="#333" stroke-width="3"/>
-      <text x="50" y="26" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="14" font-weight="900" fill="#333">FINISHED</text>
-    </g>
-    <defs><filter id="shadow"><feDropShadow dx="1" dy="1" stdDeviation="1" flood-opacity="0.2"/></filter></defs>
-  </svg>`,
-  
-  // Speech bubble - START
-  start: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 50">
-    <g filter="url(#shadow)">
-      <path d="M8 4 L72 4 C74 4 76 6 76 8 L76 34 C76 36 74 38 72 38 L45 38 L40 46 L35 38 L8 38 C6 38 4 36 4 34 L4 8 C4 6 6 4 8 4 Z" fill="white" stroke="#333" stroke-width="3"/>
-      <text x="40" y="26" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="16" font-weight="900" fill="#333">START</text>
-    </g>
-    <defs><filter id="shadow"><feDropShadow dx="1" dy="1" stdDeviation="1" flood-opacity="0.2"/></filter></defs>
-  </svg>`,
-  
-  // Speech bubble - END
-  end: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 50">
-    <g filter="url(#shadow)">
-      <path d="M8 4 L62 4 C64 4 66 6 66 8 L66 34 C66 36 64 38 62 38 L40 38 L35 46 L30 38 L8 38 C6 38 4 36 4 34 L4 8 C4 6 6 4 8 4 Z" fill="white" stroke="#333" stroke-width="3"/>
-      <text x="35" y="26" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="18" font-weight="900" fill="#333">END</text>
-    </g>
-    <defs><filter id="shadow"><feDropShadow dx="1" dy="1" stdDeviation="1" flood-opacity="0.2"/></filter></defs>
-  </svg>`,
-  
-  // Sun sticker
-  sunny: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-    <g filter="url(#shadow)">
-      <circle cx="32" cy="32" r="26" fill="white" stroke="#333" stroke-width="3"/>
-      <circle cx="32" cy="32" r="12" fill="#FBBF24" stroke="#333" stroke-width="2"/>
-      <g stroke="#FBBF24" stroke-width="3" stroke-linecap="round">
-        <line x1="32" y1="6" x2="32" y2="14"/>
-        <line x1="32" y1="50" x2="32" y2="58"/>
-        <line x1="6" y1="32" x2="14" y2="32"/>
-        <line x1="50" y1="32" x2="58" y2="32"/>
-        <line x1="13" y1="13" x2="19" y2="19"/>
-        <line x1="45" y1="45" x2="51" y2="51"/>
-        <line x1="13" y1="51" x2="19" y2="45"/>
-        <line x1="45" y1="19" x2="51" y2="13"/>
-      </g>
-    </g>
-    <defs><filter id="shadow"><feDropShadow dx="1" dy="1" stdDeviation="1" flood-opacity="0.2"/></filter></defs>
-  </svg>`,
-  
-  // Cloud sticker
-  cloudy: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 48">
-    <g filter="url(#shadow)">
-      <path d="M48 40 L12 40 C6 40 2 36 2 30 C2 24 6 20 12 20 C12 12 20 6 30 6 C38 6 45 11 47 18 C47 18 48 18 48 18 C54 18 60 24 60 30 C60 36 54 40 48 40 Z" fill="white" stroke="#333" stroke-width="3"/>
-    </g>
-    <defs><filter id="shadow"><feDropShadow dx="1" dy="1" stdDeviation="1" flood-opacity="0.2"/></filter></defs>
-  </svg>`,
-  
-  // Rain sticker
-  rainy: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 56">
-    <g filter="url(#shadow)">
-      <path d="M48 32 L12 32 C6 32 2 28 2 22 C2 16 6 12 12 12 C12 4 20 -2 30 -2 C38 -2 45 3 47 10 C47 10 48 10 48 10 C54 10 60 16 60 22 C60 28 54 32 48 32 Z" fill="white" stroke="#333" stroke-width="3"/>
-      <g stroke="#3B82F6" stroke-width="3" stroke-linecap="round">
-        <line x1="20" y1="38" x2="16" y2="48"/>
-        <line x1="32" y1="38" x2="28" y2="48"/>
-        <line x1="44" y1="38" x2="40" y2="48"/>
-      </g>
-    </g>
-    <defs><filter id="shadow"><feDropShadow dx="1" dy="1" stdDeviation="1" flood-opacity="0.2"/></filter></defs>
-  </svg>`,
-  
-  // Snow sticker
-  snowy: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-    <g filter="url(#shadow)">
-      <circle cx="32" cy="32" r="26" fill="white" stroke="#333" stroke-width="3"/>
-      <g stroke="#60A5FA" stroke-width="3" stroke-linecap="round">
-        <line x1="32" y1="14" x2="32" y2="50"/>
-        <line x1="14" y1="32" x2="50" y2="32"/>
-        <line x1="19" y1="19" x2="45" y2="45"/>
-        <line x1="19" y1="45" x2="45" y2="19"/>
-      </g>
-      <circle cx="32" cy="32" r="4" fill="#60A5FA"/>
-    </g>
-    <defs><filter id="shadow"><feDropShadow dx="1" dy="1" stdDeviation="1" flood-opacity="0.2"/></filter></defs>
-  </svg>`,
-  
-  // Wind sticker
-  windy: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 48">
-    <g filter="url(#shadow)">
-      <rect x="4" y="4" width="56" height="40" rx="8" fill="white" stroke="#333" stroke-width="3"/>
-      <g stroke="#6B7280" stroke-width="3" stroke-linecap="round" fill="none">
-        <path d="M12 16 L40 16 C44 16 48 18 48 22 C48 26 44 28 40 28"/>
-        <path d="M12 28 L32 28"/>
-        <path d="M12 38 L36 38 C40 38 44 36 44 32"/>
-      </g>
-    </g>
-    <defs><filter id="shadow"><feDropShadow dx="1" dy="1" stdDeviation="1" flood-opacity="0.2"/></filter></defs>
-  </svg>`,
-
-  // Star rating stickers
-  'star-1': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><g filter="url(#shadow)"><rect x="2" y="8" width="36" height="24" rx="4" fill="white" stroke="#333" stroke-width="2"/><polygon points="20,12 22,17 28,17 23,21 25,26 20,22 15,26 17,21 12,17 18,17" fill="#FBBF24" stroke="#333" stroke-width="1"/></g><defs><filter id="shadow"><feDropShadow dx="1" dy="1" stdDeviation="0.5" flood-opacity="0.2"/></filter></defs></svg>`,
-  'star-2': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 40"><g filter="url(#shadow)"><rect x="2" y="8" width="52" height="24" rx="4" fill="white" stroke="#333" stroke-width="2"/><polygon points="14,12 16,17 21,17 17,20 18,25 14,22 10,25 11,20 7,17 12,17" fill="#FBBF24" stroke="#333" stroke-width="1"/><polygon points="42,12 44,17 49,17 45,20 46,25 42,22 38,25 39,20 35,17 40,17" fill="#FBBF24" stroke="#333" stroke-width="1"/></g><defs><filter id="shadow"><feDropShadow dx="1" dy="1" stdDeviation="0.5" flood-opacity="0.2"/></filter></defs></svg>`,
-  'star-3': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 40"><g filter="url(#shadow)"><rect x="2" y="8" width="68" height="24" rx="4" fill="white" stroke="#333" stroke-width="2"/><polygon points="14,12 16,17 21,17 17,20 18,25 14,22 10,25 11,20 7,17 12,17" fill="#FBBF24" stroke="#333" stroke-width="1"/><polygon points="36,12 38,17 43,17 39,20 40,25 36,22 32,25 33,20 29,17 34,17" fill="#FBBF24" stroke="#333" stroke-width="1"/><polygon points="58,12 60,17 65,17 61,20 62,25 58,22 54,25 55,20 51,17 56,17" fill="#FBBF24" stroke="#333" stroke-width="1"/></g><defs><filter id="shadow"><feDropShadow dx="1" dy="1" stdDeviation="0.5" flood-opacity="0.2"/></filter></defs></svg>`,
-  'star-4': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88 40"><g filter="url(#shadow)"><rect x="2" y="8" width="84" height="24" rx="4" fill="white" stroke="#333" stroke-width="2"/><polygon points="14,12 16,17 21,17 17,20 18,25 14,22 10,25 11,20 7,17 12,17" fill="#FBBF24" stroke="#333" stroke-width="1"/><polygon points="32,12 34,17 39,17 35,20 36,25 32,22 28,25 29,20 25,17 30,17" fill="#FBBF24" stroke="#333" stroke-width="1"/><polygon points="50,12 52,17 57,17 53,20 54,25 50,22 46,25 47,20 43,17 48,17" fill="#FBBF24" stroke="#333" stroke-width="1"/><polygon points="68,12 70,17 75,17 71,20 72,25 68,22 64,25 65,20 61,17 66,17" fill="#FBBF24" stroke="#333" stroke-width="1"/></g><defs><filter id="shadow"><feDropShadow dx="1" dy="1" stdDeviation="0.5" flood-opacity="0.2"/></filter></defs></svg>`,
-  'star-5': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 104 40"><g filter="url(#shadow)"><rect x="2" y="8" width="100" height="24" rx="4" fill="white" stroke="#333" stroke-width="2"/><polygon points="14,12 16,17 21,17 17,20 18,25 14,22 10,25 11,20 7,17 12,17" fill="#FBBF24" stroke="#333" stroke-width="1"/><polygon points="30,12 32,17 37,17 33,20 34,25 30,22 26,25 27,20 23,17 28,17" fill="#FBBF24" stroke="#333" stroke-width="1"/><polygon points="46,12 48,17 53,17 49,20 50,25 46,22 42,25 43,20 39,17 44,17" fill="#FBBF24" stroke="#333" stroke-width="1"/><polygon points="62,12 64,17 69,17 65,20 66,25 62,22 58,25 59,20 55,17 60,17" fill="#FBBF24" stroke="#333" stroke-width="1"/><polygon points="78,12 80,17 85,17 81,20 82,25 78,22 74,25 75,20 71,17 76,17" fill="#FBBF24" stroke="#333" stroke-width="1"/></g><defs><filter id="shadow"><feDropShadow dx="1" dy="1" stdDeviation="0.5" flood-opacity="0.2"/></filter></defs></svg>`,
-
-  // Priority stickers
-  'priority-high': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 28"><g filter="url(#shadow)"><rect x="2" y="2" width="56" height="24" rx="4" fill="#EF4444" stroke="#333" stroke-width="2"/><polygon points="14,18 14,8 18,8 18,14 22,14 14,22" fill="white"/><text x="38" y="18" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="white">HIGH</text></g><defs><filter id="shadow"><feDropShadow dx="1" dy="1" stdDeviation="0.5" flood-opacity="0.2"/></filter></defs></svg>`,
-  'priority-medium': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 28"><g filter="url(#shadow)"><rect x="2" y="2" width="76" height="24" rx="4" fill="#F59E0B" stroke="#333" stroke-width="2"/><rect x="10" y="11" width="12" height="4" fill="white"/><text x="48" y="18" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="white">MEDIUM</text></g><defs><filter id="shadow"><feDropShadow dx="1" dy="1" stdDeviation="0.5" flood-opacity="0.2"/></filter></defs></svg>`,
-  'priority-low': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 28"><g filter="url(#shadow)"><rect x="2" y="2" width="52" height="24" rx="4" fill="#22C55E" stroke="#333" stroke-width="2"/><polygon points="14,8 14,18 18,18 18,12 22,12 14,4" fill="white" transform="rotate(180, 18, 13)"/><text x="36" y="18" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="white">LOW</text></g><defs><filter id="shadow"><feDropShadow dx="1" dy="1" stdDeviation="0.5" flood-opacity="0.2"/></filter></defs></svg>`,
-
-  // Status stickers
-  'in-progress': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 28"><g filter="url(#shadow)"><rect x="2" y="2" width="96" height="24" rx="12" fill="#3B82F6" stroke="#333" stroke-width="2"/><circle cx="16" cy="14" r="6" fill="none" stroke="white" stroke-width="2"/><path d="M16 10 L16 14 L19 16" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/><text x="56" y="18" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">IN PROGRESS</text></g><defs><filter id="shadow"><feDropShadow dx="1" dy="1" stdDeviation="0.5" flood-opacity="0.2"/></filter></defs></svg>`,
-  'scheduled': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 94 28"><g filter="url(#shadow)"><rect x="2" y="2" width="90" height="24" rx="12" fill="#8B5CF6" stroke="#333" stroke-width="2"/><rect x="10" y="8" width="12" height="12" rx="2" fill="none" stroke="white" stroke-width="2"/><line x1="10" y1="12" x2="22" y2="12" stroke="white" stroke-width="2"/><text x="52" y="18" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">SCHEDULED</text></g><defs><filter id="shadow"><feDropShadow dx="1" dy="1" stdDeviation="0.5" flood-opacity="0.2"/></filter></defs></svg>`,
-  'acknowledged': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 28"><g filter="url(#shadow)"><rect x="2" y="2" width="106" height="24" rx="12" fill="#22C55E" stroke="#333" stroke-width="2"/><circle cx="16" cy="14" r="6" fill="none" stroke="white" stroke-width="2"/><path d="M13 14 L15 16 L19 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><text x="62" y="18" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">ACKNOWLEDGED</text></g><defs><filter id="shadow"><feDropShadow dx="1" dy="1" stdDeviation="0.5" flood-opacity="0.2"/></filter></defs></svg>`,
-  'needs-followup': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 94 28"><g filter="url(#shadow)"><rect x="2" y="2" width="90" height="24" rx="12" fill="#F59E0B" stroke="#333" stroke-width="2"/><path d="M12 8 L12 20 L20 16 L20 20" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><text x="54" y="18" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">FOLLOW UP</text></g><defs><filter id="shadow"><feDropShadow dx="1" dy="1" stdDeviation="0.5" flood-opacity="0.2"/></filter></defs></svg>`,
-  'contact-customer': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 82 28"><g filter="url(#shadow)"><rect x="2" y="2" width="78" height="24" rx="12" fill="#EF4444" stroke="#333" stroke-width="2"/><path d="M10 10 C10 8 12 8 14 10 L16 12 C17 13 17 14 16 15 L15 16 C15 16 16 18 18 20 C20 22 22 23 22 23 L23 22 C24 21 25 21 26 22 L28 24 C30 26 30 28 28 28 L26 28 C20 28 10 18 10 12 L10 10 Z" fill="white"/><text x="50" y="18" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">CONTACT</text></g><defs><filter id="shadow"><feDropShadow dx="1" dy="1" stdDeviation="0.5" flood-opacity="0.2"/></filter></defs></svg>`,
+  // Communication/Service
+  'communication': '/SVG/Communication.svg',
+  'service': '/SVG/Service.svg',
+  'settings': '/SVG/Settings.svg',
+  'standard': '/SVG/Standard.svg',
 };
 
 // Pre-load sticker images for canvas rendering
@@ -3156,45 +3003,34 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
 
   // Stickers/stamps for roofing industry
   const STICKERS = [
-    // Basic Icons (Row 1)
-    { id: 'check', label: 'Approved', type: 'icon', svgKey: 'check' },
-    { id: 'x-mark', label: 'Rejected', type: 'icon', svgKey: 'x-mark' },
-    { id: 'thumbs-up', label: 'Good', type: 'icon', svgKey: 'thumbs-up' },
-    { id: 'thumbs-down', label: 'Bad', type: 'icon', svgKey: 'thumbs-down' },
-    { id: 'warning', label: 'Warning', type: 'icon', svgKey: 'warning' },
-    { id: 'location', label: 'Location', type: 'icon', svgKey: 'location' },
+    // Status/Approval
+    { id: 'approved', label: 'Approved', type: 'status', svgKey: 'approved' },
+    { id: 'rejected', label: 'Rejected', type: 'status', svgKey: 'rejected' },
+    { id: 'certification', label: 'Certified', type: 'status', svgKey: 'certification' },
+    { id: 'guarantee', label: 'Guarantee', type: 'status', svgKey: 'guarantee' },
     
-    // Speech Bubble Stamps (Row 2)
-    { id: 'approved', label: 'APPROVED', type: 'bubble', svgKey: 'approved' },
-    { id: 'finished', label: 'FINISHED', type: 'bubble', svgKey: 'finished' },
-    { id: 'start', label: 'START', type: 'bubble', svgKey: 'start' },
-    { id: 'end', label: 'END', type: 'bubble', svgKey: 'end' },
+    // Quality Ratings
+    { id: 'excellent-quality', label: 'Excellent', type: 'quality', svgKey: 'excellent-quality' },
+    { id: 'good-quality', label: 'Good', type: 'quality', svgKey: 'good-quality' },
+    { id: 'average-quality', label: 'Average', type: 'quality', svgKey: 'average-quality' },
+    { id: 'poor-quality', label: 'Poor', type: 'quality', svgKey: 'poor-quality' },
     
-    // Status Indicators
-    { id: 'in-progress', label: 'IN PROGRESS', type: 'status', svgKey: 'in-progress' },
-    { id: 'scheduled', label: 'SCHEDULED', type: 'status', svgKey: 'scheduled' },
-    { id: 'acknowledged', label: 'ACKNOWLEDGED', type: 'status', svgKey: 'acknowledged' },
-    { id: 'needs-followup', label: 'FOLLOW UP', type: 'status', svgKey: 'needs-followup' },
-    { id: 'contact-customer', label: 'CONTACT', type: 'status', svgKey: 'contact-customer' },
+    // Feedback
+    { id: 'good-review', label: 'Good Review', type: 'feedback', svgKey: 'good-review' },
+    { id: 'bad-review', label: 'Bad Review', type: 'feedback', svgKey: 'bad-review' },
+    { id: 'satisfaction', label: 'Satisfied', type: 'feedback', svgKey: 'satisfaction' },
     
-    // Quality Stars
-    { id: 'star-1', label: '1 Star', type: 'stars', stars: 1, svgKey: 'star-1' },
-    { id: 'star-2', label: '2 Stars', type: 'stars', stars: 2, svgKey: 'star-2' },
-    { id: 'star-3', label: '3 Stars', type: 'stars', stars: 3, svgKey: 'star-3' },
-    { id: 'star-4', label: '4 Stars', type: 'stars', stars: 4, svgKey: 'star-4' },
-    { id: 'star-5', label: '5 Stars', type: 'stars', stars: 5, svgKey: 'star-5' },
+    // Issues/Maintenance
+    { id: 'bug-fix', label: 'Bug Fix', type: 'issues', svgKey: 'bug-fix' },
+    { id: 'repair', label: 'Repair', type: 'issues', svgKey: 'repair' },
+    { id: 'troubleshooting', label: 'Troubleshoot', type: 'issues', svgKey: 'troubleshooting' },
+    { id: 'improvement', label: 'Improve', type: 'issues', svgKey: 'improvement' },
     
-    // Weather Conditions
-    { id: 'sunny', label: 'Sunny', type: 'weather', svgKey: 'sunny' },
-    { id: 'cloudy', label: 'Cloudy', type: 'weather', svgKey: 'cloudy' },
-    { id: 'rainy', label: 'Rainy', type: 'weather', svgKey: 'rainy' },
-    { id: 'snowy', label: 'Snowy', type: 'weather', svgKey: 'snowy' },
-    { id: 'windy', label: 'Windy', type: 'weather', svgKey: 'windy' },
-    
-    // Priority Indicators
-    { id: 'priority-high', label: 'HIGH', type: 'priority', svgKey: 'priority-high' },
-    { id: 'priority-medium', label: 'MEDIUM', type: 'priority', svgKey: 'priority-medium' },
-    { id: 'priority-low', label: 'LOW', type: 'priority', svgKey: 'priority-low' },
+    // Communication/Service
+    { id: 'communication', label: 'Contact', type: 'service', svgKey: 'communication' },
+    { id: 'service', label: 'Service', type: 'service', svgKey: 'service' },
+    { id: 'settings', label: 'Settings', type: 'service', svgKey: 'settings' },
+    { id: 'standard', label: 'Standard', type: 'service', svgKey: 'standard' },
   ];
 
   // Function to load sticker SVG as Image for canvas rendering
@@ -3203,26 +3039,26 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
       return Promise.resolve(stickerImageCache[svgKey]);
     }
     
-    const svg = StickerAssets[svgKey];
-    if (!svg) return Promise.resolve(null);
+    const svgPath = StickerFiles[svgKey];
+    if (!svgPath) return Promise.resolve(null);
     
     return new Promise((resolve) => {
       const img = new Image();
-      const blob = new Blob([svg], { type: 'image/svg+xml' });
-      const url = URL.createObjectURL(blob);
       img.onload = () => {
         stickerImageCache[svgKey] = img;
-        URL.revokeObjectURL(url);
         resolve(img);
       };
-      img.onerror = () => resolve(null);
-      img.src = url;
+      img.onerror = () => {
+        console.warn(`Failed to load sticker: ${svgKey}`);
+        resolve(null);
+      };
+      img.src = svgPath;
     });
   };
 
   // Pre-load all sticker images on mount
   React.useEffect(() => {
-    Object.keys(StickerAssets).forEach(key => loadStickerImage(key));
+    Object.keys(StickerFiles).forEach(key => loadStickerImage(key));
   }, []);
 
   // Load image and set canvas size
@@ -3514,11 +3350,12 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
         break;
       case 'text':
       case 'sticker':
+        const size = annotation.size || 80;
         bounds = {
-          x: annotation.x - 40,
-          y: annotation.y - 40,
-          width: 80,
-          height: 80
+          x: annotation.x - size / 2,
+          y: annotation.y - size / 2,
+          width: size,
+          height: size
         };
         break;
       default:
@@ -3951,7 +3788,7 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
 
       case 'sticker':
         ctx.save();
-        const stickerSize = annotation.size || 64;
+        const stickerSize = annotation.size || 80;
         
         // Draw sticker using cached SVG image
         if (annotation.svgKey && stickerImageCache[annotation.svgKey]) {
@@ -3959,8 +3796,9 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
           const aspectRatio = img.width / img.height;
           let drawWidth, drawHeight;
           
+          // Scale to fit within stickerSize while maintaining aspect ratio
           if (aspectRatio > 1) {
-            drawWidth = stickerSize * 1.5;
+            drawWidth = stickerSize;
             drawHeight = drawWidth / aspectRatio;
           } else {
             drawHeight = stickerSize;
@@ -3980,11 +3818,11 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
           ctx.strokeStyle = '#333';
           ctx.lineWidth = 2;
           ctx.beginPath();
-          ctx.roundRect(annotation.x - 30, annotation.y - 30, 60, 60, 8);
+          ctx.roundRect(annotation.x - 40, annotation.y - 40, 80, 80, 12);
           ctx.fill();
           ctx.stroke();
           ctx.fillStyle = '#999';
-          ctx.font = '12px Inter, sans-serif';
+          ctx.font = '14px Inter, sans-serif';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           ctx.fillText('Loading...', annotation.x, annotation.y);
@@ -4386,7 +4224,7 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
           x: pos.x,
           y: pos.y,
           color: selectedSticker.color || strokeColor,
-          size: 64
+          size: 80  // Larger size for professional SVG stickers
         };
         setAnnotations(prev => [...prev, annotation]);
         setSelectedSticker(null);
@@ -5051,114 +4889,105 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
               </button>
             </div>
             <div className="sticker-categories">
-              {/* Basic Icons */}
-              <div className="sticker-category">
-                <div className="sticker-category-title">Basic</div>
-                <div className="sticker-category-grid">
-                  {STICKERS.filter(s => s.type === 'icon').map(sticker => (
-                    <button
-                      key={sticker.id}
-                      className="sticker-option sticker-svg"
-                      onClick={() => handleStickerSelect(sticker)}
-                    >
-                      <div 
-                        className="sticker-svg-preview"
-                        dangerouslySetInnerHTML={{ __html: StickerAssets[sticker.svgKey] }}
-                      />
-                    </button>
-                  ))}
-                </div>
-              </div>
-              
-              {/* Speech Bubbles */}
-              <div className="sticker-category">
-                <div className="sticker-category-title">Labels</div>
-                <div className="sticker-category-grid sticker-bubbles">
-                  {STICKERS.filter(s => s.type === 'bubble').map(sticker => (
-                    <button
-                      key={sticker.id}
-                      className="sticker-option sticker-svg sticker-bubble-svg"
-                      onClick={() => handleStickerSelect(sticker)}
-                    >
-                      <div 
-                        className="sticker-svg-preview"
-                        dangerouslySetInnerHTML={{ __html: StickerAssets[sticker.svgKey] }}
-                      />
-                    </button>
-                  ))}
-                </div>
-              </div>
-              
-              {/* Status Indicators */}
+              {/* Status/Approval */}
               <div className="sticker-category">
                 <div className="sticker-category-title">Status</div>
-                <div className="sticker-category-grid sticker-status-grid">
+                <div className="sticker-category-grid">
                   {STICKERS.filter(s => s.type === 'status').map(sticker => (
                     <button
                       key={sticker.id}
-                      className="sticker-option sticker-svg sticker-status-svg"
+                      className="sticker-option sticker-svg"
                       onClick={() => handleStickerSelect(sticker)}
+                      title={sticker.label}
                     >
-                      <div 
-                        className="sticker-svg-preview"
-                        dangerouslySetInnerHTML={{ __html: StickerAssets[sticker.svgKey] }}
+                      <img 
+                        src={StickerFiles[sticker.svgKey]} 
+                        alt={sticker.label}
+                        className="sticker-img-preview"
                       />
                     </button>
                   ))}
                 </div>
               </div>
               
-              {/* Quality Stars */}
+              {/* Quality Ratings */}
               <div className="sticker-category">
-                <div className="sticker-category-title">Quality Rating</div>
-                <div className="sticker-category-grid sticker-stars-grid">
-                  {STICKERS.filter(s => s.type === 'stars').map(sticker => (
-                    <button
-                      key={sticker.id}
-                      className="sticker-option sticker-svg sticker-stars-svg"
-                      onClick={() => handleStickerSelect(sticker)}
-                    >
-                      <div 
-                        className="sticker-svg-preview"
-                        dangerouslySetInnerHTML={{ __html: StickerAssets[sticker.svgKey] }}
-                      />
-                    </button>
-                  ))}
-                </div>
-              </div>
-              
-              {/* Weather */}
-              <div className="sticker-category">
-                <div className="sticker-category-title">Weather</div>
+                <div className="sticker-category-title">Quality</div>
                 <div className="sticker-category-grid">
-                  {STICKERS.filter(s => s.type === 'weather').map(sticker => (
+                  {STICKERS.filter(s => s.type === 'quality').map(sticker => (
                     <button
                       key={sticker.id}
                       className="sticker-option sticker-svg"
                       onClick={() => handleStickerSelect(sticker)}
+                      title={sticker.label}
                     >
-                      <div 
-                        className="sticker-svg-preview"
-                        dangerouslySetInnerHTML={{ __html: StickerAssets[sticker.svgKey] }}
+                      <img 
+                        src={StickerFiles[sticker.svgKey]} 
+                        alt={sticker.label}
+                        className="sticker-img-preview"
                       />
                     </button>
                   ))}
                 </div>
               </div>
               
-              {/* Priority */}
+              {/* Feedback */}
               <div className="sticker-category">
-                <div className="sticker-category-title">Priority</div>
+                <div className="sticker-category-title">Feedback</div>
                 <div className="sticker-category-grid">
-                  {STICKERS.filter(s => s.type === 'priority').map(sticker => (
+                  {STICKERS.filter(s => s.type === 'feedback').map(sticker => (
                     <button
                       key={sticker.id}
-                      className="sticker-option sticker-svg sticker-priority-svg"
+                      className="sticker-option sticker-svg"
                       onClick={() => handleStickerSelect(sticker)}
+                      title={sticker.label}
                     >
-                      <div 
-                        className="sticker-svg-preview"
-                        dangerouslySetInnerHTML={{ __html: StickerAssets[sticker.svgKey] }}
+                      <img 
+                        src={StickerFiles[sticker.svgKey]} 
+                        alt={sticker.label}
+                        className="sticker-img-preview"
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Issues/Maintenance */}
+              <div className="sticker-category">
+                <div className="sticker-category-title">Issues</div>
+                <div className="sticker-category-grid">
+                  {STICKERS.filter(s => s.type === 'issues').map(sticker => (
+                    <button
+                      key={sticker.id}
+                      className="sticker-option sticker-svg"
+                      onClick={() => handleStickerSelect(sticker)}
+                      title={sticker.label}
+                    >
+                      <img 
+                        src={StickerFiles[sticker.svgKey]} 
+                        alt={sticker.label}
+                        className="sticker-img-preview"
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Service */}
+              <div className="sticker-category">
+                <div className="sticker-category-title">Service</div>
+                <div className="sticker-category-grid">
+                  {STICKERS.filter(s => s.type === 'service').map(sticker => (
+                    <button
+                      key={sticker.id}
+                      className="sticker-option sticker-svg"
+                      onClick={() => handleStickerSelect(sticker)}
+                      title={sticker.label}
+                    >
+                      <img 
+                        src={StickerFiles[sticker.svgKey]} 
+                        alt={sticker.label}
+                        className="sticker-img-preview"
                       />
                     </button>
                   ))}

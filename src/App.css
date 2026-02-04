@@ -8971,69 +8971,33 @@
   background: rgba(255, 255, 255, 0.1);
 }
 
-.sticker-svg-preview {
+/* Professional SVG Sticker Images */
+.sticker-img-preview {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.sticker-option.sticker-svg {
+  width: 68px;
+  height: 68px;
+  padding: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  transition: all 0.2s ease;
 }
 
-.sticker-svg-preview svg {
-  width: 48px;
-  height: 48px;
+.sticker-option.sticker-svg:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: scale(1.05);
 }
 
-/* Speech Bubble Stickers */
-.sticker-bubbles {
-  gap: 8px;
-}
-
-.sticker-option.sticker-bubble-svg {
-  padding: 6px;
-}
-
-.sticker-option.sticker-bubble-svg .sticker-svg-preview svg {
-  width: auto;
-  height: 36px;
-}
-
-/* Status Stickers */
-.sticker-status-grid {
-  flex-direction: column;
-  gap: 8px;
-}
-
-.sticker-option.sticker-status-svg {
-  padding: 4px 8px;
-  width: fit-content;
-}
-
-.sticker-option.sticker-status-svg .sticker-svg-preview svg {
-  width: auto;
-  height: 24px;
-}
-
-/* Star Rating Stickers */
-.sticker-stars-grid {
-  gap: 8px;
-}
-
-.sticker-option.sticker-stars-svg {
-  padding: 4px;
-}
-
-.sticker-option.sticker-stars-svg .sticker-svg-preview svg {
-  width: auto;
-  height: 32px;
-}
-
-/* Priority Stickers */
-.sticker-option.sticker-priority-svg {
-  padding: 4px 8px;
-}
-
-.sticker-option.sticker-priority-svg .sticker-svg-preview svg {
-  width: auto;
-  height: 24px;
+.sticker-option.sticker-svg:active {
+  transform: scale(0.95);
 }
 
 .sticker-preview {
