@@ -3,8 +3,5 @@
   <!-- Clean speech bubble -->
   <path d="M12 8 H88 C94 8 98 12 98 18 V58 C98 64 94 68 88 68 H52 L36 88 L36 68 H12 C6 68 2 64 2 58 V18 C2 12 6 8 12 8 Z" 
         fill="#7F1D1D" stroke="#450A0A" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
-  <!-- Warning triangle -->
-  <path d="M50 20 L66 48 H34 Z" fill="none" stroke="#FEF2F2" stroke-width="2.5" stroke-linejoin="round"/>
-  <text x="50" y="38" text-anchor="middle" dominant-baseline="middle" font-family="Arial Black, sans-serif" font-weight="900" font-size="14" fill="#FEF2F2">!</text>
-  <text x="50" y="58" text-anchor="middle" dominant-baseline="middle" font-family="Arial Black, Helvetica, sans-serif" font-weight="900" font-size="16" fill="#FEF2F2">URGENT</text>
+  <text x="50" y="42" text-anchor="middle" dominant-baseline="middle" font-family="Arial Black, Helvetica, sans-serif" font-weight="900" font-size="18" fill="#FEF2F2">URGENT</text>
 </svg>

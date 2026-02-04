@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 95">
-  <!-- Clean speech bubble - tail on right -->
-  <path d="M12 8 H78 C84 8 88 12 88 18 V58 C88 64 84 68 78 68 H12 C6 68 2 64 2 58 V18 C2 12 6 8 12 8 Z" 
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 95">
+  <!-- Clean speech bubble with right tail -->
+  <path d="M12 8 H88 C94 8 98 12 98 18 V58 C98 64 94 68 88 68 H68 L68 68 H12 C6 68 2 64 2 58 V18 C2 12 6 8 12 8 Z" 
         fill="#ffffff" stroke="#222222" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
-  <!-- Tail on right -->
-  <path d="M62 68 L82 88 L82 68" fill="#ffffff" stroke="#222222" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
-  <rect x="60" y="65" width="24" height="8" fill="#ffffff"/>
+  <!-- Right tail -->
+  <polygon points="68,68 88,88 88,68" fill="#ffffff" stroke="#222222" stroke-width="4" stroke-linejoin="round"/>
+  <!-- Cover join line -->
+  <line x1="68" y1="68" x2="88" y2="68" stroke="#ffffff" stroke-width="6"/>
   <text x="45" y="42" text-anchor="middle" dominant-baseline="middle" font-family="Arial Black, Helvetica, sans-serif" font-weight="900" font-size="24" fill="#222222">END</text>
 </svg>
