@@ -16,8 +16,11 @@ const StickerFiles = {
   'average-quality': '/SVG/Average Quality.svg',
   'poor-quality': '/SVG/Poor Quality.svg',
   
-  // Maintenance
-  'repair': '/SVG/Repair.svg',
+  // Workflow Markers
+  'workflow-approved': '/workflow/Approved-Badge.svg',
+  'workflow-finished': '/workflow/Finished-Badge.svg',
+  'workflow-start': '/workflow/Start-Marker.svg',
+  'workflow-end': '/workflow/End-Marker.svg',
   
   // Construction/Roofing
   'const-warning': '/const/Contruction Icon-02.svg',
@@ -3023,8 +3026,11 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
     { id: 'average-quality', label: 'Average', type: 'quality', svgKey: 'average-quality' },
     { id: 'poor-quality', label: 'Poor', type: 'quality', svgKey: 'poor-quality' },
     
-    // Maintenance
-    { id: 'repair', label: 'Needs Repair', type: 'maintenance', svgKey: 'repair' },
+    // Workflow Markers
+    { id: 'workflow-approved', label: 'Approved', type: 'workflow', svgKey: 'workflow-approved' },
+    { id: 'workflow-finished', label: 'Finished', type: 'workflow', svgKey: 'workflow-finished' },
+    { id: 'workflow-start', label: 'Start', type: 'workflow', svgKey: 'workflow-start' },
+    { id: 'workflow-end', label: 'End', type: 'workflow', svgKey: 'workflow-end' },
     
     // Construction/Roofing Tools
     { id: 'const-warning', label: 'Caution', type: 'construction', svgKey: 'const-warning' },
@@ -4947,11 +4953,11 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
                 </div>
               </div>
               
-              {/* Maintenance */}
+              {/* Workflow */}
               <div className="sticker-category">
-                <div className="sticker-category-title">Maintenance</div>
+                <div className="sticker-category-title">Workflow</div>
                 <div className="sticker-category-grid">
-                  {STICKERS.filter(s => s.type === 'maintenance').map(sticker => (
+                  {STICKERS.filter(s => s.type === 'workflow').map(sticker => (
                     <button
                       key={sticker.id}
                       className="sticker-option sticker-svg"
