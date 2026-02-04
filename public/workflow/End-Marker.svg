@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 95">
-  <!-- Clean speech bubble with right tail -->
-  <path d="M12 8 H88 C94 8 98 12 98 18 V58 C98 64 94 68 88 68 H68 L68 68 H12 C6 68 2 64 2 58 V18 C2 12 6 8 12 8 Z" 
+  <!-- Single unified path with tail included -->
+  <path d="M12 8 H88 C94 8 98 12 98 18 V58 C98 64 94 68 88 68 H88 L88 88 L68 68 H12 C6 68 2 64 2 58 V18 C2 12 6 8 12 8 Z" 
         fill="#ffffff" stroke="#222222" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
-  <!-- Right tail -->
-  <polygon points="68,68 88,88 88,68" fill="#ffffff" stroke="#222222" stroke-width="4" stroke-linejoin="round"/>
-  <!-- Cover join line -->
-  <line x1="68" y1="68" x2="88" y2="68" stroke="#ffffff" stroke-width="6"/>
-  <text x="45" y="42" text-anchor="middle" dominant-baseline="middle" font-family="Arial Black, Helvetica, sans-serif" font-weight="900" font-size="24" fill="#222222">END</text>
+  <text x="50" y="42" text-anchor="middle" dominant-baseline="middle" font-family="Arial Black, Helvetica, sans-serif" font-weight="900" font-size="24" fill="#222222">END</text>
 </svg>
