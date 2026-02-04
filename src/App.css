@@ -8958,105 +8958,82 @@
   transform: scale(0.96);
 }
 
-/* Basic Icon Stickers */
-.sticker-option.sticker-icon {
-  width: 52px;
-  height: 52px;
+/* SVG Sticker Options */
+.sticker-option.sticker-svg {
+  padding: 8px;
+  background: transparent;
+  border-radius: 8px;
+  min-width: 56px;
+  min-height: 56px;
 }
 
-.sticker-option.sticker-icon .sticker-preview {
-  font-size: 28px;
+.sticker-option.sticker-svg:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sticker-svg-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sticker-svg-preview svg {
+  width: 48px;
+  height: 48px;
 }
 
 /* Speech Bubble Stickers */
 .sticker-bubbles {
-  gap: 6px;
+  gap: 8px;
 }
 
-.sticker-option.sticker-bubble {
-  padding: 8px 14px;
-  background: #FFFFFF;
-  border-radius: 8px;
-  position: relative;
+.sticker-option.sticker-bubble-svg {
+  padding: 6px;
 }
 
-.sticker-option.sticker-bubble::after {
-  content: '';
-  position: absolute;
-  bottom: -6px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  border-top: 6px solid #FFFFFF;
-}
-
-.bubble-preview {
-  font-size: 11px;
-  font-weight: 700;
-  color: #000000;
-  letter-spacing: 0.3px;
+.sticker-option.sticker-bubble-svg .sticker-svg-preview svg {
+  width: auto;
+  height: 36px;
 }
 
 /* Status Stickers */
 .sticker-status-grid {
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
-.sticker-option.sticker-status {
-  padding: 8px 14px;
-  border-radius: 16px;
+.sticker-option.sticker-status-svg {
+  padding: 4px 8px;
   width: fit-content;
 }
 
-.status-preview {
-  font-size: 11px;
-  font-weight: 600;
-  color: #FFFFFF;
-  letter-spacing: 0.3px;
+.sticker-option.sticker-status-svg .sticker-svg-preview svg {
+  width: auto;
+  height: 24px;
 }
 
 /* Star Rating Stickers */
 .sticker-stars-grid {
-  gap: 6px;
+  gap: 8px;
 }
 
-.sticker-option.sticker-stars {
-  padding: 8px 12px;
-  background: rgba(255, 214, 10, 0.15);
-  border-radius: 8px;
+.sticker-option.sticker-stars-svg {
+  padding: 4px;
 }
 
-.stars-preview {
-  font-size: 16px;
-  letter-spacing: 2px;
-}
-
-/* Weather Stickers */
-.sticker-option.sticker-weather {
-  width: 52px;
-  height: 52px;
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.weather-preview {
-  font-size: 28px;
+.sticker-option.sticker-stars-svg .sticker-svg-preview svg {
+  width: auto;
+  height: 32px;
 }
 
 /* Priority Stickers */
-.sticker-option.sticker-priority {
-  padding: 8px 14px;
-  border-radius: 6px;
+.sticker-option.sticker-priority-svg {
+  padding: 4px 8px;
 }
 
-.priority-preview {
-  font-size: 11px;
-  font-weight: 700;
-  color: #FFFFFF;
-  letter-spacing: 0.5px;
+.sticker-option.sticker-priority-svg .sticker-svg-preview svg {
+  width: auto;
+  height: 24px;
 }
 
 .sticker-preview {
