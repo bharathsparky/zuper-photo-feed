@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120">
   <defs>
-    <linearGradient id="approvedGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#34D399"/>
-      <stop offset="100%" style="stop-color:#10B981"/>
-    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="2" dy="2" stdDeviation="2" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
   </defs>
-  <!-- Badge Circle -->
-  <circle cx="256" cy="256" r="200" fill="url(#approvedGrad)"/>
-  <circle cx="256" cy="256" r="180" fill="none" stroke="#fff" stroke-width="8" stroke-dasharray="20,10"/>
-  <!-- Checkmark -->
-  <path d="M180 260 L230 310 L340 180" fill="none" stroke="#fff" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- White background with stroke -->
+  <path d="M20 10 H160 Q180 10 180 30 V70 Q180 90 160 90 H100 L80 110 L80 90 H20 Q10 90 10 70 V30 Q10 10 20 10 Z" 
+        fill="#fff" stroke="#1a1a1a" stroke-width="4" filter="url(#shadow)"/>
   <!-- Text -->
-  <text x="256" y="400" text-anchor="middle" font-family="Arial, sans-serif" font-weight="bold" font-size="42" fill="#065F46">APPROVED</text>
-  <!-- Stars decoration -->
-  <polygon points="120,120 125,135 140,135 128,145 133,160 120,150 107,160 112,145 100,135 115,135" fill="#FCD34D"/>
-  <polygon points="392,120 397,135 412,135 400,145 405,160 392,150 379,160 384,145 372,135 387,135" fill="#FCD34D"/>
+  <text x="95" y="58" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="26" fill="#1a1a1a">APPROVED</text>
 </svg>
