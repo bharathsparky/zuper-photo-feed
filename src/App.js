@@ -16,22 +16,8 @@ const StickerFiles = {
   'average-quality': '/SVG/Average Quality.svg',
   'poor-quality': '/SVG/Poor Quality.svg',
   
-  // Feedback
-  'good-review': '/SVG/Good Review.svg',
-  'bad-review': '/SVG/Bad Review.svg',
-  'satisfaction': '/SVG/Satisfaction.svg',
-  
-  // Issues/Maintenance
-  'bug-fix': '/SVG/Bug Fix.svg',
+  // Maintenance
   'repair': '/SVG/Repair.svg',
-  'troubleshooting': '/SVG/Troubleshooting.svg',
-  'improvement': '/SVG/Improvement.svg',
-  
-  // Communication/Service
-  'communication': '/SVG/Communication.svg',
-  'service': '/SVG/Service.svg',
-  'settings': '/SVG/Settings.svg',
-  'standard': '/SVG/Standard.svg',
   
   // Weather Conditions
   'weather-cloudy': '/weather/Weather Illustration-01.svg',
@@ -3027,22 +3013,8 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
     { id: 'average-quality', label: 'Average', type: 'quality', svgKey: 'average-quality' },
     { id: 'poor-quality', label: 'Poor', type: 'quality', svgKey: 'poor-quality' },
     
-    // Feedback
-    { id: 'good-review', label: 'Good Review', type: 'feedback', svgKey: 'good-review' },
-    { id: 'bad-review', label: 'Bad Review', type: 'feedback', svgKey: 'bad-review' },
-    { id: 'satisfaction', label: 'Satisfied', type: 'feedback', svgKey: 'satisfaction' },
-    
-    // Issues/Maintenance
-    { id: 'bug-fix', label: 'Bug Fix', type: 'issues', svgKey: 'bug-fix' },
-    { id: 'repair', label: 'Repair', type: 'issues', svgKey: 'repair' },
-    { id: 'troubleshooting', label: 'Troubleshoot', type: 'issues', svgKey: 'troubleshooting' },
-    { id: 'improvement', label: 'Improve', type: 'issues', svgKey: 'improvement' },
-    
-    // Communication/Service
-    { id: 'communication', label: 'Contact', type: 'service', svgKey: 'communication' },
-    { id: 'service', label: 'Service', type: 'service', svgKey: 'service' },
-    { id: 'settings', label: 'Settings', type: 'service', svgKey: 'settings' },
-    { id: 'standard', label: 'Standard', type: 'service', svgKey: 'standard' },
+    // Maintenance
+    { id: 'repair', label: 'Needs Repair', type: 'maintenance', svgKey: 'repair' },
     
     // Weather Conditions
     { id: 'weather-cloudy', label: 'Cloudy', type: 'weather', svgKey: 'weather-cloudy' },
@@ -4955,53 +4927,11 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
                 </div>
               </div>
               
-              {/* Feedback */}
+              {/* Maintenance */}
               <div className="sticker-category">
-                <div className="sticker-category-title">Feedback</div>
+                <div className="sticker-category-title">Maintenance</div>
                 <div className="sticker-category-grid">
-                  {STICKERS.filter(s => s.type === 'feedback').map(sticker => (
-                    <button
-                      key={sticker.id}
-                      className="sticker-option sticker-svg"
-                      onClick={() => handleStickerSelect(sticker)}
-                      title={sticker.label}
-                    >
-                      <img 
-                        src={StickerFiles[sticker.svgKey]} 
-                        alt={sticker.label}
-                        className="sticker-img-preview"
-                      />
-                    </button>
-                  ))}
-                </div>
-              </div>
-              
-              {/* Issues/Maintenance */}
-              <div className="sticker-category">
-                <div className="sticker-category-title">Issues</div>
-                <div className="sticker-category-grid">
-                  {STICKERS.filter(s => s.type === 'issues').map(sticker => (
-                    <button
-                      key={sticker.id}
-                      className="sticker-option sticker-svg"
-                      onClick={() => handleStickerSelect(sticker)}
-                      title={sticker.label}
-                    >
-                      <img 
-                        src={StickerFiles[sticker.svgKey]} 
-                        alt={sticker.label}
-                        className="sticker-img-preview"
-                      />
-                    </button>
-                  ))}
-                </div>
-              </div>
-              
-              {/* Service */}
-              <div className="sticker-category">
-                <div className="sticker-category-title">Service</div>
-                <div className="sticker-category-grid">
-                  {STICKERS.filter(s => s.type === 'service').map(sticker => (
+                  {STICKERS.filter(s => s.type === 'maintenance').map(sticker => (
                     <button
                       key={sticker.id}
                       className="sticker-option sticker-svg"
