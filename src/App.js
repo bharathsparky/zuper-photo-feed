@@ -5014,27 +5014,6 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
                 </div>
               </div>
 
-              {/* Status */}
-              <div className="sticker-category">
-                <div className="sticker-category-title">Status</div>
-                <div className="sticker-category-grid">
-                  {STICKERS.filter(s => s.type === 'status').map(sticker => (
-                    <button
-                      key={sticker.id}
-                      className="sticker-option sticker-svg"
-                      onClick={() => handleStickerSelect(sticker)}
-                      title={sticker.label}
-                    >
-                      <img 
-                        src={StickerFiles[sticker.svgKey]} 
-                        alt={sticker.label}
-                        className="sticker-img-preview"
-                      />
-                    </button>
-                  ))}
-                </div>
-              </div>
-
               {/* Priority */}
               <div className="sticker-category">
                 <div className="sticker-category-title">Priority</div>
