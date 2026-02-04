@@ -22,6 +22,13 @@ const StickerFiles = {
   'workflow-start': '/workflow/Start-Marker.svg',
   'workflow-end': '/workflow/End-Marker.svg',
   
+  // Status
+  'status-inprogress': '/workflow/Status-InProgress.svg',
+  'status-scheduled': '/workflow/Status-Scheduled.svg',
+  'status-acknowledged': '/workflow/Status-Acknowledged.svg',
+  'status-followup': '/workflow/Status-NeedsFollowUp.svg',
+  'status-contact': '/workflow/Status-ContactCustomer.svg',
+  
   // Priority
   'priority-urgent': '/workflow/Priority-Urgent.svg',
   'priority-high': '/workflow/Priority-High.svg',
@@ -3045,6 +3052,13 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
     { id: 'workflow-start', label: 'Start', type: 'workflow', svgKey: 'workflow-start' },
     { id: 'workflow-end', label: 'End', type: 'workflow', svgKey: 'workflow-end' },
     
+    // Status
+    { id: 'status-inprogress', label: 'In Progress', type: 'status', svgKey: 'status-inprogress' },
+    { id: 'status-scheduled', label: 'Scheduled', type: 'status', svgKey: 'status-scheduled' },
+    { id: 'status-acknowledged', label: 'Acknowledged', type: 'status', svgKey: 'status-acknowledged' },
+    { id: 'status-followup', label: 'Needs Follow Up', type: 'status', svgKey: 'status-followup' },
+    { id: 'status-contact', label: 'Contact Customer', type: 'status', svgKey: 'status-contact' },
+    
     // Priority
     { id: 'priority-urgent', label: 'Urgent', type: 'priority', svgKey: 'priority-urgent' },
     { id: 'priority-high', label: 'High Priority', type: 'priority', svgKey: 'priority-high' },
@@ -4984,6 +4998,27 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
                 <div className="sticker-category-title">Workflow</div>
                 <div className="sticker-category-grid">
                   {STICKERS.filter(s => s.type === 'workflow').map(sticker => (
+                    <button
+                      key={sticker.id}
+                      className="sticker-option sticker-svg"
+                      onClick={() => handleStickerSelect(sticker)}
+                      title={sticker.label}
+                    >
+                      <img 
+                        src={StickerFiles[sticker.svgKey]} 
+                        alt={sticker.label}
+                        className="sticker-img-preview"
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Status */}
+              <div className="sticker-category">
+                <div className="sticker-category-title">Status</div>
+                <div className="sticker-category-grid">
+                  {STICKERS.filter(s => s.type === 'status').map(sticker => (
                     <button
                       key={sticker.id}
                       className="sticker-option sticker-svg"
