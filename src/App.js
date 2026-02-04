@@ -22,6 +22,12 @@ const StickerFiles = {
   'workflow-start': '/workflow/Start-Marker.svg',
   'workflow-end': '/workflow/End-Marker.svg',
   
+  // Priority
+  'priority-urgent': '/workflow/Priority-Urgent.svg',
+  'priority-high': '/workflow/Priority-High.svg',
+  'priority-medium': '/workflow/Priority-Medium.svg',
+  'priority-low': '/workflow/Priority-Low.svg',
+  
   // Pins & Markers
   'pin-location': '/pins/Untitled-1.svg',
   'pin-map': '/pins/Untitled-2.svg',
@@ -3042,6 +3048,12 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
     { id: 'workflow-start', label: 'Start', type: 'workflow', svgKey: 'workflow-start' },
     { id: 'workflow-end', label: 'End', type: 'workflow', svgKey: 'workflow-end' },
     
+    // Priority
+    { id: 'priority-urgent', label: 'Urgent', type: 'priority', svgKey: 'priority-urgent' },
+    { id: 'priority-high', label: 'High Priority', type: 'priority', svgKey: 'priority-high' },
+    { id: 'priority-medium', label: 'Medium Priority', type: 'priority', svgKey: 'priority-medium' },
+    { id: 'priority-low', label: 'Low Priority', type: 'priority', svgKey: 'priority-low' },
+    
     // Pins & Markers
     { id: 'pin-location', label: 'Location Pin', type: 'pins', svgKey: 'pin-location' },
     { id: 'pin-map', label: 'Map Location', type: 'pins', svgKey: 'pin-map' },
@@ -4993,7 +5005,28 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
                   ))}
                 </div>
               </div>
-              
+
+              {/* Priority */}
+              <div className="sticker-category">
+                <div className="sticker-category-title">Priority</div>
+                <div className="sticker-category-grid">
+                  {STICKERS.filter(s => s.type === 'priority').map(sticker => (
+                    <button
+                      key={sticker.id}
+                      className="sticker-option sticker-svg"
+                      onClick={() => handleStickerSelect(sticker)}
+                      title={sticker.label}
+                    >
+                      <img 
+                        src={StickerFiles[sticker.svgKey]} 
+                        alt={sticker.label}
+                        className="sticker-img-preview"
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               {/* Pins & Markers */}
               <div className="sticker-category">
                 <div className="sticker-category-title">Pins & Markers</div>
