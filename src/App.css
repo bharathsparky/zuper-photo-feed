@@ -8867,16 +8867,19 @@
   background: #1A1A1A;
   border-radius: 24px 24px 0 0;
   width: 100%;
-  max-height: 50%;
+  max-height: 70%;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .sticker-picker-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 24px;
+  padding: 16px 20px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
 }
 
 .sticker-picker-header span {
@@ -8887,8 +8890,8 @@
 }
 
 .sticker-picker-header button {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -8905,34 +8908,155 @@
   color: #fff;
 }
 
-.sticker-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  padding: 20px 24px;
+.sticker-categories {
   overflow-y: auto;
-  max-height: 280px;
+  padding: 8px 16px 24px;
+  flex: 1;
+}
+
+.sticker-category {
+  margin-bottom: 16px;
+}
+
+.sticker-category:last-child {
+  margin-bottom: 0;
+}
+
+.sticker-category-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+  padding-left: 4px;
+}
+
+.sticker-category-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .sticker-option {
-  aspect-ratio: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.08);
   border: none;
-  border-radius: 16px;
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .sticker-option:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.15);
   transform: scale(1.02);
 }
 
 .sticker-option:active {
   transform: scale(0.96);
+}
+
+/* Basic Icon Stickers */
+.sticker-option.sticker-icon {
+  width: 52px;
+  height: 52px;
+}
+
+.sticker-option.sticker-icon .sticker-preview {
+  font-size: 28px;
+}
+
+/* Speech Bubble Stickers */
+.sticker-bubbles {
+  gap: 6px;
+}
+
+.sticker-option.sticker-bubble {
+  padding: 8px 14px;
+  background: #FFFFFF;
+  border-radius: 8px;
+  position: relative;
+}
+
+.sticker-option.sticker-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #FFFFFF;
+}
+
+.bubble-preview {
+  font-size: 11px;
+  font-weight: 700;
+  color: #000000;
+  letter-spacing: 0.3px;
+}
+
+/* Status Stickers */
+.sticker-status-grid {
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sticker-option.sticker-status {
+  padding: 8px 14px;
+  border-radius: 16px;
+  width: fit-content;
+}
+
+.status-preview {
+  font-size: 11px;
+  font-weight: 600;
+  color: #FFFFFF;
+  letter-spacing: 0.3px;
+}
+
+/* Star Rating Stickers */
+.sticker-stars-grid {
+  gap: 6px;
+}
+
+.sticker-option.sticker-stars {
+  padding: 8px 12px;
+  background: rgba(255, 214, 10, 0.15);
+  border-radius: 8px;
+}
+
+.stars-preview {
+  font-size: 16px;
+  letter-spacing: 2px;
+}
+
+/* Weather Stickers */
+.sticker-option.sticker-weather {
+  width: 52px;
+  height: 52px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.weather-preview {
+  font-size: 28px;
+}
+
+/* Priority Stickers */
+.sticker-option.sticker-priority {
+  padding: 8px 14px;
+  border-radius: 6px;
+}
+
+.priority-preview {
+  font-size: 11px;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: 0.5px;
 }
 
 .sticker-preview {

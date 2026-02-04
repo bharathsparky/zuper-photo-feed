@@ -2968,16 +2968,47 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
 
   // Stickers/stamps for roofing industry
   const STICKERS = [
-    { id: 'x-mark', label: '✕', type: 'symbol', color: '#FF3B30' },
-    { id: 'check', label: '✓', type: 'symbol', color: '#34C759' },
-    { id: 'question', label: '?', type: 'symbol', color: '#FFCC00' },
-    { id: 'exclaim', label: '!', type: 'symbol', color: '#FF9500' },
-    { id: 'leak', label: '💧', type: 'emoji' },
-    { id: 'crack', label: '⚡', type: 'emoji' },
-    { id: 'approve', label: 'APPROVED', type: 'stamp', color: '#34C759' },
-    { id: 'reject', label: 'REJECTED', type: 'stamp', color: '#FF3B30' },
-    { id: 'repair', label: 'REPAIR', type: 'stamp', color: '#FF9500' },
-    { id: 'review', label: 'REVIEW', type: 'stamp', color: '#007AFF' },
+    // Basic Icons (Row 1)
+    { id: 'check', label: '✓', type: 'icon', icon: 'check', color: '#34C759' },
+    { id: 'x-mark', label: '✕', type: 'icon', icon: 'x-mark', color: '#FF3B30' },
+    { id: 'thumbs-up', label: '👍', type: 'icon', icon: 'thumbs-up', color: '#333333' },
+    { id: 'thumbs-down', label: '👎', type: 'icon', icon: 'thumbs-down', color: '#333333' },
+    { id: 'warning', label: '⚠', type: 'icon', icon: 'warning', color: '#FFD60A' },
+    
+    // Speech Bubble Stamps (Row 2)
+    { id: 'approved', label: 'APPROVED', type: 'bubble', color: '#000000' },
+    { id: 'finished', label: 'FINISHED', type: 'bubble', color: '#000000' },
+    { id: 'start', label: 'START', type: 'bubble', color: '#000000' },
+    { id: 'end', label: 'END', type: 'bubble', color: '#000000' },
+    
+    // Location Pin
+    { id: 'location', label: '📍', type: 'icon', icon: 'location', color: '#FF3B30' },
+    
+    // Status Indicators
+    { id: 'in-progress', label: 'IN PROGRESS', type: 'status', color: '#007AFF' },
+    { id: 'scheduled', label: 'SCHEDULED', type: 'status', color: '#5856D6' },
+    { id: 'acknowledged', label: 'ACKNOWLEDGED', type: 'status', color: '#34C759' },
+    { id: 'needs-followup', label: 'NEEDS FOLLOW UP', type: 'status', color: '#FF9500' },
+    { id: 'contact-customer', label: 'CONTACT CUSTOMER', type: 'status', color: '#FF3B30' },
+    
+    // Quality Stars
+    { id: 'star-1', label: '★', type: 'stars', stars: 1, color: '#FFD60A' },
+    { id: 'star-2', label: '★★', type: 'stars', stars: 2, color: '#FFD60A' },
+    { id: 'star-3', label: '★★★', type: 'stars', stars: 3, color: '#FFD60A' },
+    { id: 'star-4', label: '★★★★', type: 'stars', stars: 4, color: '#FFD60A' },
+    { id: 'star-5', label: '★★★★★', type: 'stars', stars: 5, color: '#FFD60A' },
+    
+    // Weather Conditions
+    { id: 'sunny', label: '☀️', type: 'weather', icon: 'sunny', color: '#FFD60A' },
+    { id: 'cloudy', label: '☁️', type: 'weather', icon: 'cloudy', color: '#8E8E93' },
+    { id: 'rainy', label: '🌧️', type: 'weather', icon: 'rainy', color: '#007AFF' },
+    { id: 'snowy', label: '❄️', type: 'weather', icon: 'snowy', color: '#5AC8FA' },
+    { id: 'windy', label: '💨', type: 'weather', icon: 'windy', color: '#8E8E93' },
+    
+    // Priority Indicators
+    { id: 'priority-high', label: 'HIGH', type: 'priority', priority: 'high', color: '#FF3B30' },
+    { id: 'priority-medium', label: 'MEDIUM', type: 'priority', priority: 'medium', color: '#FF9500' },
+    { id: 'priority-low', label: 'LOW', type: 'priority', priority: 'low', color: '#34C759' },
   ];
 
   // Load image and set canvas size
@@ -3705,10 +3736,261 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
         break;
 
       case 'sticker':
-        ctx.font = `bold ${annotation.size || 48}px Inter, sans-serif`;
-        if (annotation.stickerType === 'stamp') {
-          // Draw stamp box
+        ctx.save();
+        const stickerSize = annotation.size || 48;
+        
+        if (annotation.stickerType === 'icon') {
+          // Draw icon stickers (checkmark, X, thumbs, warning, location)
+          const iconSize = stickerSize;
+          
+          if (annotation.icon === 'check') {
+            // Green checkmark with white background
+            ctx.fillStyle = '#FFFFFF';
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.roundRect(annotation.x - iconSize/2 - 5, annotation.y - iconSize/2 - 5, iconSize + 10, iconSize + 10, 8);
+            ctx.fill();
+            ctx.stroke();
+            ctx.fillStyle = annotation.color;
+            ctx.font = `bold ${iconSize}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('✓', annotation.x, annotation.y);
+          } else if (annotation.icon === 'x-mark') {
+            // Red X with white background
+            ctx.fillStyle = '#FFFFFF';
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.roundRect(annotation.x - iconSize/2 - 5, annotation.y - iconSize/2 - 5, iconSize + 10, iconSize + 10, 8);
+            ctx.fill();
+            ctx.stroke();
+            ctx.fillStyle = annotation.color;
+            ctx.font = `bold ${iconSize}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('✕', annotation.x, annotation.y);
+          } else if (annotation.icon === 'thumbs-up') {
+            // Thumbs up with white background
+            ctx.fillStyle = '#FFFFFF';
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.roundRect(annotation.x - iconSize/2 - 5, annotation.y - iconSize/2 - 5, iconSize + 10, iconSize + 10, 8);
+            ctx.fill();
+            ctx.stroke();
+            ctx.fillStyle = annotation.color;
+            ctx.font = `${iconSize - 8}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('👍', annotation.x, annotation.y);
+          } else if (annotation.icon === 'thumbs-down') {
+            // Thumbs down with white background
+            ctx.fillStyle = '#FFFFFF';
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.roundRect(annotation.x - iconSize/2 - 5, annotation.y - iconSize/2 - 5, iconSize + 10, iconSize + 10, 8);
+            ctx.fill();
+            ctx.stroke();
+            ctx.fillStyle = annotation.color;
+            ctx.font = `${iconSize - 8}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('👎', annotation.x, annotation.y);
+          } else if (annotation.icon === 'warning') {
+            // Yellow warning triangle
+            ctx.fillStyle = '#FFD60A';
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 2;
+            const triSize = iconSize + 10;
+            ctx.beginPath();
+            ctx.moveTo(annotation.x, annotation.y - triSize/2);
+            ctx.lineTo(annotation.x + triSize/2, annotation.y + triSize/3);
+            ctx.lineTo(annotation.x - triSize/2, annotation.y + triSize/3);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+            ctx.fillStyle = '#000000';
+            ctx.font = `bold ${iconSize - 10}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('!', annotation.x, annotation.y + 5);
+          } else if (annotation.icon === 'location') {
+            // Location pin
+            ctx.fillStyle = annotation.color;
+            ctx.strokeStyle = '#FFFFFF';
+            ctx.lineWidth = 2;
+            const pinSize = iconSize;
+            ctx.beginPath();
+            ctx.arc(annotation.x, annotation.y - pinSize/3, pinSize/3, Math.PI, 0, false);
+            ctx.lineTo(annotation.x, annotation.y + pinSize/2);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+            ctx.fillStyle = '#FFFFFF';
+            ctx.beginPath();
+            ctx.arc(annotation.x, annotation.y - pinSize/3, pinSize/6, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        } else if (annotation.stickerType === 'bubble') {
+          // Speech bubble stamps (APPROVED, FINISHED, START, END)
+          ctx.font = `bold 16px Inter, sans-serif`;
           const text = annotation.label;
+          const textMetrics = ctx.measureText(text);
+          const padding = 12;
+          const boxWidth = textMetrics.width + padding * 2;
+          const boxHeight = 32;
+          const tailSize = 10;
+          
+          // Draw speech bubble
+          ctx.fillStyle = '#FFFFFF';
+          ctx.strokeStyle = '#000000';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.roundRect(annotation.x - boxWidth/2, annotation.y - boxHeight/2 - tailSize/2, boxWidth, boxHeight, 6);
+          ctx.fill();
+          ctx.stroke();
+          
+          // Draw tail
+          ctx.fillStyle = '#FFFFFF';
+          ctx.beginPath();
+          ctx.moveTo(annotation.x - 8, annotation.y + boxHeight/2 - tailSize/2);
+          ctx.lineTo(annotation.x, annotation.y + boxHeight/2 + tailSize/2);
+          ctx.lineTo(annotation.x + 8, annotation.y + boxHeight/2 - tailSize/2);
+          ctx.closePath();
+          ctx.fill();
+          ctx.strokeStyle = '#000000';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(annotation.x - 8, annotation.y + boxHeight/2 - tailSize/2);
+          ctx.lineTo(annotation.x, annotation.y + boxHeight/2 + tailSize/2);
+          ctx.lineTo(annotation.x + 8, annotation.y + boxHeight/2 - tailSize/2);
+          ctx.stroke();
+          
+          // Draw text
+          ctx.fillStyle = '#000000';
+          ctx.font = `bold 14px Inter, sans-serif`;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(text, annotation.x, annotation.y - tailSize/2);
+        } else if (annotation.stickerType === 'status') {
+          // Status indicators (IN PROGRESS, SCHEDULED, etc.)
+          ctx.font = `bold 12px Inter, sans-serif`;
+          const text = annotation.label;
+          const textMetrics = ctx.measureText(text);
+          const padding = 10;
+          const boxWidth = textMetrics.width + padding * 2;
+          const boxHeight = 26;
+          
+          // Draw rounded pill background
+          ctx.fillStyle = annotation.color;
+          ctx.beginPath();
+          ctx.roundRect(annotation.x - boxWidth/2, annotation.y - boxHeight/2, boxWidth, boxHeight, boxHeight/2);
+          ctx.fill();
+          
+          // Draw text
+          ctx.fillStyle = '#FFFFFF';
+          ctx.font = `bold 11px Inter, sans-serif`;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(text, annotation.x, annotation.y);
+        } else if (annotation.stickerType === 'stars') {
+          // Quality star ratings
+          const starCount = annotation.stars || 1;
+          ctx.font = `${stickerSize - 16}px Arial`;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          
+          // Draw star background
+          const starText = '★'.repeat(starCount);
+          const emptyStars = '☆'.repeat(5 - starCount);
+          
+          // Shadow/outline
+          ctx.fillStyle = '#00000040';
+          ctx.fillText(starText + emptyStars, annotation.x + 1, annotation.y + 1);
+          
+          // Filled stars
+          ctx.fillStyle = annotation.color;
+          ctx.fillText(starText, annotation.x - ((5 - starCount) * 8), annotation.y);
+          
+          // Empty stars
+          ctx.fillStyle = '#FFFFFF80';
+          ctx.fillText(emptyStars, annotation.x + (starCount * 8), annotation.y);
+        } else if (annotation.stickerType === 'weather') {
+          // Weather condition stickers
+          ctx.font = `${stickerSize}px Arial`;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          
+          // Draw background circle
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+          ctx.strokeStyle = '#00000030';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.arc(annotation.x, annotation.y, stickerSize/2 + 8, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.stroke();
+          
+          // Draw weather emoji
+          const weatherEmojis = {
+            'sunny': '☀️',
+            'cloudy': '☁️',
+            'rainy': '🌧️',
+            'snowy': '❄️',
+            'windy': '💨'
+          };
+          ctx.fillText(weatherEmojis[annotation.icon] || '☀️', annotation.x, annotation.y);
+        } else if (annotation.stickerType === 'priority') {
+          // Priority indicators (HIGH, MEDIUM, LOW)
+          ctx.font = `bold 12px Inter, sans-serif`;
+          const text = annotation.label;
+          const textMetrics = ctx.measureText(text);
+          const padding = 8;
+          const boxWidth = textMetrics.width + padding * 2 + 16; // Extra space for icon
+          const boxHeight = 24;
+          
+          // Draw background
+          ctx.fillStyle = annotation.color;
+          ctx.beginPath();
+          ctx.roundRect(annotation.x - boxWidth/2, annotation.y - boxHeight/2, boxWidth, boxHeight, 4);
+          ctx.fill();
+          
+          // Draw priority icon (flag or arrow)
+          ctx.fillStyle = '#FFFFFF';
+          const iconX = annotation.x - boxWidth/2 + 12;
+          if (annotation.priority === 'high') {
+            // Up arrow
+            ctx.beginPath();
+            ctx.moveTo(iconX, annotation.y - 5);
+            ctx.lineTo(iconX + 5, annotation.y + 3);
+            ctx.lineTo(iconX - 5, annotation.y + 3);
+            ctx.closePath();
+            ctx.fill();
+          } else if (annotation.priority === 'medium') {
+            // Dash
+            ctx.fillRect(iconX - 5, annotation.y - 2, 10, 4);
+          } else {
+            // Down arrow
+            ctx.beginPath();
+            ctx.moveTo(iconX, annotation.y + 5);
+            ctx.lineTo(iconX + 5, annotation.y - 3);
+            ctx.lineTo(iconX - 5, annotation.y - 3);
+            ctx.closePath();
+            ctx.fill();
+          }
+          
+          // Draw text
+          ctx.fillStyle = '#FFFFFF';
+          ctx.font = `bold 11px Inter, sans-serif`;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(text, annotation.x + 6, annotation.y);
+        } else if (annotation.stickerType === 'stamp') {
+          // Legacy stamp support
+          const text = annotation.label;
+          ctx.font = `bold 20px Inter, sans-serif`;
           const textMetrics = ctx.measureText(text);
           const padding = 10;
           const boxWidth = textMetrics.width + padding * 2;
@@ -3724,28 +4006,24 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
           );
           
           ctx.fillStyle = annotation.color;
-          ctx.font = `bold 20px Inter, sans-serif`;
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           ctx.fillText(text, annotation.x, annotation.y);
-          ctx.textAlign = 'left';
-          ctx.textBaseline = 'alphabetic';
         } else if (annotation.stickerType === 'symbol') {
+          // Legacy symbol support
           ctx.fillStyle = annotation.color;
           ctx.font = `bold 48px Inter, sans-serif`;
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           ctx.fillText(annotation.label, annotation.x, annotation.y);
-          ctx.textAlign = 'left';
-          ctx.textBaseline = 'alphabetic';
         } else {
+          // Default emoji
           ctx.font = '48px sans-serif';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           ctx.fillText(annotation.label, annotation.x, annotation.y);
-          ctx.textAlign = 'left';
-          ctx.textBaseline = 'alphabetic';
         }
+        ctx.restore();
         break;
 
       case 'measure': {
@@ -4805,23 +5083,104 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
                 <Icons.Close />
               </button>
             </div>
-            <div className="sticker-grid">
-              {STICKERS.map(sticker => (
-                <button
-                  key={sticker.id}
-                  className="sticker-option"
-                  onClick={() => handleStickerSelect(sticker)}
-                  style={{ color: sticker.color }}
-                >
-                  {sticker.type === 'stamp' ? (
-                    <span className="stamp-preview" style={{ borderColor: sticker.color, color: sticker.color }}>
-                      {sticker.label}
-                    </span>
-                  ) : (
-                    <span className="sticker-preview">{sticker.label}</span>
-                  )}
-                </button>
-              ))}
+            <div className="sticker-categories">
+              {/* Basic Icons */}
+              <div className="sticker-category">
+                <div className="sticker-category-title">Basic</div>
+                <div className="sticker-category-grid">
+                  {STICKERS.filter(s => s.type === 'icon').map(sticker => (
+                    <button
+                      key={sticker.id}
+                      className="sticker-option sticker-icon"
+                      onClick={() => handleStickerSelect(sticker)}
+                    >
+                      <span className="sticker-preview">{sticker.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Speech Bubbles */}
+              <div className="sticker-category">
+                <div className="sticker-category-title">Labels</div>
+                <div className="sticker-category-grid sticker-bubbles">
+                  {STICKERS.filter(s => s.type === 'bubble').map(sticker => (
+                    <button
+                      key={sticker.id}
+                      className="sticker-option sticker-bubble"
+                      onClick={() => handleStickerSelect(sticker)}
+                    >
+                      <span className="bubble-preview">{sticker.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Status Indicators */}
+              <div className="sticker-category">
+                <div className="sticker-category-title">Status</div>
+                <div className="sticker-category-grid sticker-status-grid">
+                  {STICKERS.filter(s => s.type === 'status').map(sticker => (
+                    <button
+                      key={sticker.id}
+                      className="sticker-option sticker-status"
+                      onClick={() => handleStickerSelect(sticker)}
+                      style={{ backgroundColor: sticker.color }}
+                    >
+                      <span className="status-preview">{sticker.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Quality Stars */}
+              <div className="sticker-category">
+                <div className="sticker-category-title">Quality Rating</div>
+                <div className="sticker-category-grid sticker-stars-grid">
+                  {STICKERS.filter(s => s.type === 'stars').map(sticker => (
+                    <button
+                      key={sticker.id}
+                      className="sticker-option sticker-stars"
+                      onClick={() => handleStickerSelect(sticker)}
+                    >
+                      <span className="stars-preview" style={{ color: sticker.color }}>{sticker.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Weather */}
+              <div className="sticker-category">
+                <div className="sticker-category-title">Weather</div>
+                <div className="sticker-category-grid">
+                  {STICKERS.filter(s => s.type === 'weather').map(sticker => (
+                    <button
+                      key={sticker.id}
+                      className="sticker-option sticker-weather"
+                      onClick={() => handleStickerSelect(sticker)}
+                    >
+                      <span className="weather-preview">{sticker.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Priority */}
+              <div className="sticker-category">
+                <div className="sticker-category-title">Priority</div>
+                <div className="sticker-category-grid">
+                  {STICKERS.filter(s => s.type === 'priority').map(sticker => (
+                    <button
+                      key={sticker.id}
+                      className="sticker-option sticker-priority"
+                      onClick={() => handleStickerSelect(sticker)}
+                      style={{ backgroundColor: sticker.color }}
+                    >
+                      <span className="priority-preview">{sticker.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
