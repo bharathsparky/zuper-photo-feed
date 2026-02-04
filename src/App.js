@@ -30,12 +30,9 @@ const StickerFiles = {
   
   // Pins & Markers
   'pin-location': '/pins/Untitled-1.svg',
-  'pin-map': '/pins/Untitled-2.svg',
   'pin-flag': '/pins/Untitled-11.svg',
-  'pin-inspect': '/pins/Untitled-12.svg',
   'pin-barricade': '/pins/Untitled-15.svg',
   'pin-cone': '/pins/Untitled-16.svg',
-  'pin-target': '/pins/Untitled-18.svg',
   'pin-location-map': '/pins/Untitled-19.svg',
   
   // Construction/Roofing
@@ -3056,12 +3053,9 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
     
     // Pins & Markers
     { id: 'pin-location', label: 'Location Pin', type: 'pins', svgKey: 'pin-location' },
-    { id: 'pin-map', label: 'Map Location', type: 'pins', svgKey: 'pin-map' },
     { id: 'pin-flag', label: 'Flag', type: 'pins', svgKey: 'pin-flag' },
-    { id: 'pin-inspect', label: 'Inspect', type: 'pins', svgKey: 'pin-inspect' },
     { id: 'pin-barricade', label: 'Work Zone', type: 'pins', svgKey: 'pin-barricade' },
     { id: 'pin-cone', label: 'Safety Cone', type: 'pins', svgKey: 'pin-cone' },
-    { id: 'pin-target', label: 'Target', type: 'pins', svgKey: 'pin-target' },
     { id: 'pin-location-map', label: 'Site Location', type: 'pins', svgKey: 'pin-location-map' },
     
     // Construction/Roofing Tools
