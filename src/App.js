@@ -19,6 +19,16 @@ const StickerFiles = {
   // Maintenance
   'repair': '/SVG/Repair.svg',
   
+  // Construction/Roofing
+  'const-warning': '/const/Contruction Icon-02.svg',
+  'const-house': '/const/Contruction Icon-04.svg',
+  'const-measure': '/const/Contruction Icon-05.svg',
+  'const-brick': '/const/Contruction Icon-08.svg',
+  'const-hammer': '/const/Contruction Icon-17.svg',
+  'const-trowel': '/const/Contruction Icon-18.svg',
+  'const-ladder': '/const/Contruction Icon-30.svg',
+  'const-wrench': '/const/Contruction Icon-40.svg',
+  
   // Weather Conditions
   'weather-cloudy': '/weather/Weather Illustration-01.svg',
   'weather-sunny': '/weather/Weather Illustration-02.svg',
@@ -3016,6 +3026,16 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
     // Maintenance
     { id: 'repair', label: 'Needs Repair', type: 'maintenance', svgKey: 'repair' },
     
+    // Construction/Roofing Tools
+    { id: 'const-warning', label: 'Caution', type: 'construction', svgKey: 'const-warning' },
+    { id: 'const-house', label: 'Roof Work', type: 'construction', svgKey: 'const-house' },
+    { id: 'const-measure', label: 'Measure', type: 'construction', svgKey: 'const-measure' },
+    { id: 'const-brick', label: 'Materials', type: 'construction', svgKey: 'const-brick' },
+    { id: 'const-hammer', label: 'Hammer', type: 'construction', svgKey: 'const-hammer' },
+    { id: 'const-trowel', label: 'Trowel', type: 'construction', svgKey: 'const-trowel' },
+    { id: 'const-ladder', label: 'Ladder', type: 'construction', svgKey: 'const-ladder' },
+    { id: 'const-wrench', label: 'Wrench', type: 'construction', svgKey: 'const-wrench' },
+    
     // Weather Conditions
     { id: 'weather-cloudy', label: 'Cloudy', type: 'weather', svgKey: 'weather-cloudy' },
     { id: 'weather-sunny', label: 'Sunny', type: 'weather', svgKey: 'weather-sunny' },
@@ -4932,6 +4952,27 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
                 <div className="sticker-category-title">Maintenance</div>
                 <div className="sticker-category-grid">
                   {STICKERS.filter(s => s.type === 'maintenance').map(sticker => (
+                    <button
+                      key={sticker.id}
+                      className="sticker-option sticker-svg"
+                      onClick={() => handleStickerSelect(sticker)}
+                      title={sticker.label}
+                    >
+                      <img 
+                        src={StickerFiles[sticker.svgKey]} 
+                        alt={sticker.label}
+                        className="sticker-img-preview"
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Construction/Roofing */}
+              <div className="sticker-category">
+                <div className="sticker-category-title">Construction</div>
+                <div className="sticker-category-grid">
+                  {STICKERS.filter(s => s.type === 'construction').map(sticker => (
                     <button
                       key={sticker.id}
                       className="sticker-option sticker-svg"
