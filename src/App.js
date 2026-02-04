@@ -32,6 +32,18 @@ const StickerFiles = {
   'service': '/SVG/Service.svg',
   'settings': '/SVG/Settings.svg',
   'standard': '/SVG/Standard.svg',
+  
+  // Weather Conditions
+  'weather-cloudy': '/weather/Weather Illustration-01.svg',
+  'weather-sunny': '/weather/Weather Illustration-02.svg',
+  'weather-partly-cloudy': '/weather/Weather Illustration-03.svg',
+  'weather-rainy': '/weather/Weather Illustration-04.svg',
+  'weather-thunderstorm': '/weather/Weather Illustration-05.svg',
+  'weather-storm-rain': '/weather/Weather Illustration-06.svg',
+  'weather-snowy': '/weather/Weather Illustration-07.svg',
+  'weather-temperature': '/weather/Weather Illustration-08.svg',
+  'weather-windy': '/weather/Weather Illustration-09.svg',
+  'weather-foggy': '/weather/Weather Illustration-10.svg',
 };
 
 // Pre-load sticker images for canvas rendering
@@ -3031,6 +3043,18 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
     { id: 'service', label: 'Service', type: 'service', svgKey: 'service' },
     { id: 'settings', label: 'Settings', type: 'service', svgKey: 'settings' },
     { id: 'standard', label: 'Standard', type: 'service', svgKey: 'standard' },
+    
+    // Weather Conditions
+    { id: 'weather-cloudy', label: 'Cloudy', type: 'weather', svgKey: 'weather-cloudy' },
+    { id: 'weather-sunny', label: 'Sunny', type: 'weather', svgKey: 'weather-sunny' },
+    { id: 'weather-partly-cloudy', label: 'Partly Cloudy', type: 'weather', svgKey: 'weather-partly-cloudy' },
+    { id: 'weather-rainy', label: 'Rainy', type: 'weather', svgKey: 'weather-rainy' },
+    { id: 'weather-thunderstorm', label: 'Thunderstorm', type: 'weather', svgKey: 'weather-thunderstorm' },
+    { id: 'weather-storm-rain', label: 'Storm & Rain', type: 'weather', svgKey: 'weather-storm-rain' },
+    { id: 'weather-snowy', label: 'Snowy', type: 'weather', svgKey: 'weather-snowy' },
+    { id: 'weather-temperature', label: 'Temperature', type: 'weather', svgKey: 'weather-temperature' },
+    { id: 'weather-windy', label: 'Windy', type: 'weather', svgKey: 'weather-windy' },
+    { id: 'weather-foggy', label: 'Foggy', type: 'weather', svgKey: 'weather-foggy' },
   ];
 
   // Function to load sticker SVG as Image for canvas rendering
@@ -4978,6 +5002,27 @@ const PhotoEditor = ({ photo, onClose, onSave }) => {
                 <div className="sticker-category-title">Service</div>
                 <div className="sticker-category-grid">
                   {STICKERS.filter(s => s.type === 'service').map(sticker => (
+                    <button
+                      key={sticker.id}
+                      className="sticker-option sticker-svg"
+                      onClick={() => handleStickerSelect(sticker)}
+                      title={sticker.label}
+                    >
+                      <img 
+                        src={StickerFiles[sticker.svgKey]} 
+                        alt={sticker.label}
+                        className="sticker-img-preview"
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Weather */}
+              <div className="sticker-category">
+                <div className="sticker-category-title">Weather</div>
+                <div className="sticker-category-grid">
+                  {STICKERS.filter(s => s.type === 'weather').map(sticker => (
                     <button
                       key={sticker.id}
                       className="sticker-option sticker-svg"
