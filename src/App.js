@@ -757,6 +757,13 @@ const samplePhotos = [
   { id: 26, type: 'video', url: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=400&h=400&fit=crop', duration: '2:00', job: '#2024-1451', jobTitle: 'Capitol Hill - Condo Repair', customer: 'Capitol Hill Condos', address: '1500 Broadway, Seattle, WA', company: 'Capitol Hill HOA', uploadedBy: 'Henry Jones', date: getDateString(5), tags: ['Condo', 'Repair'], description: 'Condo roof repair walkthrough' },
 ];
 
+// Jobs that have no photos yet (backend returns these alongside photo data)
+const sampleJobsWithoutPhotos = [
+  { jobId: '#2024-1460', jobTitle: 'Birch Lane - Roof Inspection', customer: 'Karen Mitchell', address: '234 Birch Ln, Seattle, WA', date: getDateString(0), status: 'In Progress' },
+  { jobId: '#2024-1461', jobTitle: 'Spruce Ave - Chimney Flashing', customer: 'Tom Parker', address: '891 Spruce Ave, Bellevue, WA', date: getDateString(1), status: 'Scheduled' },
+  { jobId: '#2024-1462', jobTitle: 'Willow Creek - Gutter Install', customer: 'Diana Hughes', address: '445 Willow Creek Dr, Tacoma, WA', date: getDateString(3), status: 'New' },
+];
+
 // Sample customers for filter
 const sampleCustomers = [
   { id: 1, name: 'Richard Mathew', company: 'Mathew Properties' },
@@ -1486,7 +1493,8 @@ const PhotoFeedGrid = ({
   onClearAllFilters,
   showMetadata = false,
   initialViewMode = 'grid',
-  onBack
+  onBack,
+  jobsWithoutPhotos = []
 }) => {
   const [activeTab, setActiveTab] = useState('my');
   const [viewMode, setViewMode] = useState(initialViewMode); // 'grid', 'job', or 'map'
@@ -1578,19 +1586,35 @@ const PhotoFeedGrid = ({
   };
 
   // Group jobs by date for timeline view in Jobs tab
-  const groupJobsByDate = (photos) => {
+  const groupJobsByDate = (photos, noPhotoJobs = []) => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const yesterday = new Date(today);
     yesterday.setDate(yesterday.getDate() - 1);
     
-    // Format date for display
     const formatDateShort = (date) => {
       const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
       return `${months[date.getMonth()]} ${date.getDate()}`;
     };
 
-    // First, group photos by job
+    const getDateBucket = (dateObj) => {
+      dateObj.setHours(0, 0, 0, 0);
+      let dateKey, displayDate;
+      if (dateObj.getTime() === today.getTime()) {
+        dateKey = 'today';
+        displayDate = `Today ${formatDateShort(today)}`;
+      } else if (dateObj.getTime() === yesterday.getTime()) {
+        dateKey = 'yesterday';
+        displayDate = `Yesterday ${formatDateShort(yesterday)}`;
+      } else {
+        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        dateKey = dateObj.toISOString().split('T')[0];
+        displayDate = `${days[dateObj.getDay()]} ${formatDateShort(dateObj)}`;
+      }
+      return { dateKey, displayDate, timestamp: dateObj.getTime() };
+    };
+
+    // Group photos by job
     const jobsMap = {};
     photos.forEach((photo, index) => {
       const jobKey = photo.job || 'unassigned';
@@ -1607,49 +1631,44 @@ const PhotoFeedGrid = ({
       }
       jobsMap[jobKey].photos.push({ ...photo, originalIndex: index });
       
-      // Track the latest photo date for this job
       const photoDate = new Date(photo.timestamp || Date.now());
       if (!jobsMap[jobKey].latestPhotoDate || photoDate > jobsMap[jobKey].latestPhotoDate) {
         jobsMap[jobKey].latestPhotoDate = photoDate;
       }
     });
 
-    // Now group jobs by their latest photo date
     const dateJobGroups = {};
-    Object.values(jobsMap).forEach(job => {
-      const photoDate = job.latestPhotoDate || new Date();
-      photoDate.setHours(0, 0, 0, 0);
-      
-      let dateKey;
-      let displayDate;
-      let dateSubtitle = null;
-      
-      if (photoDate.getTime() === today.getTime()) {
-        dateKey = 'today';
-        displayDate = `Today ${formatDateShort(today)}`;
-      } else if (photoDate.getTime() === yesterday.getTime()) {
-        dateKey = 'yesterday';
-        displayDate = `Yesterday ${formatDateShort(yesterday)}`;
-      } else {
-        // Use specific date
-        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-        dateKey = photoDate.toISOString().split('T')[0];
-        displayDate = `${days[photoDate.getDay()]} ${formatDateShort(photoDate)}`;
-      }
 
+    const addToDateGroup = (dateKey, displayDate, timestamp, job) => {
       if (!dateJobGroups[dateKey]) {
-        dateJobGroups[dateKey] = {
-          date: dateKey,
-          displayDate,
-          dateSubtitle,
-          timestamp: photoDate.getTime(),
-          jobs: []
-        };
+        dateJobGroups[dateKey] = { date: dateKey, displayDate, dateSubtitle: null, timestamp, jobs: [] };
       }
       dateJobGroups[dateKey].jobs.push(job);
+    };
+
+    // Add photo-backed jobs
+    Object.values(jobsMap).forEach(job => {
+      const photoDate = job.latestPhotoDate || new Date();
+      const { dateKey, displayDate, timestamp } = getDateBucket(new Date(photoDate));
+      addToDateGroup(dateKey, displayDate, timestamp, job);
     });
 
-    // Sort by date (newest first) and return
+    // Merge in jobs without photos
+    noPhotoJobs.forEach(job => {
+      if (jobsMap[job.jobId]) return;
+      const jobDate = new Date(job.date);
+      const { dateKey, displayDate, timestamp } = getDateBucket(jobDate);
+      addToDateGroup(dateKey, displayDate, timestamp, {
+        jobId: job.jobId,
+        jobTitle: job.jobTitle,
+        customer: job.customer,
+        address: job.address,
+        status: job.status,
+        photos: [],
+        hasNoPhotos: true
+      });
+    });
+
     return Object.keys(dateJobGroups)
       .sort((a, b) => dateJobGroups[b].timestamp - dateJobGroups[a].timestamp)
       .map(key => dateJobGroups[key])
@@ -1730,7 +1749,7 @@ const PhotoFeedGrid = ({
     : photos;
   
   const dateGroups = groupPhotosByDate(filteredPhotosForGrid);
-  const jobDateGroups = groupJobsByDate(photos);
+  const jobDateGroups = groupJobsByDate(photos, jobsWithoutPhotos);
 
   // Get tabs based on user role
   const getTabs = () => {
@@ -2124,91 +2143,81 @@ const PhotoFeedGrid = ({
 
       {viewMode === 'job' && (
         <div className="job-gallery">
-          {jobDateGroups.map((dateGroup) => (
-            <div key={dateGroup.date} className="job-date-section">
-              {/* Date Header - Same style as Photos tab */}
-              <div className="gallery-date-header">
-                <div className="date-header-content">
-                  <span className="date-title">{dateGroup.displayDate}</span>
-                </div>
+          {jobDateGroups.flatMap((dateGroup) => dateGroup.jobs).map((group) => (
+            <div key={group.jobId || 'unassigned'} className="job-card">
+              <div className="job-card-header">
+                {group.jobDeleted ? (
+                  <div className="job-deleted-state">
+                    <Icons.AlertCircle />
+                    <span>Job no longer exists</span>
+                  </div>
+                ) : (
+                  <>
+                    <div className="job-card-info">
+                      <span className="job-card-title">{group.jobTitle}</span>
+                      <span className="job-card-meta">
+                        {group.customer}{group.address ? ` - ${group.address}` : ''}
+                      </span>
+                    </div>
+                    <button className="job-camera-btn" title="Add photo to this job">
+                      <Icons.Camera />
+                    </button>
+                  </>
+                )}
               </div>
-
-              {/* Jobs under this date */}
-              {dateGroup.jobs.map((group) => (
-                <div key={group.jobId || 'unassigned'} className="job-section">
-                  {/* Minimal Section Header - 2 lines max */}
-                  <div className="job-section-header">
-                    {group.jobDeleted ? (
-                      <div className="job-deleted-state">
-                        <Icons.AlertCircle />
-                        <span>Job no longer exists</span>
-                      </div>
-                    ) : (
-                      <>
-                        <div className="job-header-row">
-                          <div className="job-header-info">
-                            <span className="job-header-title">{group.jobTitle}</span>
-                            <span className="job-header-meta">
-                              {group.address && <>{group.address}</>}
-                            </span>
-                          </div>
-                          <button className="job-camera-btn" title="Add photo to this job">
-                            <Icons.Camera />
-                          </button>
-                        </div>
-                      </>
-                    )}
-                  </div>
-
-                  {/* Photo Grid - Show max 6 photos with "View More" */}
-                  <div className="job-photo-grid">
-                    {group.photos.slice(0, 6).map((photo, index) => {
-                      const isLastVisible = index === 5 && group.photos.length > 6;
-                      
-                      return (
-                        <div 
-                          key={photo.id}
-                          className={`gallery-thumb ${photo.type === 'video' ? 'is-video' : ''} ${multiSelectMode ? 'selectable' : ''} ${selectedPhotos.includes(photo.id) ? 'selected' : ''} ${isLastVisible ? 'has-more-overlay' : ''}`}
-                          onClick={() => {
-                            if (isLastVisible) {
-                              onPhotoClick(photo.originalIndex);
-                            } else if (multiSelectMode) {
-                              onToggleSelect(photo.id);
-                            } else {
-                              onPhotoClick(photo.originalIndex);
-                            }
-                          }}
-                          onContextMenu={(e) => { e.preventDefault(); onLongPress(photo.id); }}
-                        >
-                          <img src={photo.url} alt="" loading="lazy" />
-                          {/* Uploader avatar - only for Team Leader and Admin */}
-                          {showUploaderAvatar && photo.uploadedBy && !multiSelectMode && !isLastVisible && (
-                            <div className="uploader-avatar" title={photo.uploadedBy}>
-                              {getInitials(photo.uploadedBy)}
-                            </div>
-                          )}
-                          {photo.type === 'video' && !isLastVisible && (
-                            <div className="gallery-video-badge">
-                              <Icons.Play />
-                              <span>{photo.duration}</span>
-                            </div>
-                          )}
-                          {isLastVisible && (
-                            <div className="view-more-overlay">
-                              <span className="view-more-text">View All</span>
-                            </div>
-                          )}
-                          {multiSelectMode && !isLastVisible && (
-                            <div className={`gallery-checkbox ${selectedPhotos.includes(photo.id) ? 'checked' : ''}`}>
-                              {selectedPhotos.includes(photo.id) && <Icons.Check />}
-                            </div>
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
+              {group.photos.length === 0 && !group.jobDeleted && (
+                <div className="job-card-empty-strip">
+                  <Icons.Image />
+                  <span>No photos added yet</span>
                 </div>
-              ))}
+              )}
+              {group.photos.length > 0 && (
+                <div className="job-card-photos">
+                  {group.photos.slice(0, 6).map((photo, index) => {
+                    const isLastVisible = index === 5 && group.photos.length > 6;
+                    
+                    return (
+                      <div 
+                        key={photo.id}
+                        className={`gallery-thumb ${photo.type === 'video' ? 'is-video' : ''} ${multiSelectMode ? 'selectable' : ''} ${selectedPhotos.includes(photo.id) ? 'selected' : ''} ${isLastVisible ? 'has-more-overlay' : ''}`}
+                        onClick={() => {
+                          if (isLastVisible) {
+                            onPhotoClick(photo.originalIndex);
+                          } else if (multiSelectMode) {
+                            onToggleSelect(photo.id);
+                          } else {
+                            onPhotoClick(photo.originalIndex);
+                          }
+                        }}
+                        onContextMenu={(e) => { e.preventDefault(); onLongPress(photo.id); }}
+                      >
+                        <img src={photo.url} alt="" loading="lazy" />
+                        {showUploaderAvatar && photo.uploadedBy && !multiSelectMode && !isLastVisible && (
+                          <div className="uploader-avatar" title={photo.uploadedBy}>
+                            {getInitials(photo.uploadedBy)}
+                          </div>
+                        )}
+                        {photo.type === 'video' && !isLastVisible && (
+                          <div className="gallery-video-badge">
+                            <Icons.Play />
+                            <span>{photo.duration}</span>
+                          </div>
+                        )}
+                        {isLastVisible && (
+                          <div className="view-more-overlay">
+                            <span className="view-more-text">View All</span>
+                          </div>
+                        )}
+                        {multiSelectMode && !isLastVisible && (
+                          <div className={`gallery-checkbox ${selectedPhotos.includes(photo.id) ? 'checked' : ''}`}>
+                            {selectedPhotos.includes(photo.id) && <Icons.Check />}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           ))}
         </div>
@@ -5589,6 +5598,7 @@ function App() {
               onBack={() => setCurrentScreen('home')}
               favoritedPhotos={favoritedPhotos}
               onToggleFavorite={handleToggleFavorite}
+              jobsWithoutPhotos={sampleJobsWithoutPhotos}
             />
             <FilterSheet 
               isOpen={showFilter} 
@@ -5649,6 +5659,7 @@ function App() {
               initialViewMode="job"
               onBack={() => setCurrentScreen('home')}
               favoritedPhotos={favoritedPhotos}
+              jobsWithoutPhotos={sampleJobsWithoutPhotos}
               onToggleFavorite={handleToggleFavorite}
             />
             <FilterSheet 
@@ -5743,6 +5754,7 @@ function App() {
               onBack={() => setCurrentScreen('home')}
               favoritedPhotos={favoritedPhotos}
               onToggleFavorite={handleToggleFavorite}
+              jobsWithoutPhotos={sampleJobsWithoutPhotos}
             />
             <BulkTagSheet 
               isOpen={showTagSheet}
@@ -5775,6 +5787,7 @@ function App() {
             onBulkAction={() => {}}
             isOffline={true}
             onBack={() => setCurrentScreen('home')}
+            jobsWithoutPhotos={sampleJobsWithoutPhotos}
           />
         );
       case 'empty':
