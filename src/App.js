@@ -112,6 +112,46 @@ const Icons = {
       <rect x="14.5" y="14.5" width="3.5" height="3.5" rx="0.75" />
     </svg>
   ),
+  Grid6: () => (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+      <rect x="1" y="1" width="2" height="2" rx="0.5" />
+      <rect x="4" y="1" width="2" height="2" rx="0.5" />
+      <rect x="7" y="1" width="2" height="2" rx="0.5" />
+      <rect x="10" y="1" width="2" height="2" rx="0.5" />
+      <rect x="13" y="1" width="2" height="2" rx="0.5" />
+      <rect x="16" y="1" width="2" height="2" rx="0.5" />
+      <rect x="1" y="4" width="2" height="2" rx="0.5" />
+      <rect x="4" y="4" width="2" height="2" rx="0.5" />
+      <rect x="7" y="4" width="2" height="2" rx="0.5" />
+      <rect x="10" y="4" width="2" height="2" rx="0.5" />
+      <rect x="13" y="4" width="2" height="2" rx="0.5" />
+      <rect x="16" y="4" width="2" height="2" rx="0.5" />
+      <rect x="1" y="7" width="2" height="2" rx="0.5" />
+      <rect x="4" y="7" width="2" height="2" rx="0.5" />
+      <rect x="7" y="7" width="2" height="2" rx="0.5" />
+      <rect x="10" y="7" width="2" height="2" rx="0.5" />
+      <rect x="13" y="7" width="2" height="2" rx="0.5" />
+      <rect x="16" y="7" width="2" height="2" rx="0.5" />
+      <rect x="1" y="10" width="2" height="2" rx="0.5" />
+      <rect x="4" y="10" width="2" height="2" rx="0.5" />
+      <rect x="7" y="10" width="2" height="2" rx="0.5" />
+      <rect x="10" y="10" width="2" height="2" rx="0.5" />
+      <rect x="13" y="10" width="2" height="2" rx="0.5" />
+      <rect x="16" y="10" width="2" height="2" rx="0.5" />
+      <rect x="1" y="13" width="2" height="2" rx="0.5" />
+      <rect x="4" y="13" width="2" height="2" rx="0.5" />
+      <rect x="7" y="13" width="2" height="2" rx="0.5" />
+      <rect x="10" y="13" width="2" height="2" rx="0.5" />
+      <rect x="13" y="13" width="2" height="2" rx="0.5" />
+      <rect x="16" y="13" width="2" height="2" rx="0.5" />
+      <rect x="1" y="16" width="2" height="2" rx="0.5" />
+      <rect x="4" y="16" width="2" height="2" rx="0.5" />
+      <rect x="7" y="16" width="2" height="2" rx="0.5" />
+      <rect x="10" y="16" width="2" height="2" rx="0.5" />
+      <rect x="13" y="16" width="2" height="2" rx="0.5" />
+      <rect x="16" y="16" width="2" height="2" rx="0.5" />
+    </svg>
+  ),
   Menu: () => (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
       <line x1="3" y1="6" x2="21" y2="6" />
@@ -1517,22 +1557,18 @@ const PhotoFeedGrid = ({
   const [selectedDateRange, setSelectedDateRange] = useState(null); // { from, to } or preset like 'today', 'week'
   const [selectedUploadedBy, setSelectedUploadedBy] = useState([]); // For Photos tab - Team Leader/Admin only (multi-select)
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false); // Favorites filter
-  const [gridSize, setGridSize] = useState(3); // 2, 3, or 4 columns
+  const [gridDensity, setGridDensity] = useState('medium'); // 'large', 'medium', 'small'
   
-  // Use prop favoritedPhotos if provided, otherwise use empty set (controlled by parent)
   const favoritedPhotos = propFavoritedPhotos || new Set();
   
-  // Cycle through grid sizes
-  const cycleGridSize = () => {
-    setGridSize(prev => {
-      if (prev === 3) return 2;
-      if (prev === 2) return 4;
-      return 3;
-    });
-  };
+  const [showGridPopover, setShowGridPopover] = useState(false);
   
-  // Get the appropriate grid icon
-  const GridIcon = gridSize === 2 ? Icons.Grid2 : gridSize === 4 ? Icons.Grid4 : Icons.Grid3;
+  const gridDensityConfig = {
+    large:  { icon: Icons.Grid3, label: 'Large' },
+    medium: { icon: Icons.Grid4, label: 'Medium' },
+    small:  { icon: Icons.Grid6, label: 'Small' },
+  };
+  const GridIcon = gridDensityConfig[gridDensity].icon;
   
   // Available tags (would come from backend)
   const availableTags = ['Before', 'After', 'Damage', 'Progress', 'Complete', 'Issue', 'Inspection'];
@@ -1790,11 +1826,30 @@ const PhotoFeedGrid = ({
           <>
             <button className="header-btn" onClick={onBack}><Icons.Back /></button>
             <h1 className="header-title">Photo Feed</h1>
-            {/* Grid size toggle - only show in Photos view */}
+            {/* Grid density popover - only show in Photos view */}
             {(viewMode === 'grid' || viewMode === 'favorites') ? (
-              <button className="header-btn grid-toggle" onClick={cycleGridSize} title={`${gridSize} columns`}>
-                <GridIcon />
-              </button>
+              <div className="grid-popover-wrapper">
+                <button className="header-btn grid-toggle" onClick={() => setShowGridPopover(!showGridPopover)} title={`${gridDensityConfig[gridDensity].label} grid`}>
+                  <GridIcon />
+                </button>
+                {showGridPopover && (
+                  <>
+                    <div className="grid-popover-backdrop" onClick={() => setShowGridPopover(false)} />
+                    <div className="grid-popover">
+                      {Object.entries(gridDensityConfig).map(([key, { icon: Icon, label }]) => (
+                        <button
+                          key={key}
+                          className={`grid-popover-option ${gridDensity === key ? 'active' : ''}`}
+                          onClick={() => { setGridDensity(key); setShowGridPopover(false); }}
+                        >
+                          <Icon />
+                          <span>{label}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </>
+                )}
+              </div>
             ) : (
               <div style={{ width: '40px' }} />
             )}
@@ -2082,7 +2137,7 @@ const PhotoFeedGrid = ({
               </div>
               
               {/* Photos Grid */}
-              <div className={`gallery-grid grid-cols-${gridSize} ${showMetadata ? 'with-metadata' : ''}`}>
+              <div className={`gallery-grid grid-density-${gridDensity} ${showMetadata ? 'with-metadata' : ''}`}>
                 {group.photos.map((photo, photoIndex) => (
                   <div 
                     key={photo.id}
@@ -2101,12 +2156,6 @@ const PhotoFeedGrid = ({
                     {favoritedPhotos.has(photo.originalIndex) && !multiSelectMode && (
                       <div className="favorite-indicator">
                         <Icons.HeartFilled />
-                      </div>
-                    )}
-                    {photo.type === 'video' && (
-                      <div className="gallery-video-badge">
-                        <Icons.Play />
-                        <span>{photo.duration}</span>
                       </div>
                     )}
                     {showMetadata && (
@@ -2195,12 +2244,6 @@ const PhotoFeedGrid = ({
                         {showUploaderAvatar && photo.uploadedBy && !multiSelectMode && !isLastVisible && (
                           <div className="uploader-avatar" title={photo.uploadedBy}>
                             {getInitials(photo.uploadedBy)}
-                          </div>
-                        )}
-                        {photo.type === 'video' && !isLastVisible && (
-                          <div className="gallery-video-badge">
-                            <Icons.Play />
-                            <span>{photo.duration}</span>
                           </div>
                         )}
                         {isLastVisible && (

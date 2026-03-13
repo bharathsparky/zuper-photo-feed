@@ -1283,7 +1283,7 @@
   min-height: 56px;
   position: sticky;
   top: 0;
-  z-index: 20;
+  z-index: 300;
   transition: box-shadow 0.2s ease, background 0.2s ease;
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
@@ -2109,57 +2109,60 @@
   margin-left: 2px;
 }
 
-/* Gallery Grid - Tight Layout */
+/* Gallery Grid - Responsive Layout */
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   gap: 6px;
   background: transparent;
   border-radius: 0;
   padding: 4px 0;
-  transition: all 0.2s ease;
+  transition: gap 0.2s ease;
 }
 
-/* Grid size variants */
-.gallery-grid.grid-cols-2 {
-  grid-template-columns: repeat(2, 1fr);
+/* Grid density variants — thumbnail min-size controls column count */
+/* Large: 3 cols on phone, ~5 on tablet portrait, ~7 on tablet landscape */
+.gallery-grid.grid-density-large {
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   gap: 8px;
 }
 
-.gallery-grid.grid-cols-3 {
-  grid-template-columns: repeat(3, 1fr);
-  gap: 6px;
+/* Medium: 4 cols on phone, ~6 on tablet portrait, ~9 on tablet landscape */
+.gallery-grid.grid-density-medium {
+  grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
+  gap: 5px;
 }
 
-.gallery-grid.grid-cols-4 {
-  grid-template-columns: repeat(4, 1fr);
-  gap: 4px;
+/* Small: 6 cols on phone, ~9 on tablet portrait, ~13 on tablet landscape */
+.gallery-grid.grid-density-small {
+  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+  gap: 3px;
 }
 
-/* Adjust thumbnail sizes for different grid sizes */
-.gallery-grid.grid-cols-2 .gallery-thumb {
+/* Adjust thumbnail rounding per density */
+.gallery-grid.grid-density-large .gallery-thumb {
   border-radius: 10px;
 }
 
-.gallery-grid.grid-cols-4 .gallery-thumb {
+.gallery-grid.grid-density-small .gallery-thumb {
   border-radius: 4px;
 }
 
-.gallery-grid.grid-cols-4 .video-badge {
+.gallery-grid.grid-density-small .video-badge {
   font-size: 9px;
   padding: 2px 5px;
   bottom: 4px;
   right: 4px;
 }
 
-.gallery-grid.grid-cols-4 .favorite-indicator {
+.gallery-grid.grid-density-small .favorite-indicator {
   width: 16px;
   height: 16px;
   top: 4px;
   right: 4px;
 }
 
-.gallery-grid.grid-cols-4 .favorite-indicator svg {
+.gallery-grid.grid-density-small .favorite-indicator svg {
   width: 10px;
   height: 10px;
 }
@@ -2332,8 +2335,8 @@
   background: rgba(255, 152, 0, 0.85); /* Amber */
 }
 
-/* Smaller avatar for 4-column grid */
-.gallery-grid.grid-cols-4 .uploader-avatar {
+/* Smaller avatar for small/dense grid */
+.gallery-grid.grid-density-small .uploader-avatar {
   width: 18px;
   height: 18px;
   font-size: 7px;
@@ -5972,6 +5975,10 @@
 }
 
 /* Grid Size Toggle Button */
+.grid-popover-wrapper {
+  position: relative;
+}
+
 .header-btn.grid-toggle {
   width: 40px;
   height: 40px;
@@ -5991,6 +5998,66 @@
 .header-btn.grid-toggle svg {
   width: 20px;
   height: 20px;
+}
+
+/* Grid Size Popover */
+.grid-popover-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+}
+
+.grid-popover {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 1000;
+  background: #FFFFFF;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  padding: 6px;
+  min-width: 150px;
+  animation: gridPopoverIn 0.15s ease-out;
+}
+
+@keyframes gridPopoverIn {
+  from { opacity: 0; transform: translateY(-4px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.grid-popover-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #4A5568;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.grid-popover-option:hover {
+  background: #F5F6F8;
+}
+
+.grid-popover-option.active {
+  background: #FBE9E7;
+  color: #E44A19;
+}
+
+.grid-popover-option svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.grid-popover-option.active svg {
+  color: #E44A19;
 }
 
 /* ============================================
