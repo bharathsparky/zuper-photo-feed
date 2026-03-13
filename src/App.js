@@ -70,8 +70,8 @@ const stickerImageCache = {};
 
 // Icons Component
 const Icons = {
-  // Grid size toggle icons
-  Grid2: () => (
+  // Grid density icons — NxN grids (2x2, 3x3, 4x4)
+  GridLarge: () => (
     <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
       <rect x="2" y="2" width="7" height="7" rx="1.5" />
       <rect x="11" y="2" width="7" height="7" rx="1.5" />
@@ -79,7 +79,7 @@ const Icons = {
       <rect x="11" y="11" width="7" height="7" rx="1.5" />
     </svg>
   ),
-  Grid3: () => (
+  GridMedium: () => (
     <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
       <rect x="1" y="1" width="5" height="5" rx="1" />
       <rect x="7.5" y="1" width="5" height="5" rx="1" />
@@ -92,7 +92,7 @@ const Icons = {
       <rect x="14" y="14" width="5" height="5" rx="1" />
     </svg>
   ),
-  Grid4: () => (
+  GridSmall: () => (
     <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
       <rect x="1" y="1" width="3.5" height="3.5" rx="0.75" />
       <rect x="5.5" y="1" width="3.5" height="3.5" rx="0.75" />
@@ -110,46 +110,6 @@ const Icons = {
       <rect x="5.5" y="14.5" width="3.5" height="3.5" rx="0.75" />
       <rect x="10" y="14.5" width="3.5" height="3.5" rx="0.75" />
       <rect x="14.5" y="14.5" width="3.5" height="3.5" rx="0.75" />
-    </svg>
-  ),
-  Grid6: () => (
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-      <rect x="1" y="1" width="2" height="2" rx="0.5" />
-      <rect x="4" y="1" width="2" height="2" rx="0.5" />
-      <rect x="7" y="1" width="2" height="2" rx="0.5" />
-      <rect x="10" y="1" width="2" height="2" rx="0.5" />
-      <rect x="13" y="1" width="2" height="2" rx="0.5" />
-      <rect x="16" y="1" width="2" height="2" rx="0.5" />
-      <rect x="1" y="4" width="2" height="2" rx="0.5" />
-      <rect x="4" y="4" width="2" height="2" rx="0.5" />
-      <rect x="7" y="4" width="2" height="2" rx="0.5" />
-      <rect x="10" y="4" width="2" height="2" rx="0.5" />
-      <rect x="13" y="4" width="2" height="2" rx="0.5" />
-      <rect x="16" y="4" width="2" height="2" rx="0.5" />
-      <rect x="1" y="7" width="2" height="2" rx="0.5" />
-      <rect x="4" y="7" width="2" height="2" rx="0.5" />
-      <rect x="7" y="7" width="2" height="2" rx="0.5" />
-      <rect x="10" y="7" width="2" height="2" rx="0.5" />
-      <rect x="13" y="7" width="2" height="2" rx="0.5" />
-      <rect x="16" y="7" width="2" height="2" rx="0.5" />
-      <rect x="1" y="10" width="2" height="2" rx="0.5" />
-      <rect x="4" y="10" width="2" height="2" rx="0.5" />
-      <rect x="7" y="10" width="2" height="2" rx="0.5" />
-      <rect x="10" y="10" width="2" height="2" rx="0.5" />
-      <rect x="13" y="10" width="2" height="2" rx="0.5" />
-      <rect x="16" y="10" width="2" height="2" rx="0.5" />
-      <rect x="1" y="13" width="2" height="2" rx="0.5" />
-      <rect x="4" y="13" width="2" height="2" rx="0.5" />
-      <rect x="7" y="13" width="2" height="2" rx="0.5" />
-      <rect x="10" y="13" width="2" height="2" rx="0.5" />
-      <rect x="13" y="13" width="2" height="2" rx="0.5" />
-      <rect x="16" y="13" width="2" height="2" rx="0.5" />
-      <rect x="1" y="16" width="2" height="2" rx="0.5" />
-      <rect x="4" y="16" width="2" height="2" rx="0.5" />
-      <rect x="7" y="16" width="2" height="2" rx="0.5" />
-      <rect x="10" y="16" width="2" height="2" rx="0.5" />
-      <rect x="13" y="16" width="2" height="2" rx="0.5" />
-      <rect x="16" y="16" width="2" height="2" rx="0.5" />
     </svg>
   ),
   Menu: () => (
@@ -1564,9 +1524,9 @@ const PhotoFeedGrid = ({
   const [showGridPopover, setShowGridPopover] = useState(false);
   
   const gridDensityConfig = {
-    large:  { icon: Icons.Grid3, label: 'Large' },
-    medium: { icon: Icons.Grid4, label: 'Medium' },
-    small:  { icon: Icons.Grid6, label: 'Small' },
+    large:  { icon: Icons.GridLarge, label: 'Large' },
+    medium: { icon: Icons.GridMedium, label: 'Medium' },
+    small:  { icon: Icons.GridSmall, label: 'Small' },
   };
   const GridIcon = gridDensityConfig[gridDensity].icon;
   
