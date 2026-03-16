@@ -1515,6 +1515,10 @@ const PhotoFeedGrid = ({
   
   const [showGridPopover, setShowGridPopover] = useState(false);
   const [showJobsSearch, setShowJobsSearch] = useState(false);
+  const [showUploadedBySheet, setShowUploadedBySheet] = useState(false);
+  const [uploaderSearchQuery, setUploaderSearchQuery] = useState('');
+  const [showTagsSheet, setShowTagsSheet] = useState(false);
+  const [tagsSearchQuery, setTagsSearchQuery] = useState('');
   
   const gridDensityConfig = {
     large:  { icon: Icons.GridLarge, label: 'Large' },
@@ -1849,8 +1853,8 @@ const PhotoFeedGrid = ({
           {/* Tags Filter */}
           <div className="filter-pill-wrapper">
             <button 
-              className={`filter-pill ${selectedTags.length > 0 ? 'active' : ''} ${activeInlineFilter === 'tags' ? 'open' : ''}`}
-              onClick={() => setActiveInlineFilter(activeInlineFilter === 'tags' ? null : 'tags')}
+              className={`filter-pill ${selectedTags.length > 0 ? 'active' : ''} ${showTagsSheet ? 'open' : ''}`}
+              onClick={() => setShowTagsSheet(true)}
             >
               <span>Tags{selectedTags.length > 0 ? ` (${selectedTags.length})` : ''}</span>
               <Icons.ChevronDown />
@@ -1872,8 +1876,8 @@ const PhotoFeedGrid = ({
           {(userRole === USER_ROLES.TEAM_LEADER || userRole === USER_ROLES.ADMIN) && (
             <div className="filter-pill-wrapper">
               <button 
-                className={`filter-pill ${selectedUploadedBy.length > 0 ? 'active' : ''} ${activeInlineFilter === 'uploadedBy' ? 'open' : ''}`}
-                onClick={() => setActiveInlineFilter(activeInlineFilter === 'uploadedBy' ? null : 'uploadedBy')}
+                className={`filter-pill ${selectedUploadedBy.length > 0 ? 'active' : ''} ${showUploadedBySheet ? 'open' : ''}`}
+                onClick={() => setShowUploadedBySheet(true)}
               >
                 <span>Uploaded by{selectedUploadedBy.length > 0 ? ` (${selectedUploadedBy.length})` : ''}</span>
                 <Icons.ChevronDown />
@@ -1912,35 +1916,7 @@ const PhotoFeedGrid = ({
               </>
             )}
 
-            {/* Tags Options */}
-            {activeInlineFilter === 'tags' && (
-              <>
-                {availableTags.map(tag => (
-                  <button 
-                    key={tag}
-                    className={`dropdown-option ${selectedTags.includes(tag) ? 'selected' : ''}`}
-                    onClick={() => {
-                      setSelectedTags(prev => 
-                        prev.includes(tag) 
-                          ? prev.filter(t => t !== tag)
-                          : [...prev, tag]
-                      );
-                    }}
-                  >
-                    <span className="tag-checkbox">{selectedTags.includes(tag) ? '✓' : ''}</span>
-                    {tag}
-                  </button>
-                ))}
-                {selectedTags.length > 0 && (
-                  <button 
-                    className="dropdown-option clear-option"
-                    onClick={() => { setSelectedTags([]); setActiveInlineFilter(null); }}
-                  >
-                    Clear all
-                  </button>
-                )}
-              </>
-            )}
+            {/* Tags handled via bottom sheet, not dropdown */}
 
             {/* Date Options */}
             {activeInlineFilter === 'date' && (
@@ -1960,35 +1936,7 @@ const PhotoFeedGrid = ({
               </>
             )}
 
-            {/* Uploaded By Options - Multi-select */}
-            {activeInlineFilter === 'uploadedBy' && (
-              <>
-                {teamMembers.map(member => (
-                  <button 
-                    key={member.id}
-                    className={`dropdown-option ${selectedUploadedBy.includes(member.name) ? 'selected' : ''}`}
-                    onClick={() => {
-                      setSelectedUploadedBy(prev => 
-                        prev.includes(member.name) 
-                          ? prev.filter(n => n !== member.name)
-                          : [...prev, member.name]
-                      );
-                    }}
-                  >
-                    <span className="tag-checkbox">{selectedUploadedBy.includes(member.name) ? '✓' : ''}</span>
-                    {member.name}
-                  </button>
-                ))}
-                {selectedUploadedBy.length > 0 && (
-                  <button 
-                    className="dropdown-option clear-option"
-                    onClick={() => { setSelectedUploadedBy([]); setActiveInlineFilter(null); }}
-                  >
-                    Clear all
-                  </button>
-                )}
-              </>
-            )}
+            {/* Uploaded By handled via bottom sheet, not dropdown */}
           </div>
         </>
       )}
@@ -2252,6 +2200,137 @@ const PhotoFeedGrid = ({
         </div>
       )}
       */}
+
+      {/* Uploaded By Bottom Sheet */}
+      {showUploadedBySheet && (
+        <div className="bottom-sheet-overlay" onClick={() => { setShowUploadedBySheet(false); setUploaderSearchQuery(''); }}>
+          <div className="bottom-sheet uploader-sheet" onClick={e => e.stopPropagation()}>
+            <div className="sheet-handle" />
+            <div className="sheet-header">
+              <h2>Uploaded by</h2>
+              <button className="sheet-close-btn" onClick={() => { setShowUploadedBySheet(false); setUploaderSearchQuery(''); }}>
+                <Icons.Close />
+              </button>
+            </div>
+            <div className="uploader-search-row">
+              <Icons.Search />
+              <input
+                type="text"
+                placeholder="Search by keyword"
+                value={uploaderSearchQuery}
+                onChange={(e) => setUploaderSearchQuery(e.target.value)}
+                className="uploader-search-input"
+                autoFocus
+              />
+              {uploaderSearchQuery && (
+                <button className="uploader-search-clear" onClick={() => setUploaderSearchQuery('')}>
+                  <Icons.Close />
+                </button>
+              )}
+            </div>
+            <div className="uploader-list">
+              {teamMembers
+                .filter(m => m.name.toLowerCase().includes(uploaderSearchQuery.toLowerCase()))
+                .map(member => (
+                <button
+                  key={member.id}
+                  className={`uploader-item ${selectedUploadedBy.includes(member.name) ? 'selected' : ''}`}
+                  onClick={() => {
+                    setSelectedUploadedBy(prev =>
+                      prev.includes(member.name)
+                        ? prev.filter(n => n !== member.name)
+                        : [...prev, member.name]
+                    );
+                  }}
+                >
+                  <div className={`uploader-checkbox ${selectedUploadedBy.includes(member.name) ? 'checked' : ''}`}>
+                    {selectedUploadedBy.includes(member.name) && <Icons.Check />}
+                  </div>
+                  <div className="uploader-avatar-circle">
+                    {getInitials(member.name)}
+                  </div>
+                  <div className="uploader-details">
+                    <span className="uploader-name">{member.name}</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+            {selectedUploadedBy.length > 0 && (
+              <div className="uploader-sheet-footer">
+                <button className="uploader-clear-btn" onClick={() => setSelectedUploadedBy([])}>
+                  Clear all
+                </button>
+                <button className="uploader-apply-btn" onClick={() => { setShowUploadedBySheet(false); setUploaderSearchQuery(''); }}>
+                  Apply ({selectedUploadedBy.length})
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Tags Bottom Sheet */}
+      {showTagsSheet && (
+        <div className="bottom-sheet-overlay" onClick={() => { setShowTagsSheet(false); setTagsSearchQuery(''); }}>
+          <div className="bottom-sheet uploader-sheet" onClick={e => e.stopPropagation()}>
+            <div className="sheet-handle" />
+            <div className="sheet-header">
+              <h2>Tags</h2>
+              <button className="sheet-close-btn" onClick={() => { setShowTagsSheet(false); setTagsSearchQuery(''); }}>
+                <Icons.Close />
+              </button>
+            </div>
+            <div className="uploader-search-row">
+              <Icons.Search />
+              <input
+                type="text"
+                placeholder="Search tags"
+                value={tagsSearchQuery}
+                onChange={(e) => setTagsSearchQuery(e.target.value)}
+                className="uploader-search-input"
+                autoFocus
+              />
+              {tagsSearchQuery && (
+                <button className="uploader-search-clear" onClick={() => setTagsSearchQuery('')}>
+                  <Icons.Close />
+                </button>
+              )}
+            </div>
+            <div className="uploader-list">
+              {availableTags
+                .filter(tag => tag.toLowerCase().includes(tagsSearchQuery.toLowerCase()))
+                .map(tag => (
+                <button
+                  key={tag}
+                  className={`uploader-item ${selectedTags.includes(tag) ? 'selected' : ''}`}
+                  onClick={() => {
+                    setSelectedTags(prev =>
+                      prev.includes(tag)
+                        ? prev.filter(t => t !== tag)
+                        : [...prev, tag]
+                    );
+                  }}
+                >
+                  <div className={`uploader-checkbox ${selectedTags.includes(tag) ? 'checked' : ''}`}>
+                    {selectedTags.includes(tag) && <Icons.Check />}
+                  </div>
+                  <span className="uploader-name">{tag}</span>
+                </button>
+              ))}
+            </div>
+            {selectedTags.length > 0 && (
+              <div className="uploader-sheet-footer">
+                <button className="uploader-clear-btn" onClick={() => setSelectedTags([])}>
+                  Clear all
+                </button>
+                <button className="uploader-apply-btn" onClick={() => { setShowTagsSheet(false); setTagsSearchQuery(''); }}>
+                  Apply ({selectedTags.length})
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
