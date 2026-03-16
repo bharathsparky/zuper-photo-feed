@@ -357,6 +357,11 @@ const Icons = {
       <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
     </svg>
   ),
+  Markup: () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M4 21v-4.25L17.175 3.6q.3-.3.675-.45T18.6 3q.4 0 .763.15T20 3.6L21.4 5q.3.275.45.638T22 6.4q0 .375-.15.75t-.45.675L8.25 21zM18.65 7.775L20 6.425L18.575 5l-1.35 1.35zM14 21q1.85 0 3.425-.925T19 17.5q0-.9-.475-1.55t-1.275-1.125L15.775 16.3q.575.25.9.55t.325.65q0 .575-.913 1.038T14 19q-.425 0-.712.288T13 20t.288.713T14 21m-9.425-7.65l1.5-1.5q-.5-.2-.788-.412T5 11q0-.3.45-.6t1.9-.925q2.2-.95 2.925-1.725T11 6q0-1.375-1.1-2.187T7 3q-1.125 0-2.013.4t-1.362.975Q3.35 4.7 3.4 5.1t.375.65q.325.275.725.225t.675-.325q.35-.35.775-.5T7 5q1.025 0 1.513.3T9 6q0 .35-.437.637T6.55 7.65q-2 .875-2.775 1.588T3 11q0 .8.425 1.363t1.15.987" />
+    </svg>
+  ),
   Undo: () => (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="M9 14L4 9l5-5" />
@@ -827,33 +832,24 @@ const OfflineBanner = () => (
 
 
 // More Options Menu Component
-const MoreOptionsMenu = ({ isOpen, onClose, onAction, canDelete }) => {
+const MoreOptionsMenu = ({ isOpen, onClose, onAction }) => {
   if (!isOpen) return null;
   
   return (
     <div className="options-menu-overlay" onClick={onClose}>
       <div className="options-menu" onClick={e => e.stopPropagation()}>
-        <button className="option-item" onClick={() => onAction('download')}>
-          <Icons.Download />
-          <span>Download</span>
+        <button className="option-item" onClick={() => onAction('rename')}>
+          <Icons.Pencil />
+          <span>Rename</span>
         </button>
         <button className="option-item" onClick={() => onAction('share')}>
           <Icons.Share />
           <span>Share</span>
         </button>
-        <button className="option-item" onClick={() => onAction('report')}>
-          <Icons.FileText />
-          <span>Add to Job Report</span>
+        <button className="option-item" onClick={() => onAction('download')}>
+          <Icons.Download />
+          <span>Download</span>
         </button>
-        {canDelete && (
-          <>
-            <div className="option-divider" />
-            <button className="option-item danger" onClick={() => onAction('delete')}>
-              <Icons.Trash />
-              <span>Delete</span>
-            </button>
-          </>
-        )}
       </div>
     </div>
   );
@@ -927,104 +923,109 @@ const ActiveFiltersChips = ({ filters, onRemove, onClearAll }) => {
 
 // Homepage Component (Entry Point)
 const Homepage = ({ onNavigate }) => {
+  const today = new Date();
+  const dayName = today.toLocaleDateString('en-US', { weekday: 'long' });
+  const monthName = today.toLocaleDateString('en-US', { month: 'long' });
+  const dayNum = today.getDate();
+  const year = today.getFullYear();
+
   return (
     <div className="home-screen">
       {/* Header */}
       <div className="home-header">
         <div className="header-left">
-          <img src={FigmaAssets.imgMenu2} alt="Menu" className="header-icon" />
-          <img src={FigmaAssets.imgImage1} alt="IKEA" className="company-logo-img" />
+          <button className="home-hamburger">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="2" strokeLinecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <span className="company-logo-text">
+            <span className="logo-acme">ACME</span>
+            <span className="logo-corp">CORPORATION</span>
+          </span>
         </div>
-        <div className="header-center"></div>
         <div className="header-actions">
-          <img src={FigmaAssets.imgSearch} alt="Search" className="header-icon" />
-          <img src={FigmaAssets.imgMessage} alt="Message" className="header-icon" />
-          <img src={FigmaAssets.imgBell} alt="Bell" className="header-icon" />
+          <button className="home-header-btn">
+            <Icons.Search />
+          </button>
+          <button className="home-header-btn badge-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <span className="header-badge">13</span>
+          </button>
+          <button className="home-header-btn badge-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <span className="header-badge">94</span>
+          </button>
         </div>
       </div>
-      <div className="header-separator"></div>
 
       {/* User Greeting Card */}
       <div className="greeting-card">
         <div className="greeting-top">
           <div className="greeting-content">
-            <h2>Hello, Henry Jones!</h2>
-            <p className="date-text">Friday, January 6th 2022</p>
+            <h2>Hello, Bharath S! 👋</h2>
+            <p className="date-text">{dayName}, {monthName} {dayNum} {year}</p>
           </div>
           <div className="user-avatar">
-            <img src={FigmaAssets.img5} alt="User" />
+            <div className="avatar-placeholder">
+              <Icons.User />
+            </div>
           </div>
         </div>
         <div className="greeting-separator"></div>
         <div className="work-hours-section">
           <div className="work-hours-info">
             <span className="work-label">Work hours</span>
-            <span className="work-time">10:00 am to 5:00 pm</span>
+            <span className="work-time">09:00 AM - 07:00 PM</span>
           </div>
-          <button className="start-btn">
-            <img src={FigmaAssets.img6} alt="Play" className="play-icon-img" />
-            <span>Start</span>
+          <button className="punch-in-btn">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <span>Punch In</span>
           </button>
         </div>
-      </div>
-
-      {/* Quick Links */}
-      <div className="quick-links-section">
-        <div className="section-header">
-          <h3>Quick Links</h3>
-          <button className="add-btn">
-            <img src={FigmaAssets.imgPlus} alt="Add" className="add-icon-img" />
-          </button>
-        </div>
-        <div className="quick-links-grid">
-          <button className="quick-link-item" onClick={() => onNavigate('photo-feed')}>
-            <div className="quick-link-icon photo-feed">
+        <div className="greeting-separator"></div>
+        {/* Quick Action Pills — inside the card */}
+        <div className="quick-pills-section">
+          <div className="quick-pills-row">
+            <button className="quick-pill" onClick={() => onNavigate('photo-feed')}>
               <Icons.Gallery />
-            </div>
-            <span>Photo Feed</span>
-          </button>
-          <button className="quick-link-item">
-            <div className="quick-link-icon schedule">
+              <span>Photo Feed</span>
+            </button>
+            <button className="quick-pill">
               <Icons.Schedule />
-            </div>
-            <span>Schedule</span>
-          </button>
-          <button className="quick-link-item">
-            <div className="quick-link-icon tasks">
-              <Icons.Tasks />
-            </div>
-            <span>My Tasks (12)</span>
-          </button>
-          <button className="quick-link-item">
-            <div className="quick-link-icon announcement">
-              <Icons.Megaphone />
-            </div>
-            <span>Announcement(s)</span>
-          </button>
-          <button className="quick-link-item">
-            <div className="quick-link-icon scan">
+              <span>Schedule</span>
+            </button>
+            <button className="quick-pill">
               <Icons.Scan />
-            </div>
-            <span>Scan</span>
-          </button>
+              <span>Scan</span>
+            </button>
+          </div>
+          <div className="quick-pills-row">
+            <button className="quick-pill">
+              <Icons.Plus />
+              <span>New</span>
+            </button>
+            <button className="quick-pill">
+              <Icons.Megaphone />
+              <span>Announcement(s)</span>
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Jobs Section */}
       <div className="jobs-section">
         <div className="jobs-header">
-          <h3>Jobs (35)</h3>
+          <h3>Jobs (18)</h3>
           <div className="jobs-nav">
             <button className="map-icon-btn">
-              <img src={FigmaAssets.imgMap2} alt="Map" className="map-icon-img" />
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
             </button>
             <div className="date-nav">
-              <button>
-                <img src={FigmaAssets.imgChevronLeft} alt="Previous" className="chevron-icon" />
+              <button className="date-nav-arrow">
+                <Icons.ChevronLeft />
               </button>
-              <span>Today</span>
-              <button className="chevron-right">
-                <img src={FigmaAssets.imgChevronLeft} alt="Next" className="chevron-icon" />
+              <span className="date-nav-label">Today</span>
+              <button className="date-nav-arrow">
+                <Icons.ChevronRight />
               </button>
             </div>
           </div>
@@ -1032,52 +1033,43 @@ const Homepage = ({ onNavigate }) => {
         
         <div className="stats-grid">
           <div className="stat-card total-jobs">
-            <span className="stat-label">Total jobs</span>
-            <span className="stat-value">35</span>
+            <span className="stat-label">Total Jobs</span>
+            <span className="stat-value">18</span>
           </div>
           <div className="stat-card yet-to-start">
             <span className="stat-label">Yet to start</span>
-            <span className="stat-value">27</span>
+            <span className="stat-value">14</span>
           </div>
           <div className="stat-card in-progress">
             <span className="stat-label">In Progress</span>
-            <span className="stat-value">4</span>
+            <span className="stat-value">2</span>
           </div>
           <div className="stat-card completed">
             <span className="stat-label">Completed</span>
-            <span className="stat-value">0</span>
+            <span className="stat-value">1</span>
           </div>
         </div>
 
         {/* Job Card */}
-        <div className="job-card">
-          <div className="job-card-header">
-            <div className="job-number">
-              <img src={FigmaAssets.imgRepeat} alt="Repeat" className="repeat-icon-img" />
-              #2022 - 1429
-            </div>
-            <span className="job-status new">New</span>
+        <div className="job-card-v2">
+          <div className="job-card-v2-header">
+            <span className="job-pre-number">pre 102971</span>
+            <span className="job-badge-ctcf">CTCF</span>
           </div>
-          <h4 className="job-title">46th Avenue Genese St - Interior Design</h4>
-          <p className="job-time">Today, 10:30 - 11:00 AM</p>
-          <div className="job-details">
-            <div className="job-detail">
-              <div className="job-badge-icon">
-                <img src={FigmaAssets.img3} alt="User" />
-              </div>
-              <span>Richard Mathew (Vodafone Idea)</span>
+          <h4 className="job-card-v2-title">Title Jan 2026</h4>
+          <p className="job-card-v2-date">02/26/2026 05:30 AM - 03/22/2026 05:30 AM</p>
+          <div className="job-card-v2-details">
+            <div className="job-card-v2-detail">
+              <Icons.User />
+              <span>gvvvv vvvv</span>
             </div>
-            <div className="job-detail">
-              <div className="job-badge-icon">
-                <img src={FigmaAssets.img} alt="Briefcase" />
-              </div>
-              <span>Renovation</span>
+            <div className="job-card-v2-detail">
+              <Icons.Briefcase />
+              <span>Copy CF Validation</span>
             </div>
-            <div className="job-detail">
-              <div className="job-badge-icon">
-                <img src={FigmaAssets.img1} alt="Location" />
-              </div>
-              <span>Genese Street, 46th Avenue, SW, Seattle</span>
+            <div className="job-card-v2-detail">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"/></svg>
+              <span>M. A. Chidambaram Stadium, Wallahjah Road, Chepauk, Triplicane, ... <strong>...show more</strong></span>
             </div>
           </div>
         </div>
@@ -1522,6 +1514,7 @@ const PhotoFeedGrid = ({
   const favoritedPhotos = propFavoritedPhotos || new Set();
   
   const [showGridPopover, setShowGridPopover] = useState(false);
+  const [showJobsSearch, setShowJobsSearch] = useState(false);
   
   const gridDensityConfig = {
     large:  { icon: Icons.GridLarge, label: 'Large' },
@@ -1785,7 +1778,25 @@ const PhotoFeedGrid = ({
         ) : (
           <>
             <button className="header-btn" onClick={onBack}><Icons.Back /></button>
-            <h1 className="header-title">Photo Feed</h1>
+            {/* Tabs integrated into header */}
+            {!multiSelectMode ? (
+              <div className="header-tabs">
+                <button 
+                  className={`header-tab ${viewMode === 'grid' ? 'active' : ''}`}
+                  onClick={() => { setViewMode('grid'); setShowFavoritesOnly(false); }}
+                >
+                  Photos
+                </button>
+                <button 
+                  className={`header-tab ${viewMode === 'job' ? 'active' : ''}`}
+                  onClick={() => { setViewMode('job'); setShowFavoritesOnly(false); }}
+                >
+                  Jobs
+                </button>
+              </div>
+            ) : (
+              <h1 className="header-title">Photo Feed</h1>
+            )}
             {/* Grid density popover - only show in Photos view */}
             {(viewMode === 'grid' || viewMode === 'favorites') ? (
               <div className="grid-popover-wrapper">
@@ -1810,39 +1821,16 @@ const PhotoFeedGrid = ({
                   </>
                 )}
               </div>
+            ) : viewMode === 'job' ? (
+              <button className="header-btn" onClick={() => setShowJobsSearch(!showJobsSearch)}>
+                <Icons.Search />
+              </button>
             ) : (
               <div style={{ width: '40px' }} />
             )}
           </>
         )}
       </div>
-
-      {/* View Switcher - Photos / Jobs / Map */}
-      {!multiSelectMode && (
-        <div className="feed-tabs view-tabs three-tabs">
-          <button 
-            className={`tab-btn ${viewMode === 'grid' ? 'active' : ''}`}
-            onClick={() => { setViewMode('grid'); setShowFavoritesOnly(false); }}
-          >
-            <Icons.Grid />
-            Photos
-          </button>
-          <button 
-            className={`tab-btn ${viewMode === 'job' ? 'active' : ''}`}
-            onClick={() => { setViewMode('job'); setShowFavoritesOnly(false); }}
-          >
-            <Icons.Briefcase />
-            Jobs
-          </button>
-          <button 
-            className={`tab-btn ${viewMode === 'map' ? 'active' : ''}`}
-            onClick={() => { setViewMode('map'); setShowFavoritesOnly(false); }}
-          >
-            <Icons.MapPin />
-            Map
-          </button>
-        </div>
-      )}
 
       {/* Inline Filter Pills - Only for Photos tab */}
       {!multiSelectMode && viewMode === 'grid' && (
@@ -2026,57 +2014,45 @@ const PhotoFeedGrid = ({
         </>
       )}
 
-      {/* Jobs Search and Date Filter - Only for Jobs tab */}
-      {!multiSelectMode && viewMode === 'job' && (
-        <div className="jobs-search-filter">
-          {/* Search Bar */}
+      {/* Jobs Search Bar - toggleable via header search icon */}
+      {!multiSelectMode && viewMode === 'job' && showJobsSearch && (
+        <div className="jobs-search-bar-row">
           <div className="jobs-search-bar">
             <Icons.Search />
             <input 
               type="text" 
-              placeholder="Search jobs by name or address..." 
+              placeholder="Search" 
               className="jobs-search-input"
+              autoFocus
             />
-          </div>
-          
-          {/* Filter Pills Row */}
-          <div className="jobs-filter-pills">
-            {/* Date Filter */}
-            <div className="filter-pill-wrapper">
-              <button 
-                className={`filter-pill ${selectedDateRange ? 'active' : ''} ${activeInlineFilter === 'jobDate' ? 'open' : ''}`}
-                onClick={() => setActiveInlineFilter(activeInlineFilter === 'jobDate' ? null : 'jobDate')}
-              >
-                <span>{selectedDateRange || 'Date'}</span>
-                <Icons.ChevronDown />
-              </button>
-            </div>
+            <button className="jobs-search-close" onClick={() => setShowJobsSearch(false)}>
+              <Icons.Close />
+            </button>
           </div>
         </div>
       )}
 
-      {/* Stats Bar - Only show in Job View mode */}
+      {/* Jobs Date Filter - always visible in Jobs tab */}
       {!multiSelectMode && viewMode === 'job' && (
-        <div className="stats-bar">
-          <div className="stat-chip">
-            <Icons.Image />
-            <span>47 Photos</span>
-          </div>
-          <div className="stat-chip">
-            <Icons.Video />
-            <span>12 Videos</span>
-          </div>
-          <div className="stat-chip">
-            <Icons.Calendar />
-            <span>This Week: 8</span>
+        <div className="jobs-date-filter-row">
+          <div className="filter-pill-wrapper">
+            <button 
+              className={`filter-pill ${selectedDateRange ? 'active' : ''} ${activeInlineFilter === 'jobDate' ? 'open' : ''}`}
+              onClick={() => setActiveInlineFilter(activeInlineFilter === 'jobDate' ? null : 'jobDate')}
+            >
+              <span>{selectedDateRange || 'Last 7 Days'}</span>
+              <Icons.ChevronDown />
+            </button>
           </div>
         </div>
       )}
+
+      {/* Stats bar removed - was dead code (display:none with no matching :has selector) */}
 
       {/* Photo Gallery, Job View, or Map View */}
       {(viewMode === 'grid' || viewMode === 'favorites') && (
         <div className="photo-gallery">
-          {/* Empty state for favorites */}
+          {/* Favorites empty state - hidden for now
           {showFavoritesOnly && dateGroups.length === 0 && (
             <div className="favorites-empty-state">
               <div className="empty-icon">
@@ -2086,6 +2062,7 @@ const PhotoFeedGrid = ({
               <p>Tap the heart icon when viewing a photo to add it to your favorites</p>
             </div>
           )}
+          */}
           {dateGroups.map((group, groupIndex) => (
             <div key={group.date} className="gallery-date-section">
               {/* Date Header */}
@@ -2112,12 +2089,13 @@ const PhotoFeedGrid = ({
                         {getInitials(photo.uploadedBy)}
                       </div>
                     )}
-                    {/* Small favorite indicator - only shown if favorited */}
+                    {/* Favorite indicator - hidden for now
                     {favoritedPhotos.has(photo.originalIndex) && !multiSelectMode && (
                       <div className="favorite-indicator">
                         <Icons.HeartFilled />
                       </div>
                     )}
+                    */}
                     {showMetadata && (
                       <div className="photo-metadata-overlay">
                         <div className="metadata-uploader">
@@ -2152,81 +2130,89 @@ const PhotoFeedGrid = ({
 
       {viewMode === 'job' && (
         <div className="job-gallery">
-          {jobDateGroups.flatMap((dateGroup) => dateGroup.jobs).map((group) => (
-            <div key={group.jobId || 'unassigned'} className="job-card">
-              <div className="job-card-header">
-                {group.jobDeleted ? (
-                  <div className="job-deleted-state">
-                    <Icons.AlertCircle />
-                    <span>Job no longer exists</span>
-                  </div>
-                ) : (
-                  <>
-                    <div className="job-card-info">
-                      <span className="job-card-title">{group.jobTitle}</span>
-                      <span className="job-card-meta">
-                        {group.customer}{group.address ? ` - ${group.address}` : ''}
-                      </span>
-                    </div>
-                    <button className="job-camera-btn" title="Add photo to this job">
-                      <Icons.Camera />
-                    </button>
-                  </>
-                )}
+          {jobDateGroups.map((dateGroup) => (
+            <div key={dateGroup.date} className="job-date-section">
+              <div className="job-date-header">
+                <span className="job-date-label">{dateGroup.displayDate}</span>
               </div>
-              {group.photos.length === 0 && !group.jobDeleted && (
-                <div className="job-card-empty-strip">
-                  <Icons.Image />
-                  <span>No photos added yet</span>
-                </div>
-              )}
-              {group.photos.length > 0 && (
-                <div className="job-card-photos">
-                  {group.photos.slice(0, 6).map((photo, index) => {
-                    const isLastVisible = index === 5 && group.photos.length > 6;
-                    
-                    return (
-                      <div 
-                        key={photo.id}
-                        className={`gallery-thumb ${photo.type === 'video' ? 'is-video' : ''} ${multiSelectMode ? 'selectable' : ''} ${selectedPhotos.includes(photo.id) ? 'selected' : ''} ${isLastVisible ? 'has-more-overlay' : ''}`}
-                        onClick={() => {
-                          if (isLastVisible) {
-                            onPhotoClick(photo.originalIndex);
-                          } else if (multiSelectMode) {
-                            onToggleSelect(photo.id);
-                          } else {
-                            onPhotoClick(photo.originalIndex);
-                          }
-                        }}
-                        onContextMenu={(e) => { e.preventDefault(); onLongPress(photo.id); }}
-                      >
-                        <img src={photo.url} alt="" loading="lazy" />
-                        {showUploaderAvatar && photo.uploadedBy && !multiSelectMode && !isLastVisible && (
-                          <div className="uploader-avatar" title={photo.uploadedBy}>
-                            {getInitials(photo.uploadedBy)}
-                          </div>
-                        )}
-                        {isLastVisible && (
-                          <div className="view-more-overlay">
-                            <span className="view-more-text">View All</span>
-                          </div>
-                        )}
-                        {multiSelectMode && !isLastVisible && (
-                          <div className={`gallery-checkbox ${selectedPhotos.includes(photo.id) ? 'checked' : ''}`}>
-                            {selectedPhotos.includes(photo.id) && <Icons.Check />}
-                          </div>
-                        )}
+              {dateGroup.jobs.map((group) => (
+                <div key={group.jobId || 'unassigned'} className={`job-card ${group.photos.length === 0 && !group.jobDeleted ? 'needs-photos' : ''}`}>
+                  <div className="job-card-header">
+                    {group.jobDeleted ? (
+                      <div className="job-deleted-state">
+                        <Icons.AlertCircle />
+                        <span>Job no longer exists</span>
                       </div>
-                    );
-                  })}
+                    ) : (
+                      <>
+                        <div className="job-card-info">
+                          <span className="job-card-title">{group.jobTitle}</span>
+                          <span className="job-card-meta">
+                            {group.customer}{group.address ? `, ${group.address}` : ''}
+                          </span>
+                        </div>
+                        {group.photos.length > 0 && (
+                          <button className="job-camera-btn" title="Add photo to this job">
+                            <Icons.Camera />
+                          </button>
+                        )}
+                      </>
+                    )}
+                  </div>
+                  {group.photos.length === 0 && !group.jobDeleted && (
+                    <button className="job-card-empty-action" title="Tap to add photos">
+                      <Icons.Camera />
+                      <span>Add photos</span>
+                    </button>
+                  )}
+                  {group.photos.length > 0 && (
+                    <div className="job-card-photos">
+                      {group.photos.slice(0, 6).map((photo, index) => {
+                        const isLastVisible = index === 5 && group.photos.length > 6;
+                        return (
+                          <div 
+                            key={photo.id}
+                            className={`gallery-thumb ${photo.type === 'video' ? 'is-video' : ''} ${multiSelectMode ? 'selectable' : ''} ${selectedPhotos.includes(photo.id) ? 'selected' : ''} ${isLastVisible ? 'has-more-overlay' : ''}`}
+                            onClick={() => {
+                              if (isLastVisible) {
+                                onPhotoClick(photo.originalIndex);
+                              } else if (multiSelectMode) {
+                                onToggleSelect(photo.id);
+                              } else {
+                                onPhotoClick(photo.originalIndex);
+                              }
+                            }}
+                            onContextMenu={(e) => { e.preventDefault(); onLongPress(photo.id); }}
+                          >
+                            <img src={photo.url} alt="" loading="lazy" />
+                            {showUploaderAvatar && photo.uploadedBy && !multiSelectMode && !isLastVisible && (
+                              <div className="uploader-avatar" title={photo.uploadedBy}>
+                                {getInitials(photo.uploadedBy)}
+                              </div>
+                            )}
+                            {isLastVisible && (
+                              <div className="view-more-overlay">
+                                <span className="view-more-text">View All</span>
+                              </div>
+                            )}
+                            {multiSelectMode && !isLastVisible && (
+                              <div className={`gallery-checkbox ${selectedPhotos.includes(photo.id) ? 'checked' : ''}`}>
+                                {selectedPhotos.includes(photo.id) && <Icons.Check />}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
-              )}
+              ))}
             </div>
           ))}
         </div>
       )}
 
-      {/* Map View */}
+      {/* Map View - hidden for now
       {viewMode === 'map' && (
         <MapView 
           jobs={jobGroups} 
@@ -2234,6 +2220,7 @@ const PhotoFeedGrid = ({
           onPhotoClick={onPhotoClick}
         />
       )}
+      */}
 
       {/* Bulk Actions Bar */}
       {multiSelectMode && selectedPhotos.length > 0 && (
@@ -2245,7 +2232,7 @@ const PhotoFeedGrid = ({
         </div>
       )}
 
-      {/* Bottom Navigation - Only show in Photos/Grid view */}
+      {/* Bottom Navigation - hidden for now
       {!multiSelectMode && (viewMode === 'grid' || viewMode === 'favorites') && (
         <div className="feed-bottom-nav">
           <button 
@@ -2264,6 +2251,7 @@ const PhotoFeedGrid = ({
           </button>
         </div>
       )}
+      */}
     </div>
   );
 };
@@ -2823,10 +2811,16 @@ const MediaViewer = ({ photos, currentIndex, onClose, onNavigate, onShowDetails,
   const [isMuted, setIsMuted] = useState(false);
   const [videoProgress, setVideoProgress] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);
+  const [descriptionText, setDescriptionText] = useState('');
+  const [isEditingDesc, setIsEditingDesc] = useState(false);
   const currentPhoto = photos[currentIndex];
 
-  // Check if user can delete (owns the photo)
-  const canDelete = currentPhoto.uploadedBy === 'Henry Jones'; // Simulated current user
+  React.useEffect(() => {
+    setDescriptionText(currentPhoto.description || '');
+    setIsEditingDesc(false);
+  }, [currentPhoto]);
+
+
 
   const handleSwipe = useCallback((direction) => {
     if (direction === 'left' && currentIndex < photos.length - 1) {
@@ -2839,48 +2833,63 @@ const MediaViewer = ({ photos, currentIndex, onClose, onNavigate, onShowDetails,
   const handleMenuAction = (action) => {
     setShowOptionsMenu(false);
     switch (action) {
-      case 'download':
-        onToast?.({ message: 'Downloading photo...', type: 'info' });
+      case 'rename':
+        onToast?.({ message: 'Rename dialog opened', type: 'info' });
         break;
       case 'share':
         onToast?.({ message: 'Share options opened', type: 'info' });
         break;
-      case 'report':
-        onToast?.({ message: 'Added to Job Report', type: 'success' });
-        break;
-      case 'delete':
-        if (!canDelete) {
-          onToast?.({ message: 'You can only delete photos you uploaded', type: 'error' });
-        } else {
-          onToast?.({ message: 'Photo deleted', type: 'success' });
-        }
+      case 'download':
+        onToast?.({ message: 'Downloading photo...', type: 'info' });
         break;
       default:
         break;
     }
   };
 
+  const handleAddTag = () => {
+    onToast?.({ message: 'Tag picker opened', type: 'info' });
+  };
+
+  const handleDescriptionSave = () => {
+    setIsEditingDesc(false);
+    if (descriptionText.trim()) {
+      onToast?.({ message: 'Description saved', type: 'success' });
+    }
+  };
+
+  const formatViewerDate = (dateStr) => {
+    if (!dateStr) return '';
+    try {
+      const d = new Date(dateStr);
+      const mm = String(d.getMonth() + 1).padStart(2, '0');
+      const dd = String(d.getDate()).padStart(2, '0');
+      const yyyy = d.getFullYear();
+      return `${mm}/${dd}/${yyyy}`;
+    } catch {
+      return dateStr;
+    }
+  };
+
   return (
-    <div className="media-viewer" onClick={() => setShowControls(!showControls)}>
+    <div className="media-viewer">
       {/* Top Bar */}
-      <div className={`viewer-top-bar ${showControls ? 'visible' : ''}`}>
-        <button className="viewer-btn" onClick={(e) => { e.stopPropagation(); onClose(); }}>
+      <div className="viewer-top-bar visible">
+        <button className="viewer-btn viewer-close-btn" onClick={(e) => { e.stopPropagation(); onClose(); }}>
           <Icons.Close />
         </button>
-        <span className="photo-counter">{currentIndex + 1} of {photos.length}</span>
+        <div className="viewer-title-block" onClick={(e) => { e.stopPropagation(); onShowDetails(); }}>
+          <span className="viewer-title">
+            {currentPhoto.type === 'image' ? 'Photo' : 'Video'}.{currentPhoto.type === 'image' ? 'jpg' : 'mp4'}
+          </span>
+        </div>
         <div className="viewer-top-actions">
           <button 
-            className="viewer-btn edit-btn"
+            className="viewer-btn markup-btn"
             onClick={(e) => { e.stopPropagation(); onEditPhoto?.(currentPhoto); }}
             title="Annotate photo"
           >
-            <Icons.Pencil />
-          </button>
-          <button 
-            className={`viewer-btn favorite-viewer-btn ${favoritedPhotos?.has(currentIndex) ? 'favorited' : ''}`}
-            onClick={(e) => { e.stopPropagation(); onToggleFavorite?.(currentIndex); }}
-          >
-            {favoritedPhotos?.has(currentIndex) ? <Icons.HeartFilled /> : <Icons.Heart />}
+            <Icons.Markup />
           </button>
           <button className="viewer-btn" onClick={(e) => { e.stopPropagation(); setShowOptionsMenu(true); }}>
             <Icons.MoreVertical />
@@ -2889,7 +2898,7 @@ const MediaViewer = ({ photos, currentIndex, onClose, onNavigate, onShowDetails,
       </div>
 
       {/* Media Content */}
-      <div className={`viewer-content ${isZoomed ? 'zoomed' : ''}`}>
+      <div className={`viewer-content ${isZoomed ? 'zoomed' : ''}`} onClick={() => setShowControls(!showControls)}>
         <img 
           src={currentPhoto.url} 
           alt={currentPhoto.jobTitle || 'Photo'} 
@@ -2909,14 +2918,6 @@ const MediaViewer = ({ photos, currentIndex, onClose, onNavigate, onShowDetails,
           </>
         )}
       </div>
-
-      {/* Zoom hint on first view */}
-      {showControls && !isZoomed && currentPhoto.type === 'image' && !currentPhoto.corrupted && (
-        <div className="zoom-hint">
-          <Icons.ZoomIn />
-          <span>Double-tap to zoom</span>
-        </div>
-      )}
 
       {/* Video Player Controls (when playing) */}
       {currentPhoto.type === 'video' && isPlaying && (
@@ -2951,40 +2952,88 @@ const MediaViewer = ({ photos, currentIndex, onClose, onNavigate, onShowDetails,
         </button>
       )}
 
-      {/* Bottom Info Bar */}
-      <div className={`viewer-bottom-bar ${showControls ? 'visible' : ''}`} onClick={(e) => { e.stopPropagation(); onShowDetails(); }}>
-        <div className="quick-info">
-          <div className="job-info">
-            <Icons.Briefcase />
-            {currentPhoto.jobDeleted ? (
-              <span className="deleted-text">Job no longer exists</span>
-            ) : (
-              <span>{currentPhoto.job}</span>
-            )}
-          </div>
-          <div className="customer-info">
+      {/* Bottom Section */}
+      <div className="viewer-bottom-section" onClick={(e) => e.stopPropagation()}>
+        {/* Uploader + Job Context */}
+        <div className="viewer-context-row">
+          <div className="viewer-uploader-info">
             <Icons.User />
-            {currentPhoto.customer ? (
-              <span>{currentPhoto.customer}</span>
-            ) : (
-              <span className="no-customer-text">No customer assigned</span>
+            <span>{currentPhoto.uploadedBy || 'Unknown'}</span>
+            {currentPhoto.date && (
+              <>
+                <span className="viewer-context-sep">&middot;</span>
+                <span className="viewer-context-date">{formatViewerDate(currentPhoto.date)}</span>
+              </>
             )}
           </div>
+          {currentPhoto.job && !currentPhoto.jobDeleted ? (
+            <button 
+              className="viewer-job-link"
+              onClick={() => onToast?.({ message: `Navigating to job ${currentPhoto.job}...`, type: 'info' })}
+            >
+              <Icons.Briefcase />
+              <span>{currentPhoto.job}</span>
+              <Icons.ChevronRight />
+            </button>
+          ) : (
+            <span className="viewer-job-deleted">
+              <Icons.Briefcase />
+              {currentPhoto.jobDeleted ? 'Job removed' : 'Unassigned'}
+            </span>
+          )}
         </div>
-        <Icons.ChevronRight />
-      </div>
 
-      {/* Thumbnail Strip */}
-      <div className={`thumbnail-strip ${showControls ? 'visible' : ''}`}>
-        {photos.map((photo, index) => (
-          <div 
-            key={photo.id}
-            className={`strip-thumb ${index === currentIndex ? 'active' : ''}`}
-            onClick={(e) => { e.stopPropagation(); onNavigate(index); }}
-          >
-            <img src={photo.url} alt="" />
-          </div>
-        ))}
+        {/* Thumbnail Strip */}
+        <div className="thumbnail-strip visible">
+          {photos.map((photo, index) => (
+            <div 
+              key={photo.id}
+              className={`strip-thumb ${index === currentIndex ? 'active' : ''}`}
+              onClick={(e) => { e.stopPropagation(); onNavigate(index); }}
+            >
+              <img src={photo.url} alt="" />
+            </div>
+          ))}
+        </div>
+
+        {/* Description Input */}
+        <div className="viewer-description-row">
+          <Icons.Mic />
+          {isEditingDesc ? (
+            <input
+              className="viewer-desc-input"
+              type="text"
+              value={descriptionText}
+              onChange={(e) => setDescriptionText(e.target.value)}
+              onBlur={handleDescriptionSave}
+              onKeyDown={(e) => { if (e.key === 'Enter') handleDescriptionSave(); }}
+              autoFocus
+              placeholder="Add description..."
+            />
+          ) : (
+            <span 
+              className={`viewer-desc-placeholder ${descriptionText ? 'has-text' : ''}`}
+              onClick={() => setIsEditingDesc(true)}
+            >
+              {descriptionText || 'Add description...'}
+            </span>
+          )}
+        </div>
+
+        {/* Tags */}
+        <div className="viewer-tags-row">
+          {currentPhoto.tags && currentPhoto.tags.length > 0 && (
+            <div className="viewer-existing-tags">
+              {currentPhoto.tags.map((tag, i) => (
+                <span key={i} className="viewer-tag-chip">{tag}</span>
+              ))}
+            </div>
+          )}
+          <button className="viewer-add-tag-btn" onClick={handleAddTag}>
+            <Icons.Plus />
+            <span>Add Tags</span>
+          </button>
+        </div>
       </div>
 
       {/* More Options Menu */}
@@ -2992,7 +3041,6 @@ const MediaViewer = ({ photos, currentIndex, onClose, onNavigate, onShowDetails,
         isOpen={showOptionsMenu}
         onClose={() => setShowOptionsMenu(false)}
         onAction={handleMenuAction}
-        canDelete={canDelete}
       />
     </div>
   );
@@ -5416,10 +5464,9 @@ const LoadingGrid = () => (
       <h1 className="header-title">Photo Feed</h1>
       <div style={{ width: '40px' }} />
     </div>
-    <div className="feed-tabs view-tabs three-tabs">
-      <button className="tab-btn active"><Icons.Grid /> Photos</button>
-      <button className="tab-btn"><Icons.Briefcase /> Jobs</button>
-      <button className="tab-btn"><Icons.MapPin /> Map</button>
+    <div className="feed-tabs view-tabs two-tabs">
+      <button className="tab-btn active">Photos</button>
+      <button className="tab-btn">Jobs</button>
     </div>
     <div className="photo-grid">
       {[...Array(12)].map((_, i) => (
@@ -5801,10 +5848,9 @@ function App() {
               <h1 className="header-title">Photo Feed</h1>
               <div style={{ width: '40px' }} />
             </div>
-            <div className="feed-tabs view-tabs three-tabs">
-              <button className="tab-btn active"><Icons.Grid /> Photos</button>
-              <button className="tab-btn"><Icons.Briefcase /> Jobs</button>
-              <button className="tab-btn"><Icons.MapPin /> Map</button>
+            <div className="feed-tabs view-tabs two-tabs">
+              <button className="tab-btn active">Photos</button>
+              <button className="tab-btn">Jobs</button>
             </div>
             <EmptyState type="no-photos" />
           </div>
@@ -5819,10 +5865,9 @@ function App() {
               <h1 className="header-title">Photo Feed</h1>
               <div style={{ width: '40px' }} />
             </div>
-            <div className="feed-tabs view-tabs three-tabs">
-              <button className="tab-btn active"><Icons.Grid /> Photos</button>
-              <button className="tab-btn"><Icons.Briefcase /> Jobs</button>
-              <button className="tab-btn"><Icons.MapPin /> Map</button>
+            <div className="feed-tabs view-tabs two-tabs">
+              <button className="tab-btn active">Photos</button>
+              <button className="tab-btn">Jobs</button>
             </div>
             <EmptyState type="error" />
           </div>
