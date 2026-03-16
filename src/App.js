@@ -1699,14 +1699,14 @@ const PhotoFeedGrid = ({
       const dateKey = getDateKey(photoDate);
       
       if (photoDate.getTime() === today.getTime()) {
-        displayDate = 'Today';
-        dateSubtitle = formatDateShort(today);
+        displayDate = `Today ${formatDateShort(today)}`;
+        dateSubtitle = '';
       } else if (photoDate.getTime() === yesterday.getTime()) {
-        displayDate = 'Yesterday';
-        dateSubtitle = formatDateShort(yesterday);
+        displayDate = `Yesterday ${formatDateShort(yesterday)}`;
+        dateSubtitle = '';
       } else {
-        // Show actual date for all other days
-        displayDate = formatDateShort(photoDate);
+        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        displayDate = `${days[photoDate.getDay()]} ${formatDateShort(photoDate)}`;
         dateSubtitle = '';
       }
       
@@ -2880,7 +2880,11 @@ const MediaViewer = ({ photos, currentIndex, onClose, onNavigate, onShowDetails,
         </button>
         <div className="viewer-title-block" onClick={(e) => { e.stopPropagation(); onShowDetails(); }}>
           <span className="viewer-title">
+            {currentPhoto.jobTitle || 'Unassigned'}
+          </span>
+          <span className="viewer-subtitle">
             {currentPhoto.type === 'image' ? 'Photo' : 'Video'}.{currentPhoto.type === 'image' ? 'jpg' : 'mp4'}
+            {currentPhoto.date ? ` | ${formatViewerDate(currentPhoto.date)}` : ''}
           </span>
         </div>
         <div className="viewer-top-actions">
@@ -2959,12 +2963,6 @@ const MediaViewer = ({ photos, currentIndex, onClose, onNavigate, onShowDetails,
           <div className="viewer-uploader-info">
             <Icons.User />
             <span>{currentPhoto.uploadedBy || 'Unknown'}</span>
-            {currentPhoto.date && (
-              <>
-                <span className="viewer-context-sep">&middot;</span>
-                <span className="viewer-context-date">{formatViewerDate(currentPhoto.date)}</span>
-              </>
-            )}
           </div>
           {currentPhoto.job && !currentPhoto.jobDeleted ? (
             <button 
