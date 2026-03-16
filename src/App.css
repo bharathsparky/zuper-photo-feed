@@ -2844,7 +2844,7 @@
   flex: 1;
   overflow-y: auto;
   padding: 0 16px 80px;
-  background: #fff;
+  background: transparent;
   -webkit-overflow-scrolling: touch;
 }
 
