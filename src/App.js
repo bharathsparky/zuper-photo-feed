@@ -1835,13 +1835,13 @@ const PhotoFeedGrid = ({
       {/* Inline Filter Pills - Only for Photos tab */}
       {!multiSelectMode && viewMode === 'grid' && (
         <div className="inline-filters">
-          {/* Media Type Filter */}
+          {/* Date Filter - most used by field techs */}
           <div className="filter-pill-wrapper">
             <button 
-              className={`filter-pill ${selectedMediaType !== 'all' ? 'active' : ''} ${activeInlineFilter === 'mediaType' ? 'open' : ''}`}
-              onClick={() => setActiveInlineFilter(activeInlineFilter === 'mediaType' ? null : 'mediaType')}
+              className={`filter-pill ${selectedDateRange ? 'active' : ''} ${activeInlineFilter === 'date' ? 'open' : ''}`}
+              onClick={() => setActiveInlineFilter(activeInlineFilter === 'date' ? null : 'date')}
             >
-              <span>Media type</span>
+              <span>Date</span>
               <Icons.ChevronDown />
             </button>
           </div>
@@ -1857,13 +1857,13 @@ const PhotoFeedGrid = ({
             </button>
           </div>
 
-          {/* Date Filter */}
+          {/* Media Type Filter */}
           <div className="filter-pill-wrapper">
             <button 
-              className={`filter-pill ${selectedDateRange ? 'active' : ''} ${activeInlineFilter === 'date' ? 'open' : ''}`}
-              onClick={() => setActiveInlineFilter(activeInlineFilter === 'date' ? null : 'date')}
+              className={`filter-pill ${selectedMediaType !== 'all' ? 'active' : ''} ${activeInlineFilter === 'mediaType' ? 'open' : ''}`}
+              onClick={() => setActiveInlineFilter(activeInlineFilter === 'mediaType' ? null : 'mediaType')}
             >
-              <span>Date</span>
+              <span>Media type</span>
               <Icons.ChevronDown />
             </button>
           </div>
