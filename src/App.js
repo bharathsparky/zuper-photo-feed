@@ -2079,85 +2079,83 @@ const PhotoFeedGrid = ({
 
       {viewMode === 'job' && (
         <div className="job-gallery">
-          {jobDateGroups.map((dateGroup) => (
-            <div key={dateGroup.date} className="job-date-section">
-              <div className="job-date-header">
-                <span className="job-date-label">{dateGroup.displayDate}</span>
-              </div>
-              {dateGroup.jobs.map((group) => (
-                <div key={group.jobId || 'unassigned'} className={`job-card ${group.photos.length === 0 && !group.jobDeleted ? 'needs-photos' : ''}`}>
-                  <div className="job-card-header">
-                    {group.jobDeleted ? (
-                      <div className="job-deleted-state">
-                        <Icons.AlertCircle />
-                        <span>Job no longer exists</span>
-                      </div>
-                    ) : (
-                      <>
-                        <div className="job-card-info">
-                          <span className="job-card-title">{group.jobTitle}</span>
-                          <span className="job-card-meta">
-                            {group.customer}{group.address ? `, ${group.address}` : ''}
-                          </span>
-                        </div>
-                        {group.photos.length > 0 && (
-                          <button className="job-camera-btn" title="Add photo to this job">
-                            <Icons.Camera />
-                          </button>
-                        )}
-                      </>
-                    )}
-                  </div>
-                  {group.photos.length === 0 && !group.jobDeleted && (
-                    <button className="job-card-empty-action" title="Tap to add photos">
-                      <Icons.Camera />
-                      <span>Add photos</span>
-                    </button>
-                  )}
-                  {group.photos.length > 0 && (
-                    <div className="job-card-photos">
-                      {group.photos.slice(0, 6).map((photo, index) => {
-                        const isLastVisible = index === 5 && group.photos.length > 6;
-                        return (
-                          <div 
-                            key={photo.id}
-                            className={`gallery-thumb ${photo.type === 'video' ? 'is-video' : ''} ${multiSelectMode ? 'selectable' : ''} ${selectedPhotos.includes(photo.id) ? 'selected' : ''} ${isLastVisible ? 'has-more-overlay' : ''}`}
-                            onClick={() => {
-                              if (isLastVisible) {
-                                onPhotoClick(photo.originalIndex);
-                              } else if (multiSelectMode) {
-                                onToggleSelect(photo.id);
-                              } else {
-                                onPhotoClick(photo.originalIndex);
-                              }
-                            }}
-                            onContextMenu={(e) => { e.preventDefault(); onLongPress(photo.id); }}
-                          >
-                            <img src={photo.url} alt="" loading="lazy" />
-                            {showUploaderAvatar && photo.uploadedBy && !multiSelectMode && !isLastVisible && (
-                              <div className="uploader-avatar" title={photo.uploadedBy}>
-                                {getInitials(photo.uploadedBy)}
-                              </div>
-                            )}
-                            {isLastVisible && (
-                              <div className="view-more-overlay">
-                                <span className="view-more-text">View All</span>
-                              </div>
-                            )}
-                            {multiSelectMode && !isLastVisible && (
-                              <div className={`gallery-checkbox ${selectedPhotos.includes(photo.id) ? 'checked' : ''}`}>
-                                {selectedPhotos.includes(photo.id) && <Icons.Check />}
-                              </div>
-                            )}
-                          </div>
-                        );
-                      })}
+          {jobDateGroups.flatMap((dateGroup) =>
+            dateGroup.jobs.map((group) => (
+              <div key={group.jobId || 'unassigned'} className={`job-card ${group.photos.length === 0 && !group.jobDeleted ? 'needs-photos' : ''}`}>
+                <div className="job-card-header">
+                  {group.jobDeleted ? (
+                    <div className="job-deleted-state">
+                      <Icons.AlertCircle />
+                      <span>Job no longer exists</span>
                     </div>
+                  ) : (
+                    <>
+                      <div className="job-card-info">
+                        <div className="job-card-title-row">
+                          <span className="job-card-title">{group.jobTitle}</span>
+                          <span className="job-card-date">{dateGroup.displayDate}</span>
+                        </div>
+                        <span className="job-card-meta">
+                          {group.customer}{group.address ? `, ${group.address}` : ''}
+                        </span>
+                      </div>
+                      {group.photos.length > 0 && (
+                        <button className="job-camera-btn" title="Add photo to this job">
+                          <Icons.Camera />
+                        </button>
+                      )}
+                    </>
                   )}
                 </div>
-              ))}
-            </div>
-          ))}
+                {group.photos.length === 0 && !group.jobDeleted && (
+                  <button className="job-card-empty-action" title="Tap to add photos">
+                    <Icons.Camera />
+                    <span>Add photos</span>
+                  </button>
+                )}
+                {group.photos.length > 0 && (
+                  <div className="job-card-photos">
+                    {group.photos.slice(0, 6).map((photo, index) => {
+                      const isLastVisible = index === 5 && group.photos.length > 6;
+                      return (
+                        <div 
+                          key={photo.id}
+                          className={`gallery-thumb ${photo.type === 'video' ? 'is-video' : ''} ${multiSelectMode ? 'selectable' : ''} ${selectedPhotos.includes(photo.id) ? 'selected' : ''} ${isLastVisible ? 'has-more-overlay' : ''}`}
+                          onClick={() => {
+                            if (isLastVisible) {
+                              onPhotoClick(photo.originalIndex);
+                            } else if (multiSelectMode) {
+                              onToggleSelect(photo.id);
+                            } else {
+                              onPhotoClick(photo.originalIndex);
+                            }
+                          }}
+                          onContextMenu={(e) => { e.preventDefault(); onLongPress(photo.id); }}
+                        >
+                          <img src={photo.url} alt="" loading="lazy" />
+                          {showUploaderAvatar && photo.uploadedBy && !multiSelectMode && !isLastVisible && (
+                            <div className="uploader-avatar" title={photo.uploadedBy}>
+                              {getInitials(photo.uploadedBy)}
+                            </div>
+                          )}
+                          {isLastVisible && (
+                            <div className="view-more-overlay">
+                              <span className="view-more-text">View All</span>
+                            </div>
+                          )}
+                          {multiSelectMode && !isLastVisible && (
+                            <div className={`gallery-checkbox ${selectedPhotos.includes(photo.id) ? 'checked' : ''}`}>
+                              {selectedPhotos.includes(photo.id) && <Icons.Check />}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            ))
+          )}
         </div>
       )}
 

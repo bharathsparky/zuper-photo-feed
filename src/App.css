@@ -2884,6 +2884,10 @@
   overflow: hidden;
 }
 
+.job-gallery > .job-card:first-child {
+  margin-top: 8px;
+}
+
 .job-card.needs-photos {
   /* no visual distinction needed */
 }
@@ -2903,6 +2907,12 @@
   gap: 2px;
 }
 
+.job-card-title-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
 .job-card-title {
   font-size: 15px;
   font-weight: 600;
@@ -2911,6 +2921,16 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  flex: 1;
+  min-width: 0;
+}
+
+.job-card-date {
+  font-size: 12px;
+  font-weight: 500;
+  color: #71787F;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .job-card-meta {
