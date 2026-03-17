@@ -1607,7 +1607,24 @@ const PhotoFeedGrid = ({
       return { dateKey, displayDate, timestamp: dateObj.getTime() };
     };
 
-    // Group photos by job
+    const jobStatusMap = {
+      '#2024-1429': 'In Progress',
+      '#2024-1430': 'Completed',
+      '#2024-1431': 'In Progress',
+      '#2024-1432': 'Completed',
+      '#2024-1433': 'In Progress',
+      '#2024-1434': 'Scheduled',
+      '#2024-1435': 'Completed',
+      '#2024-1442': 'In Progress',
+      '#2024-1443': 'In Progress',
+      '#2024-1444': 'Scheduled',
+      '#2024-1445': 'In Progress',
+      '#2024-1446': 'Completed',
+      '#2024-1447': 'In Progress',
+      '#2024-1448': 'Scheduled',
+      '#2024-1449': 'In Progress',
+    };
+
     const jobsMap = {};
     photos.forEach((photo, index) => {
       const jobKey = photo.job || 'unassigned';
@@ -1618,6 +1635,7 @@ const PhotoFeedGrid = ({
           customer: photo.customer,
           address: photo.address,
           jobDeleted: photo.jobDeleted,
+          status: jobStatusMap[photo.job] || 'In Progress',
           photos: [],
           latestPhotoDate: null
         };
@@ -2083,30 +2101,27 @@ const PhotoFeedGrid = ({
             dateGroup.jobs.map((group) => (
               <div key={group.jobId || 'unassigned'} className={`job-card ${group.photos.length === 0 && !group.jobDeleted ? 'needs-photos' : ''}`}>
                 <div className="job-card-header">
-                  {group.jobDeleted ? (
-                    <div className="job-deleted-state">
-                      <Icons.AlertCircle />
-                      <span>Job no longer exists</span>
-                    </div>
-                  ) : (
-                    <>
-                      <div className="job-card-info">
-                        <div className="job-card-title-row">
-                          <span className="job-card-title">{group.jobTitle}</span>
-                          <span className="job-card-date">{dateGroup.displayDate}</span>
-                        </div>
-                        <span className="job-card-meta">
-                          {group.customer}{group.address ? `, ${group.address}` : ''}
-                        </span>
+                    {group.jobDeleted ? (
+                      <div className="job-deleted-state">
+                        <Icons.AlertCircle />
+                        <span>Job no longer exists</span>
                       </div>
-                      {group.photos.length > 0 && (
-                        <button className="job-camera-btn" title="Add photo to this job">
-                          <Icons.Camera />
-                        </button>
-                      )}
-                    </>
-                  )}
-                </div>
+                    ) : (
+                      <>
+                        <div className="job-card-info">
+                          <span className="job-card-title">{group.jobTitle}</span>
+                          <span className="job-card-meta">
+                            {group.customer}{group.address ? `, ${group.address}` : ''}
+                          </span>
+                        </div>
+                        {group.photos.length > 0 && (
+                          <button className="job-camera-btn" title="Add photo to this job">
+                            <Icons.Camera />
+                          </button>
+                        )}
+                      </>
+                    )}
+                  </div>
                 {group.photos.length === 0 && !group.jobDeleted && (
                   <button className="job-card-empty-action" title="Tap to add photos">
                     <Icons.Camera />
