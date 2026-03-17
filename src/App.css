@@ -6580,6 +6580,23 @@
   transition: all 0.12s ease;
 }
 
+.grid-popover-check {
+  width: 16px;
+  flex-shrink: 0;
+  font-weight: 600;
+  color: #E44A19;
+}
+
+.grid-popover-label {
+  flex: 1;
+}
+
+.grid-popover-icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
 .grid-popover-option:hover {
   background: #F5F6F8;
 }

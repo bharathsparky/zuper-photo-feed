@@ -204,14 +204,14 @@
     0 3px 8px rgba(0, 0, 0, 0.12);
 }
 
-/* Grid density popover */
+/* Grid density popover — iOS native popover style */
 .grid-popover-wrapper { position: relative; }
 .grid-toggle {
-  color: var(--ios-blue);
+  color: var(--ios-label) !important;
 }
 .grid-toggle svg {
-  width: 20px;
-  height: 20px;
+  width: 22px !important;
+  height: 22px !important;
   stroke-width: 1.5px;
 }
 .grid-popover-backdrop {
@@ -220,36 +220,74 @@
   z-index: 999;
 }
 .grid-popover {
-  position: absolute;
-  top: calc(100% + 8px);
-  right: 0;
-  background: var(--ios-system-background);
-  border-radius: var(--ios-radius-md);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
-  overflow: hidden;
+  position: absolute !important;
+  top: calc(100% + 6px) !important;
+  right: -4px !important;
+  left: auto !important;
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(40px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(180%) !important;
+  border-radius: 14px !important;
+  box-shadow:
+    0 0 0 0.33px rgba(0, 0, 0, 0.12),
+    0 8px 32px rgba(0, 0, 0, 0.14),
+    0 2px 8px rgba(0, 0, 0, 0.06) !important;
+  overflow: hidden !important;
   z-index: 1000;
-  min-width: 140px;
+  min-width: 180px !important;
+  padding: 0 !important;
 }
 .grid-popover-option {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-  padding: 12px 16px;
-  border: none;
-  background: transparent;
-  font-family: var(--ios-font);
-  font-size: var(--ios-subhead);
-  color: var(--ios-label);
+  display: flex !important;
+  align-items: center !important;
+  gap: 0 !important;
+  width: 100% !important;
+  padding: 13px 16px !important;
+  border: none !important;
+  background: transparent !important;
+  font-family: var(--ios-font) !important;
+  font-size: 17px !important;
+  color: var(--ios-label) !important;
   cursor: pointer;
-  border-bottom: 0.5px solid var(--ios-opaque-separator);
+  border-bottom: 0.33px solid rgba(60, 60, 67, 0.12) !important;
+  border-radius: 0 !important;
+  font-weight: var(--ios-weight-regular) !important;
 }
-.grid-popover-option:last-child { border-bottom: none; }
+.grid-popover-option:last-child { border-bottom: none !important; }
+.grid-popover-option:active {
+  background: rgba(0, 0, 0, 0.04) !important;
+}
 .grid-popover-option.active {
-  color: var(--ios-blue);
-  font-weight: var(--ios-weight-semibold);
+  background: transparent !important;
+  color: var(--ios-label) !important;
+  font-weight: var(--ios-weight-regular) !important;
 }
-.grid-popover-option svg { width: 20px; height: 20px; }
+.grid-popover-check {
+  width: 24px !important;
+  flex-shrink: 0 !important;
+  font-size: 17px !important;
+  font-weight: var(--ios-weight-semibold) !important;
+  color: var(--ios-label) !important;
+}
+.grid-popover-label {
+  flex: 1 !important;
+  text-align: left !important;
+}
+.grid-popover-icon {
+  display: flex !important;
+  align-items: center !important;
+  flex-shrink: 0 !important;
+  margin-left: 16px !important;
+  color: var(--ios-secondary-label) !important;
+}
+.grid-popover-icon svg {
+  width: 22px !important;
+  height: 22px !important;
+  color: var(--ios-secondary-label) !important;
+}
+.grid-popover-option.active .grid-popover-icon svg {
+  color: var(--ios-label) !important;
+}
 
 /* View Tabs (feed-tabs) — segmented control */
 .feed-tabs {
@@ -339,7 +377,7 @@
 .inline-filters {
   display: flex;
   gap: 8px;
-  padding: 6px 16px;
+  padding: 10px 16px 8px;
   background: transparent;
   position: relative;
   overflow-x: auto;
@@ -664,8 +702,12 @@
   position: relative;
   margin-bottom: 0 !important;
   padding-bottom: 0 !important;
-  padding-top: 0 !important;
+  padding-top: 8px !important;
   border-bottom: none !important;
+}
+
+.gallery-date-section:first-child {
+  padding-top: 2px !important;
 }
 
 .gallery-date-section:last-child { margin-bottom: 80px !important; }
@@ -677,7 +719,7 @@
   display: inline-flex !important;
   align-items: center;
   justify-content: flex-start;
-  padding: 6px 0 6px !important;
+  padding: 4px 0 8px !important;
   background: transparent !important;
   margin: 0 !important;
   pointer-events: none;
@@ -743,7 +785,7 @@
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)) !important;
-  gap: 2px !important;
+  gap: 3px !important;
   background: transparent !important;
   border-radius: 0 !important;
   transition: gap var(--ios-duration-fast) var(--ios-ease);
@@ -752,12 +794,12 @@
 
 .gallery-grid.grid-density-large {
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)) !important;
-  gap: 2px !important;
+  gap: 3px !important;
 }
 
 .gallery-grid.grid-density-medium {
   grid-template-columns: repeat(auto-fill, minmax(75px, 1fr)) !important;
-  gap: 2px !important;
+  gap: 3px !important;
 }
 
 .gallery-grid.grid-density-small {
@@ -954,7 +996,7 @@
 
 /* iOS Section Header — frosted pill badge */
 .job-date-section {
-  padding-top: 8px;
+  padding-top: 12px;
 }
 
 .job-date-section:first-child {
@@ -962,7 +1004,7 @@
 }
 
 .job-date-header {
-  padding: 0 16px 4px;
+  padding: 0 16px 8px;
 }
 
 .job-date-label {
@@ -2405,10 +2447,11 @@
 
 .timeline-date-section {
   margin-bottom: 0;
+  padding-top: 8px;
 }
 
 .timeline-date-header {
-  padding: 6px 16px 4px;
+  padding: 4px 16px 8px;
   font-size: var(--ios-caption1) !important;
   font-weight: var(--ios-weight-semibold) !important;
   color: var(--ios-label) !important;

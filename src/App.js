@@ -1817,8 +1817,9 @@ const PhotoFeedGrid = ({
                           className={`grid-popover-option ${gridDensity === key ? 'active' : ''}`}
                           onClick={() => { setGridDensity(key); setShowGridPopover(false); }}
                         >
-                          <Icon />
-                          <span>{label}</span>
+                          <span className="grid-popover-check">{gridDensity === key ? '✓' : ''}</span>
+                          <span className="grid-popover-label">{label}</span>
+                          <span className="grid-popover-icon"><Icon /></span>
                         </button>
                       ))}
                     </div>
