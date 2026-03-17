@@ -5591,6 +5591,9 @@ const RoleInfo = ({ role }) => {
 
 // Main App Component
 function App() {
+  const [isIosTheme, setIsIosTheme] = useState(() => {
+    return window.location.hash === '#ios';
+  });
   const [currentScreen, setCurrentScreen] = useState('home');
   const [currentRole, setCurrentRole] = useState(USER_ROLES.TEAM_LEADER);
   const [showFilter, setShowFilter] = useState(false);
@@ -5608,6 +5611,39 @@ function App() {
   const [favoritedPhotos, setFavoritedPhotos] = useState(new Set([0, 3, 7])); // App-level favorites
   const [showEditor, setShowEditor] = useState(false);
   const [editingPhoto, setEditingPhoto] = useState(null);
+
+  useEffect(() => {
+    const iosIndexId = 'ios-index-css';
+    const iosAppId = 'ios-app-css';
+
+    if (isIosTheme) {
+      if (!document.getElementById(iosIndexId)) {
+        const link1 = document.createElement('link');
+        link1.id = iosIndexId;
+        link1.rel = 'stylesheet';
+        link1.href = '/ios/index.css';
+        document.head.appendChild(link1);
+      }
+      if (!document.getElementById(iosAppId)) {
+        const link2 = document.createElement('link');
+        link2.id = iosAppId;
+        link2.rel = 'stylesheet';
+        link2.href = '/ios/App.css';
+        document.head.appendChild(link2);
+      }
+
+      window.location.hash = 'ios';
+    } else {
+      const el1 = document.getElementById(iosIndexId);
+      const el2 = document.getElementById(iosAppId);
+      if (el1) el1.remove();
+      if (el2) el2.remove();
+
+      if (window.location.hash === '#ios') {
+        window.location.hash = '';
+      }
+    }
+  }, [isIosTheme]);
 
   // Handle opening the photo editor
   const handleEditPhoto = (photo) => {
@@ -5982,6 +6018,24 @@ function App() {
             </button>
           ))}
         </div>
+      </div>
+
+      {/* Theme Toggle */}
+      <div className="screen-nav" style={{ gap: '6px', paddingBottom: '4px' }}>
+        <button
+          className={`screen-nav-btn ${!isIosTheme ? 'active' : ''}`}
+          onClick={() => setIsIosTheme(false)}
+          style={!isIosTheme ? { background: '#34C759', color: 'white' } : {}}
+        >
+          Android
+        </button>
+        <button
+          className={`screen-nav-btn ${isIosTheme ? 'active' : ''}`}
+          onClick={() => setIsIosTheme(true)}
+          style={isIosTheme ? { background: '#007AFF', color: 'white' } : {}}
+        >
+          iOS
+        </button>
       </div>
 
       {/* Screen Navigation */}

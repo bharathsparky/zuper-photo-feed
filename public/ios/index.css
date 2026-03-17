@@ -1,0 +1,292 @@
+/* ============================================
+   iOS HUMAN INTERFACE GUIDELINES — DESIGN TOKENS
+   System colors, typography, and spacing from Apple HIG
+   ============================================ */
+
+:root {
+  /* iOS System Colors — Light Mode */
+  --ios-blue: #007AFF;
+  --ios-green: #34C759;
+  --ios-indigo: #5856D6;
+  --ios-orange: #FF9500;
+  --ios-pink: #FF2D55;
+  --ios-purple: #AF52DE;
+  --ios-red: #FF3B30;
+  --ios-teal: #5AC8FA;
+  --ios-yellow: #FFCC00;
+
+  /* iOS Label Colors */
+  --ios-label: #000000;
+  --ios-secondary-label: #3C3C43BF; /* 60% opacity */
+  --ios-tertiary-label: #3C3C434D; /* 30% opacity */
+  --ios-quaternary-label: #3C3C432E; /* 18% opacity */
+
+  /* iOS System Backgrounds */
+  --ios-system-background: #FFFFFF;
+  --ios-secondary-system-background: #F2F2F7;
+  --ios-tertiary-system-background: #FFFFFF;
+
+  /* iOS Grouped Backgrounds */
+  --ios-system-grouped-background: #F2F2F7;
+  --ios-secondary-system-grouped-background: #FFFFFF;
+  --ios-tertiary-system-grouped-background: #F2F2F7;
+
+  /* iOS Fill Colors */
+  --ios-system-fill: #78788033; /* 20% opacity */
+  --ios-secondary-system-fill: #78788029; /* 16% opacity */
+  --ios-tertiary-system-fill: #7676801F; /* 12% opacity */
+  --ios-quaternary-system-fill: #74748014; /* 8% opacity */
+
+  /* iOS Separator Colors */
+  --ios-separator: #3C3C4349; /* 29% opacity */
+  --ios-opaque-separator: #C6C6C8;
+
+  /* iOS System Gray Scale */
+  --ios-system-gray: #8E8E93;
+  --ios-system-gray2: #AEAEB2;
+  --ios-system-gray3: #C7C7CC;
+  --ios-system-gray4: #D1D1D6;
+  --ios-system-gray5: #E5E5EA;
+  --ios-system-gray6: #F2F2F7;
+
+  /* Typography — SF Pro (system font) */
+  --ios-font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
+
+  /* iOS Type Scale (pt = px at 1x) */
+  --ios-large-title: 34px;
+  --ios-title1: 28px;
+  --ios-title2: 22px;
+  --ios-title3: 20px;
+  --ios-headline: 17px;
+  --ios-body: 17px;
+  --ios-callout: 16px;
+  --ios-subhead: 15px;
+  --ios-footnote: 13px;
+  --ios-caption1: 12px;
+  --ios-caption2: 11px;
+
+  /* iOS Font Weights */
+  --ios-weight-regular: 400;
+  --ios-weight-medium: 500;
+  --ios-weight-semibold: 600;
+  --ios-weight-bold: 700;
+
+  /* iOS Spacing (4pt grid) */
+  --ios-space-2: 2px;
+  --ios-space-4: 4px;
+  --ios-space-8: 8px;
+  --ios-space-12: 12px;
+  --ios-space-16: 16px;
+  --ios-space-20: 20px;
+  --ios-space-24: 24px;
+  --ios-space-32: 32px;
+
+  /* iOS Corner Radius */
+  --ios-radius-sm: 6px;
+  --ios-radius-md: 10px;
+  --ios-radius-lg: 14px;
+  --ios-radius-xl: 20px;
+  --ios-radius-continuous: 13px;
+
+  /* iOS Minimum Touch Target */
+  --ios-min-target: 44px;
+
+  /* iOS Navigation Bar Height */
+  --ios-nav-height: 44px;
+  --ios-large-nav-height: 96px;
+  --ios-tab-bar-height: 49px;
+  --ios-search-bar-height: 36px;
+
+  /* iOS Animations */
+  --ios-spring: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ios-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ios-duration-fast: 200ms;
+  --ios-duration-normal: 350ms;
+  --ios-duration-slow: 500ms;
+}
+
+/* Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Base Styles — SF Pro */
+body {
+  font-family: var(--ios-font);
+  font-size: var(--ios-body);
+  color: var(--ios-label);
+  background: var(--ios-system-grouped-background);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.47;
+  letter-spacing: -0.41px;
+}
+
+/* Phone Frame Container */
+.phone-frame {
+  width: 390px;
+  height: 844px;
+  background: #000;
+  border-radius: 54px;
+  padding: 12px;
+  box-shadow:
+    0 0 0 4px #1a1a1a,
+    0 0 0 6px #333,
+    0 25px 80px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+
+.phone-frame::before {
+  content: '';
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 126px;
+  height: 34px;
+  background: #000;
+  border-radius: 20px;
+  z-index: 1000;
+}
+
+.phone-screen {
+  width: 100%;
+  height: 100%;
+  background: var(--ios-system-grouped-background);
+  border-radius: 44px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Status Bar */
+.status-bar {
+  height: 54px;
+  padding: 14px 28px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: var(--ios-system-background);
+  position: relative;
+  z-index: 100;
+}
+
+.status-bar-time {
+  font-size: 15px;
+  font-weight: var(--ios-weight-semibold);
+  letter-spacing: -0.3px;
+}
+
+.status-bar-icons {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.status-bar-icons svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Screen Navigation */
+.screen-nav {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  background: var(--ios-secondary-system-background);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.screen-nav-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 9999px;
+  font-size: var(--ios-caption1);
+  font-weight: var(--ios-weight-medium);
+  font-family: var(--ios-font);
+  cursor: pointer;
+  transition: all var(--ios-duration-fast) var(--ios-ease);
+  background: white;
+  color: var(--ios-system-gray);
+}
+
+.screen-nav-btn.active {
+  background: var(--ios-blue);
+  color: white;
+}
+
+.screen-nav-btn:hover:not(.active) {
+  background: rgba(0, 122, 255, 0.1);
+  color: var(--ios-blue);
+}
+
+/* App Container */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+  gap: 20px;
+}
+
+@media (min-width: 900px) {
+  .app-container {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
+/* iOS Activity Indicator Spinner */
+@keyframes ios-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Shimmer Animation */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg,
+    var(--ios-system-gray6) 25%,
+    var(--ios-system-gray5) 50%,
+    var(--ios-system-gray6) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Scrollbar — Hidden (iOS style) */
+::-webkit-scrollbar { display: none; }
+* { scrollbar-width: none; }
+
+/* Utility Classes */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.truncate-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

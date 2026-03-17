@@ -2227,7 +2227,7 @@
 }
 
 .date-title {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   color: #1a1a1a;
   letter-spacing: -0.01em;
@@ -2235,8 +2235,8 @@
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(12px) saturate(180%);
   -webkit-backdrop-filter: blur(12px) saturate(180%);
-  padding: 6px 14px;
-  border-radius: 20px;
+  padding: 4px 10px;
+  border-radius: 14px;
   display: inline-block;
   pointer-events: auto;
   box-shadow: none;
@@ -2862,12 +2862,12 @@
 }
 
 .job-date-label {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   color: #1a1a1a;
   background: rgba(255, 255, 255, 0.95);
-  padding: 5px 12px;
-  border-radius: 16px;
+  padding: 4px 10px;
+  border-radius: 14px;
   border: 1px solid #d1d1d6;
   display: inline-block;
 }
